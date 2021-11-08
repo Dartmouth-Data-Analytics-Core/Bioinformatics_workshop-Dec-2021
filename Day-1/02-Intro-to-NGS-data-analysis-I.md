@@ -7,7 +7,7 @@
 If you get lost, or do not have enough time to finish the commands before we move to the next session you can copy the files needed for the next step with the following command from the scratch directory you have created for yourself. You will just need to update the target directory to your own directory on scratch. 
 
 ```bash
-# go to your scratch directoory (e.g. /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/)
+# go to your scratch directory (e.g. /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/)
 
 # copy files 
 cp -r /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /scratch/omw/
@@ -103,13 +103,13 @@ ls -lah
 ```
 Sym-linked files are similar to an alias they are a file that points to a location. Any modifications made to the original files in `/dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq/` will also be seen in the symlink files. Moving the original files or deleting the original files will cause the symlinks to malfunction.
 
-Remember, because your symlinks are pointing to something in the scratch directory these files are slated to be deleted in 45 days at which point your symlinks will still exist but no longer function properly.
+Remember, because your symlinks are pointing to something in the scratch directory these files are slated to be deleted in 45 days, at which point your symlinks will still exist but no longer function properly.
 
 ### Basic operations
 
 While you don't normally need to go looking within an individual FASTQ file, it is useful to explore them at the command line to help better understand their contents. Being able to work with FASTQ files at the command line can also be a valuable skill for troubleshooting problems that come upo in your analyses.
 
-Due to their large size, we often perform gzip compression of FASTQ files so that they take up less space, however this means we have to unzip when we want to work with them. We can do this with the `zcat` command and a pipe (|). `zcat` works similar to `cat` but operates on zipped files, FASTQ files are very large and so we will use `head` to limit the output to the first ten lines.
+Due to gzip compression of FASTQ files we have to unzip when we want to work with them. We can do this with the `zcat` command and a pipe (|). `zcat` works similar to `cat` but operates on zipped files, FASTQ files are very large and so we will use `head` to limit the output to the first ten lines.
 
 Use `zcat` and `head` to have a look at the first few records in our FASTQ file.
 ```bash
@@ -134,7 +134,7 @@ zcat SRR1039508_1.chr20.fastq.gz | sed -n '1~4p' | head -10
 
 Using this same approach, we can print the second line for the first 10,000 entires of the FASTQ file, and use the `grep` command to search for regular expressions in the output. Using the `-o` option for grep, we tell the command that we want it to print lines that match the character string.
 ```bash
-# Print the first 10 lines to confirm we are getting bthe sequence lines
+# Print the first 10 lines to confirm we are getting the sequence lines
 zcat SRR1039508_1.chr20.fastq.gz | sed -n '2~4p' | head -10
 
 # Pipe the sequence line from the first 10000 FASTQ records to grep to search for our (pretend) adapter sequence
