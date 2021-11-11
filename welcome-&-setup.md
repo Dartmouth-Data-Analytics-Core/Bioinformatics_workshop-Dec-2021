@@ -205,11 +205,7 @@ sessionInfo()
 The commands that you will be following can be found in markdown `(.md)` files where there is a brief description of each command and how it is applied to the data and what it does followed by an example command that you can copy and paste into the terminal window. The majority of day 1 and 2 will be using the terminal window on your local machine, with an open `ssh` connection to discovery, as we will be running `bash` code. For some of day 2 and most of day 3 you will be using RStudio on your local machine to run the commands in the  markdown files (`.md`) located in this GitHub repo. 
 
 
-In your terminal window **on your local machine** navigate to where you want to download the files needed for this workshop. Then execute the following command:
-
-```bash
-git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop_setup/
-```
+In your terminal window **on your local machine** navigate to where you want to download the files needed for this workshop. 
 
 **On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (preferably in the same location as you downloaded the setup materials) with the folloing command: 
 
