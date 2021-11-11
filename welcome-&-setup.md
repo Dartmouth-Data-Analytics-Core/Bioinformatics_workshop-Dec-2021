@@ -2,15 +2,13 @@
 
 Before you attend the workshop there are a couple of things we would like you to do to get setup for using the tools that will be required during the course of the workshop.  
 
-For those of you that indicated that you did not have an account on *discovery* you should have received an email from me explaing how to set that up, please make sure this is done and you are able to log into your account **BEFORE** the workshop begins. 
-
 ---
 
-## Downloading the data ##
+## The terminal emulator ##
 
-The commands that you will be following can be found in markdown `(.md)` files where there is a brief description of the command and how it is applied to the data and what it does followed by an example command that you can copy and paste into the terminal window. The majority of day 1 and 2 will be using the terminal window on your local machine, with an open `ssh` connection to discovery7, as we will be running `bash` code. For some of day 2 and most of day 3 you will be using RStudio on your local machine to run the commands in the  markdown files (`.md`) located in this GitHub repo. 
+A terminal emulator is a more streamlined way of navigating a computational environment (once you get the hang of it). We will cover some basic command to help orient you with using the terminal to interact with your machine on Day 1 of the workshop.
 
-To start make sure that you are able to use a terminal emulator, select one of the following based on your operating system, download it and open it up. 
+If you are using a Mac there is a terminal emulator program pre-installed on your machine, if you are using another OS we have included some links to popular terminal emulator porgrams below. Please select one of them download the progam and open it up for the next step.
 
 Operating system| Terminal emulators
 ---|---
@@ -18,42 +16,35 @@ Mac| Terminal (comes pre-installed)
 Windows| [MobaXterm](https://mobaxterm.mobatek.net/download.html) <br> [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 Linux| Konsole, Terminal, etc. (should be pre-installed but depends on the desktop environment you are running)
 
-
-In your terminal window navigate to where you want to download the files needed for this workshop onto your local machine. Then execute the following command:
-
-```bash
-git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop_setup/
-```
-
-**On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (prefereably in the same location as you downloaded the setup materials) with the folloing command: 
-
-```bash
-git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop/
-```
-
 ---
 
-## Install the Integrative Genomics Viewer (IGV)
+## The discovery HPC system ##
 
-We will be using the [Integrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/), a genome browser produced by researchers at the Broad Institute, to explore and visualize genomics data. 
+For those of you that indicated that you did not have an account on *discovery* you should have received an email from research computing with credentials for logging on the system using your netID.
 
-<img src="figures/igv.png" height="100" width="100"/>
+To log onto discovery we will use the secure shell command `ssh`. 
 
-You will need to download and install the IGV desktop application for your operating system before the workshop begins. The latest versions of IGV can be found at their [downloads page](http://software.broadinstitute.org/software/igv/download). After installing IGV, try opening the application on your computer to confirm the installation was successful. 
+```bash
+ssh netID@discovery.dartmouth.edu
+```
+
+You will be prompted for a password and when you start typing nothing will show up in the prompt, I assure you though your keystrokes are recorded and you will be logged onto the discovery HPC environment if your password is correct. If your password is incorrect you will receive the warning "Permission denied, please try again." and will be prompted to enter your password again.
 
 ---
 
 ## Setting up a Conda Environment ## 
 
-Conda is a package management system that helps you find, install, and organize groups of packages needed for a particular task. Conda environments are really useful when working on high performance computing (HPC) environments like Dartmouth's Discovery system because you can install packages locally without needing administrator permission. Conda environments are also useful for project continuity, the versions of the packages that you install in your environment and all of their dependencies will remain the same (unless you update them). We will be using a conda environment to make sure we all have the same version of many different bioinformatics software programs available to us. 
+Once you are logged onto discovery you can load the all of the software we will need for the workshop. 
 
-Before you begin using conda environments on discovery you will need to ensure that you have run the source code to enable the conda commands. Log into discovery and run the following command:
+Conda is a package management system that helps you find, install, and organize groups of packages needed for a particular task. Conda environments are really useful when working on HPC environments like Dartmouth's Discovery system because you can install packages locally without needing administrator permission. Conda environments are also useful for project continuity, the versions of the packages that you install in your environment and all of their dependencies will remain the same (unless you update them). We will be using a conda environment to make sure we all have the same version of many different bioinformatics software programs available to us. 
+
+Before you begin using conda environments on discovery you will need to ensure that you have run the source code to enable the conda commands. Ensure you are logged into discovery and run the following command:
 
 ```bash
 source /optnfs/common/miniconda3/etc/profile.d/conda.sh
 ```
 
-We recommend that you add the above line of code to your `.bashrc` file in your home directory, otherwise you will need to run this command each time you start a new session on discovery. To do this use the nano text editor on discovery to copy the line above into your `.bashrc` file.
+We recommend that you add the above line of code to your `.bashrc` file in your home directory, otherwise you will need to run this command each time you start a new session on discovery. To do this use the `nano` text editing program on discovery (this comes pre-installed) to copy the line above into your `.bashrc` file (we will talk more about what this file is and how to use it on Day 1).
 
 ```bash
 # open the file with the text editor
@@ -61,21 +52,21 @@ nano .bashrc
 
 # copy this line to the file : source /optnfs/common/miniconda3/etc/profile.d/conda.sh
 
-# use ctrl+x to exit the editor and save the changes you made
+# use ctrl+x to exit the editor and type "Y" to save the changes you made
 ```
 
 
-Next you will have to run the following command to create a .conda/ directory in your home drive to store all of your personal conda environments. You only have to run this command once to make this directory, so it does not need to be added to your .bashrc file.
+Next you will have to run the following command to create a .conda/ directory in your home drive. This directory will store all of your personal conda environments, including the one we are about to build for this workshop. **You only have to run this command once to make this directory, so it does not need to be added to your .bashrc file.**
 
 ```bash
 cd ~
 mkdir -p .conda/pkgs/cache .conda/envs
 ```
 
-Now you will need to create the conda environment that we will be using for the course into your personal directory of accessible conda environments. This takes about 15 minutes to execute and you will see all of the packages that are loaded into this environment. The number of packages should indicate why conda environments are so useful, imagine having to load all of these packages individually it is much easier to load them with a single command in a conda environment.
+Lastly you will need to create the conda environment that we will be using for the course in your personal directory of accessible conda environments. This takes about 15 minutes to execute and you will see all of the packages that are loaded into this environment. The number of packages being installed should indicate why conda environments are so useful, imagine having to load all of these packages individually it is much easier to load them with a single command in a conda environment.
 
 ```bash
-conda env create -f /scratch/fund_of_bioinfo/environment.yml
+conda env create -f /dartfs-hpc/scratch/fund_of_bioinfo/environment.yml
 ```
 
 When you are ready activate the conda environment, which you will need for the work we are doing for days 1 and 2 of the workshop you can use the following command. 
@@ -91,9 +82,20 @@ conda deactivate
 ```
 
 ---
+
 ## Installing an SFTP client ##
 
-This is optional but for those of you that are new to the command line this might be an easier way to move files between the HPC environment and your local machine. An SFTP client stands for secure file transfer protocol and will enable you to drag and drop files as you might in a finder window between your local machine and a remote location. I use FileZilla, which I believe works on Mac, Windows, and linux operating systems. You can download [FileZilla](https://filezilla-project.org/download.php?show_all=1) by following the link and selecting the version that is correct for your OS, then open the program to ensure that you have downloaded it successfully. 
+**This is optional** but for those of you that are new to the command line this might be an easier way to move files between the HPC environment and your local machine. An SFTP client stands for secure file transfer protocol and will enable you to drag and drop files as you might in a finder window between your local machine and a remote location. I use FileZilla, which I believe works on Mac, Windows, and linux operating systems. You can download [FileZilla](https://filezilla-project.org/download.php?show_all=1) by following the link and selecting the version that is correct for your OS, then open the program to ensure that you have downloaded it successfully. 
+
+---
+
+## Install the Integrative Genomics Viewer (IGV)
+
+We will be using the [Integrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/), a genome browser produced by researchers at the Broad Institute, to explore and visualize genomics data. 
+
+<img src="figures/igv.png" height="100" width="100"/>
+
+You will need to download and install the IGV desktop application for your operating system before the workshop begins. The latest versions of IGV can be found at their [downloads page](http://software.broadinstitute.org/software/igv/download). After installing IGV, try opening the application on your computer to confirm the installation was successful. 
 
 ---
 
@@ -196,5 +198,26 @@ install("BSgenome.Mmusculus.UCSC.mm10.masked")
 sessionInfo()
 ```
 
-If you have issues with any part of the installation and setup, please reach out to us directly (contact details are in the workshop ReadMe page) or come to bioinformatics help hours **December 11, 2020 1-2PM** the link is in your welcome email. 
+---
+
+## Downloading the data ##
+
+The commands that you will be following can be found in markdown `(.md)` files where there is a brief description of each command and how it is applied to the data and what it does followed by an example command that you can copy and paste into the terminal window. The majority of day 1 and 2 will be using the terminal window on your local machine, with an open `ssh` connection to discovery, as we will be running `bash` code. For some of day 2 and most of day 3 you will be using RStudio on your local machine to run the commands in the  markdown files (`.md`) located in this GitHub repo. 
+
+
+In your terminal window **on your local machine** navigate to where you want to download the files needed for this workshop. Then execute the following command:
+
+```bash
+git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop_setup/
+```
+
+**On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (preferably in the same location as you downloaded the setup materials) with the folloing command: 
+
+```bash
+git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop/
+```
+
+---
+
+If you have issues with any part of the installation and setup, please reach out to us directly (contact details are in the workshop ReadMe page) or come to bioinformatics help hours **December 3, 2021 12:30-1:30PM** the link is in your welcome email. 
 
