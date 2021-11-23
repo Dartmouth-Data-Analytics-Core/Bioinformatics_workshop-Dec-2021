@@ -22,7 +22,7 @@ Linux| Konsole, Terminal, etc. (should be pre-installed but depends on the deskt
 
 For those of you that indicated that you did not have an account on *discovery* you will need to request one [here](https://rc.dartmouth.edu) **AT LEAST** two (business) days before the workshop begins. There is a green button at the top of the page that says **Request an Accoun**, once you click the button you will be prompted to log in with your netID and password and then you can fill in the form to request your account.
 
-Once you have a discovery account you can follow along [here](https://youtu.be/VoHBlblsQfg) to log onto discovery using the command line.
+Once you have a discovery account you can follow along with this video [here](https://youtu.be/VoHBlblsQfg) to log onto discovery using the command line.
 
 To log onto discovery we will use the secure shell command `ssh`. 
 
