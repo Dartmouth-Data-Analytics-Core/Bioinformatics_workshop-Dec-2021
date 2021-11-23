@@ -1,6 +1,6 @@
 # Welcome to the DAC Fundamentals of Bioinformatics workshop #
 
-Before you attend the workshop there are a couple of things we would like you to do to get setup for using the tools that will be required during the course of the workshop.  
+Before you attend the workshop there are a couple of things we would like you to do to get setup for using the tools that will be required during the course of the workshop. Please read through each of the sections below to ensure you are prepared to attend the workshop. We strongly recommend that you run through these steps several days in advance of the workshop, in case any troubleshooting is required.
 
 ---
 
@@ -20,7 +20,9 @@ Linux| Konsole, Terminal, etc. (should be pre-installed but depends on the deskt
 
 ## The discovery HPC system ##
 
-For those of you that indicated that you did not have an account on *discovery* you should have received an email from research computing with credentials for logging on the system using your netID.
+For those of you that indicated that you did not have an account on *discovery* you will need to request one [here](https://rc.dartmouth.edu) **AT LEAST** two (business) days before the workshop begins. There is a green button at the top of the page that says **Request an Accoun**, once you click the button you will be prompted to log in with your netID and password and then you can fill in the form to request your account.
+
+Once you have a discovery account you can follow along [here](https://youtu.be/VoHBlblsQfg) to log onto discovery using the command line.
 
 To log onto discovery we will use the secure shell command `ssh`. 
 
@@ -81,11 +83,13 @@ You will see that the activate command has worked when it reads (fund_of_bioinfo
 conda deactivate
 ```
 
+You can follow along with me as I run these commands to create a new conda environment in this [video](https://youtu.be/73IHZlFvb5Q)
+
 ---
 
 ## Installing an SFTP client ##
 
-**This is optional** but for those of you that are new to the command line this might be an easier way to move files between the HPC environment and your local machine. An SFTP client stands for secure file transfer protocol and will enable you to drag and drop files as you might in a finder window between your local machine and a remote location. I use FileZilla, which I believe works on Mac, Windows, and linux operating systems. You can download [FileZilla](https://filezilla-project.org/download.php?show_all=1) by following the link and selecting the version that is correct for your OS, then open the program to ensure that you have downloaded it successfully. 
+**This is optional** but for those of you that are new to the command line this might be an easier way to move files between the HPC environment and your local machine. An SFTP client stands for secure file transfer protocol and will enable you to drag and drop files as you might in a finder window between your local machine and a remote location. I use FileZilla, which I believe works on Mac, Windows, and linux operating systems. You can download [FileZilla](https://filezilla-project.org/download.php?show_all=1) by following the link and selecting the version that is correct for your OS, then open the program to ensure that you have downloaded it successfully. Once you have Filezilla installed you can use this [video](https://youtu.be/VoHBlblsQfg) to guide you in linking the SFTP client to your account on discovery.
 
 ---
 
@@ -105,7 +109,9 @@ We will be using R-Studio to explore and analyze genomics data on day 2 and 3, t
 
 Next you will need to set up a new project in R-Studio for this workshop. Projects in R are like containers for various jobs that you will perform, the history of the project will be loaded when you open a new project. By using a project you can install all of the tools ahead of time and they will be there for you when you need them during the workshop. In R-Studio under File select New directory and then select New Project and name the project something you will remember (bioinfo_workshop).
 
-Now that you have your project loaded, run the following code to install all of the packages we will be using during the workshop: 
+Now that you have your project loaded, run the following code to install all of the packages we will be using during the workshop. For those of you that haven't used RStudio before we have made a [video](https://youtu.be/UtZHS-q7buI) showing the successful installation of the R packages you will need using the commands below:
+
+
 ```r
 if (!any(rownames(installed.packages()) == "biomaRt")){
   if (!requireNamespace("BiocManager", quietly = TRUE))
