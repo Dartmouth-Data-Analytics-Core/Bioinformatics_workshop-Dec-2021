@@ -109,7 +109,9 @@ We will be using R-Studio to explore and analyze genomics data on day 2 and 3, t
 
 Next you will need to set up a new project in R-Studio for this workshop. Projects in R are like containers for various jobs that you will perform, the history of the project will be loaded when you open a new project. By using a project you can install all of the tools ahead of time and they will be there for you when you need them during the workshop. In R-Studio under File select New directory and then select New Project and name the project something you will remember (bioinfo_workshop).
 
-Now that you have your project loaded, run the following code to install all of the packages we will be using during the workshop. For those of you that haven't used RStudio before we have made a [video](https://youtu.be/UtZHS-q7buI) showing the successful installation of the R packages you will need using the commands below:
+Now that you have your project loaded, run the following code to install all of the packages we will be using during the workshop. For those of you that haven't used RStudio before we have made a [video](https://youtu.be/UtZHS-q7buI) showing the successful installation of the R packages you will need using the commands below. 
+
+I bumbled the description of the code chunks with the nested loops, so here is a better description for those that are interested. There are two loops and each loop starts with an if statement. The first loop states "if `biomaRt` is not installed enter this loop" and the second one "if `BioCManager` is not installed enter this loop", when the condition is fulfilled (the package is *not* installed) the loop is entered and the function `install.packages` is used to install the package. Each loop is exited once the packages are installed and the package is loaded with the 'library' function to make the functions contained in the package available during the current session.
 
 
 ```r
