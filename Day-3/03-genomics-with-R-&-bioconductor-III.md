@@ -22,9 +22,13 @@ These genomes are focused predominantly on those available from NCBI and UCSC ge
 
 BSgenome packages are heavily dependent on the [BioStrings package](http://bioconductor.org/packÂages/release/bioc/html/Biostrings.html), which defines a set of methods and object classes for storing and accessing sequence data. BioStrings is loaded automatically when you loaded BSgenome.
 
+---
+
 ## Learning objectives:
 
 We will introduce the basic object classes and methods introduced by BioStrings to demonstrate how they form the basis for BSgenome packages, and what genomic sequence-based operations they allow you to perform on reference genome data (or any sequence you define).
+
+---
 
 ### Basic object-classes and methods in the BioStrings package
 
@@ -174,6 +178,8 @@ seq.dnass
 
 Like XString, a virtual class exists for `DNAStringSet` class objects called *XStringSet*, which also contains object classes for storing RNA and AA sequences (`RNAStringSet` and `AAStringSet`).
 
+---
+
 #### Working with *BSGenome* reference genomes
 
 Now that we understand the major methods and classes implemented by BioStrings, lets load a complete reference genome and start exploring it.
@@ -247,6 +253,8 @@ letterFrequency(chr1, "A", as.prob=TRUE)
 
 Beyond the basic BioStrings based methods, there is one important method implemented by the BSGenome using the `getSeq()` function, that extracts sequences at request from a BSgenome or XStringSet class object. We will use getSeq() functionality in our example below to demonstrate how you might use BSGenome packages in a typical NGS analysis.
 
+---
+
 #### Example: Extracting sequences flanking ChIP-seq peaks
 
 Once peak regions have been identified to describe the potential binding locations of transcription factor (TF) or histone modification, a common task in the analysis of ChIP-seq data is to scan the sequences immediately surrounding these peaks in order to identify sequences enriched over these peak regions that may represent the binding motif for that TF. To achieve this, we need to obtain the sequences for these peaks from the reference genome that the samples were aligned to (mm10). The cartoon below depicts this overall workflow.
@@ -317,90 +325,11 @@ writeXStringSet(ctcf_seqs, file="CTCF-peaks-resized.fa")
 
 After you write the file, go to your the UNIX command line and have a look at your FASTA file to confirm it looks correct.
 
-**Note:** There are other ways you could have performed this task outside of the functionality implemented by BioStrings and BSGenome. The major advantage of performing this analysis in R/Bioconductor is that you can leverage the methods and object classes implemneted in BioStrings, BSGenome, GRanges, and other Bioconductor packages for your analysis.  
+**Note:** There are other ways you could have performed this task outside of the functionality implemented by BioStrings and BSGenome. The major advantage of performing this analysis in R/Bioconductor is that you can leverage the methods and object classes implemented in BioStrings, BSGenome, GRanges, and other Bioconductor packages for your analysis.  
 
 If you did not require R/Bioconductor functionality for further analysis, you could perform a similar analysis on the UNIX command line with [*bedtools*](https://bedtools.readthedocs.io/en/latest/) and its `getfasta` tool, which allows you to extract sequences from a BED/GTF/VCF file and export them to a FASTA file. Ofcourse, this do mean you would need to have a copy of the reference genome available to you.
 
 ---
-
-#### OPTIONAL SECTION:
-#### Using *BioStrings* without *BSGenome*
-
-BioStrings can be used independently from BSGenome with any set of sequences you are able to define in your R environment as an *XString* or *XStringSet* class object. For example, perhaps you are studying the *Amphimedon queenslandica*, a marine sponge organism native to the Great Barrier Reef, and want to explore some basic features of its coding sequences.
-
-<p align="center">
-<img src="../figures/Amphimedon_queenslandica_adult.png" title="xxxx" alt="context"
-	width="70%" height="70%" />
-</p>
-
-Image source: [Wikipedia](https://en.wikipedia.org/wiki/Amphimedon_queenslandica)
-
-We can retrieve a FASTA file for the coding sequences  (13 overall) from NCBI [(RefSeq ID: NC_008944.1)](https://www.ncbi.nlm.nih.gov/genome/2698) and read the FASTA file into R as a DNAStringSet object using the `readDNAStringSet()` function.
-```{r}
-fasta.file <- "a.queenslandica.fasta"
-a.queen <- readDNAStringSet(fasta.file, "fasta")
-a.queen
-```
-
-Just as we have done earlier in this lesson, we can again use the BioStrings functions to perform basic operations on these sequences. For example:
-```r
-# confirm how long it is
-length(a.queen)
-
-# what is the frequency of each base in your sequence
-base.freqs <- alphabetFrequency(a.queen, baseOnly=TRUE, as.prob=TRUE)
-base.freqs
-
-# what is the frequency of your favourite base
-a.freqs <- letterFrequency(a.queen, "A", as.prob=TRUE)
-a.freqs
-```
-
-BioStrings also implements extensive functionality for **pattern matching**, allowing you to search sequences for specific patterns of interest. For example, we may want to confirm that each of our coding sequences begins with an `ATG` start codon. We can do this using the BioStrings functions `matchPattern()` and `countPattern()`.
-```r
-# return all matches in a DNAString subject sequence to a query pattern
-matchPattern("ATG", a.queen[[1]])
-
-# only return how many counts were found
-countPattern("ATG", a.queen[[1]])
-
-# what happens if we remove the indexing of the DNAStringSet object 'a.queen'? Why?
-matchPattern("ATG", a.queen)
-
-# match a query sequence against multiple sequences that you want to search in  
-vmatch <- vmatchPattern("ATG", a.queen)
-vmatch
-
-# look at the structure of this object
-str(vmatch)
-
-# extract the IRanges for matches in the first subject sequence
-vmatch[[1]]
-```
-
-We may also have several patterns that we want to search for in each our coding sequences. For example, perhaps we want to search for standard stop codons (`TAG`, `TAA`, `TGA`) in the *A.queenslandica* coding sequences. BioStrings functions `matchPDict()` and `vmatchPDict()` provide functionality for such tasks. e.g.
-```r
-# create a DNAStringSet of the stop codons
-stop.codons <- DNAStringSet(c("TAG", "TAA", "TGA"))
-
-# create a dictionary of patterns (PDict class object) that you want to search your sequences for
-stop.codons.dict <- PDict(stop.codons)
-
-# search in the first coding sequence
-match1 <- matchPDict(stop.codons.dict, a.queen[[1]])
-match1
-match1[[3]]
-
-# use a loop to search for stop codons in all our coding sequences
-matches <- list()
-for(i in 1:length(a.queen)){
-  matches[[i]] <- matchPDict(stop.codons.dict, a.queen[[i]])
-}
-length(matches)
-str(matches)
-matches[[4]]
-matches[[4]][[3]]
-```
 
 #### Other functionality in BioStrings
 
@@ -411,6 +340,8 @@ BioStrings also provides functionality for a number of other analytical tasks th
 * motif searches with a Position Weight Matrix (PWM) using `matchPWM()` (commonly done in ChIP-seq & ATAC-seq)
 * palindrome searching using findPalindromes `findPalindromes()`
 * computing edit distances between sets of sequences using `stringDist()`  
+
+> ATTENTION: (performed at home or during extra time) that provides some exercises exploring additional functionality available in BioStrings can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/03-genomics-with-R-%26-bioconductor-III.md).
 
 An excellent BioStrings tutorial is available [here](https://bioconductor.org/help/course-materials/2011/BioC2011/LabStuff/BiostringsBSgenomeOverview.pdf) from one of the BioStrings creators, that covers much of the same material as we have above, but in more detail and with more complex examples.
 
