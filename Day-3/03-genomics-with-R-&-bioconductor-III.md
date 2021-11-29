@@ -341,7 +341,7 @@ BioStrings also provides functionality for a number of other analytical tasks th
 * palindrome searching using findPalindromes `findPalindromes()`
 * computing edit distances between sets of sequences using `stringDist()`  
 
-> ATTENTION: (performed at home or during extra time) that provides some exercises exploring additional functionality available in BioStrings can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/03-genomics-with-R-%26-bioconductor-III.md).
+> ATTENTION: (performed at home or during extra time) that provides some exercises exploring additional functionality available in BioStrings can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/03-optional-exercise---BioStrings-extra-stuff.md).
 
 An excellent BioStrings tutorial is available [here](https://bioconductor.org/help/course-materials/2011/BioC2011/LabStuff/BiostringsBSgenomeOverview.pdf) from one of the BioStrings creators, that covers much of the same material as we have above, but in more detail and with more complex examples.
 

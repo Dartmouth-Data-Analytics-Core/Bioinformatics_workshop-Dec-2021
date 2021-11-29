@@ -164,7 +164,7 @@ As we have seen, while the R-packages discussed above can present powerful and q
 
 Using BioMart is also valuable if you need annotation data for a model organism that doesn't have an EnsDb or OrgDb R-package available for it.
 
-> ATTENTION: An optional lesson (performed at home or during extra time) that introduces how BioMart can be accessed programmatically using an R-package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-OPTIONAL-EXERCISE-BioMart-R-package.md).
+> ATTENTION: An optional lesson (performed at home or during extra time) that introduces how BioMart can be accessed programmatically using an R-package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
 
 
 ---
@@ -376,4 +376,4 @@ plotTracks(list(gtrack, txTr, track1), main="CD97B variants")
 
 ---
 
-> ATTENTION: An optional lesson (performed at home or during extra time) that that explores another example application of annotating genomic data (ChIP-seq) using TxDB objects can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-OPTIONAL-EXERCISE-ChIPseq-annotation.md).
+> ATTENTION: An optional lesson (performed at home or during extra time) that that explores another example application of annotating genomic data (ChIP-seq) using TxDB objects can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---ChIPseq-annotation.md).
