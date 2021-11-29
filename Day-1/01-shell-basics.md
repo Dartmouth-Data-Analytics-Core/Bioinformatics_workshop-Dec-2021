@@ -192,8 +192,8 @@ mv ~/all_counts.txt ~/all_counts.copy.txt
 ```
 You can also use the `mv` command to move a file to a new location. Let's move the all_counts.copy.txt from your home directory into your fundamentals_of_bioinformatics directory.
 ```bash
-# Move the all_counts.copy.txt into your fundamentals_of_bioinformatics directory
-mv ~/all_counts.copy.txt fundamentals_of_bioinformatics
+# Move the all_counts.copy.txt into your fundamentals_of_bioinformatics directory 
+mv ~/all_counts.copy.txt /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/all_counts.copy.txt
 
 #check the contents of your fundamentals_of_bioinformatics directory
 ls
@@ -272,14 +272,14 @@ X{*m*} | exactly *m* instances of X
 X{*m*,} | at least *m* instances of X
 X{*m*,*n*} | between *m* and *n* instances of X
 
-Now lets use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have no reads expressed for the first four samples.  
+Now lets use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have no reads expressed for the first four samples. The flag `-P` indicates that we will be using regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
 
 ```bash
 # Count the number of genes with no reads in the first four samples
-grep "^ENSG[0-9]*\t0\t0\t0\t0\t" all_counts.txt| wc -l
+grep -P "^ENSG[0-9]*\t0\t0\t0\t0\t" all_counts.txt| wc -l
 
 # Count the number of genes with no reads expressed in any of the samples
-grep "^ENSG[0-9]*\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0$" all_counts.txt| wc -l
+grep -P "^ENSG[0-9]*\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0$" all_counts.txt| wc -l
 ```
 
 ### Shell environment variables
@@ -313,12 +313,13 @@ ll="ls -lah"
 $ll
 ```
 
-It is possible to make variables you add to your environment persistent, meaning those changes will define your environment each time you start a new bash session. This can be achieved by adding the variable assignment to one of the *environment files*, which are a set of files that are executed everytime you start a new bash session. These files are typically hidden, so we need to use `ls` wuth the `-a` flag to see them.
+It is possible to make variables you add to your environment persistent, meaning those changes will define your environment each time you start a new bash session. This can be achieved by adding the variable assignment to one of the *environment files*, which are a set of files that are executed everytime you start a new bash session. These files are typically hidden, so we need to use `ls` with the `-a` flag to see them.
 
-List all files in your homoe directory and locate the `.bash_profile` environment file, and view its contents with the `cat` command.
+List all files in your home directory and locate the `.bash_profile` environment file, and view its contents with the `cat` command.
+
 ```bash
 # navigate to your home directory
-cd ../
+cd ~
 
 # view files in current working directory and include hidden files
 ls -a
@@ -340,6 +341,7 @@ $ll
 ```
 
 Now `$ll` will be set as an environment variable everytime we start a new bash terminal. It is also possible to avoid using the `$` to evaluate this variable by using the `alias` command in bash. `alias` allows you to set command that can be called directly using whatever characters you define, and can be added to your `.bash_profile` in the same way as we did above.
+
 ```bash
 # make an alias for the ls -lah command
 alias ll="ls -lah"
