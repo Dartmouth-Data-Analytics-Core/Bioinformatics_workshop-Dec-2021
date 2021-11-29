@@ -75,7 +75,7 @@ Raw sequence data was obtained from the [Sequence Read Archive (SRA)](https://ww
 
 ```bash
 # lets have a look at the project directory containing the reduced raw FASTQs
-ls -lah /dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq/
+ls -lah /dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/
 
 # lets have a look at the project directory containing the full raw FASTQs
 ls -lah /dartfs-hpc/scratch/fund_of_bioinfo/raw_full_fastq/
@@ -96,12 +96,12 @@ mkdir raw_fastq
 cd raw_fastq
 
 # Create a symlink to the data directory in the scratch drive
-ln -s /dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq/*fastq.gz ./
+ln -s /dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/*fastq.gz ./
 
 # Check that your command worked
 ls -lah
 ```
-Sym-linked files are similar to an alias they are a file that points to a location. Any modifications made to the original files in `/dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq/` will also be seen in the symlink files. Moving the original files or deleting the original files will cause the symlinks to malfunction.
+Sym-linked files are similar to an alias they are a file that points to a location. Any modifications made to the original files in `/dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/` will also be seen in the symlink files. Moving the original files or deleting the original files will cause the symlinks to malfunction.
 
 Remember, because your symlinks are pointing to something in the scratch directory these files are slated to be deleted in 45 days, at which point your symlinks will still exist but no longer function properly.
 
