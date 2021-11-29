@@ -124,7 +124,7 @@ It is a good idea when working on projects on an HPC to stay organized so lets s
 
 ```bash
 # navigate to scratch so you can make your own directory there 
-cd /scratch/
+cd /dartfs-hpc/scratch/
 
 # make the directory 
 mkdir -p omw/fundamentals_of_bioinformatics
@@ -133,7 +133,7 @@ mkdir -p omw/fundamentals_of_bioinformatics
 cd omw/fundamentals_of_bioinformatics
 
 # set an alias so we can get here quicly 
-alias biow='cd /scratch/omw/fundamentals_of_bioinformatics'
+alias biow='cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics'
 # NOTE: you can add this line to your .bashrc so it get run everytime you log in, we will cover this below 
 
 # check your location on the cluster
@@ -148,7 +148,7 @@ As expected the new directory that you created is empty there are no files. Lets
 ```bash
 
 # copy the file from the scratch drive to the fundamentals_of_bioinformatics directory you just created
-cp /scratch/fund_of_bioinfo/counts/all_counts.txt ./
+cp /dartfs-hpc/scratch/fund_of_bioinfo/all_counts.txt ./
 
 ```
 
