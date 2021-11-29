@@ -11,6 +11,8 @@ Examples of common annotation tasks include:
 
 In this lesson, we will introduce the major Bioconductor packages for genome annotation and how you might use them to achieve common tasks in NGS data analysis.
 
+---
+
 #### Key annotation packages in Bioconductor:
 
 | **Package/package-family** | **Contents & uses**                                                |
@@ -30,6 +32,8 @@ These packages can be broadly categorized into **annotation-centric** packages a
 **Method-centric** packages such as *AnnotationDbi* and *GenomicFeatures* provide functionality for convienient and efficient access to multiple databases, and do not focus on providing access to any one annotation resource alone. For example, *Org.X.DB*, *EnsDb.X.vX*, and *biomaRT* objects all inherit methods from *AnnotationDbi*, meaning that we can use these common methods to access data from different annotation packages (as we will see in this lesson).
 
 **Note:** Another method-centric package that we won't discuss here is [*AnnotationHub*](https://www.bioconductor.org/packages/release/bioc/html/AnnotationHub.html), which provides methods to query annotation data from a very large range of databases.
+
+---
 
 ### Mapping gene identifiers with *Org.X.DB*
 
@@ -74,6 +78,8 @@ select(org.Hs.eg.db, keys = head(entrez.ids), columns = c("SYMBOL","ENTREZID", "
 # using mapIds but only to get gene symbol
 mapIds(org.Hs.eg.db, keys = head(entrez.ids), column = c("SYMBOL"), keytype="ENSEMBL")
 ```
+
+---
 
 ### RNA-seq results annotation using OrgDb  
 
@@ -157,55 +163,6 @@ write.csv(results_merge, file = "diff-exp-results-annotated.csv")
 As we have seen, while the R-packages discussed above can present powerful and quick ways to access lots of annotation data (e.g. gene ontology etc.), there are some obvious limitations which are important to understand when you are annotating your own datasets.
 
 Using BioMart is also valuable if you need annotation data for a model organism that doesn't have an EnsDb or OrgDb R-package availble for it.
-
-### OPTIONAL SECTION: Access Biomart data from within R
-
-If you want to access BioMart from within R, you can use the `BioMart` package to directly interface with the database. This can be a little slower than the approach described above, but can allow more flexibility depending on what you need annotation data for.
-```r
-library(biomaRt)
-
-# check available martslistMarts(), 10)
-head(listMarts())
-```
-
-You can see the same marts are listed as were available from the BiomaRt website. We need to choose one of these marts in order to see the available annotation datasets that can be accessed from that mart.
-```r
-# use 'ensembl to select the 'ENSEMBL_MART_ENSEMBL' mart
-ensembl <- useMart("ensembl")
-
-# show available datasets to pull annotation data from
-head(listDatasets(ensembl), 10)
-tail(listDatasets(ensembl), 10)
-nrow(listDatasets(ensembl))
-
-# check for human dataset
-table(listDatasets(ensembl)$dataset %in% "hsapiens_gene_ensembl")
-```
-
-Now select the `hsapiens_gene_ensembl` dataset from the mart and view the available *attributes* (values that can be returned, e.g. gene symbol) for that dataset.
-```r
-
-# pick the ensembl mart for humans  
-ensembl <- useMart("ensembl", dataset="hsapiens_gene_ensembl")
-
-# list the attributes for this dataset
-head(listAttributes(ensembl), 10)
-tail(listAttributes(ensembl), 10)
-nrow(listAttributes(ensembl))
-```
-
-The flagship function of the BiomaRt package is `getBM()` (for get BiomaRt presumably) which allows us to obtain specific data (attributes) given a set of values that we provide (e.g. Ensembl IDs). The process is very similar to how we used the `select()` and `mapIDs()` functions from OrgDb. Lets use `getBM()` to return annotation data from BiomaRt for our RNA-seq data.
-```r
-# submit query for 1st 2000 genes (to save time in class) in our RNAseq results
-anno_bm <- getBM(attributes=c("ensembl_gene_id", "hgnc_symbol", "chromosome_name", "start_position", "end_position", "strand"),
-                 filters = "ensembl_gene_id",
-                 values = head(results$ensembl, 2000),
-                 mart = ensembl,
-		 useCache = FALSE)
-head(anno_bm, 10)
-```
-
-You can see we now have a `data.frame` stored in anno_bm in our environment that looks similar to the text file that we downloaded directly from biomaRt and read into R. You could follow a similar protocol to that which we performed to merge the BiomaRt data downloaded in the text file with our RNA-seq results.
 
 ---
 
@@ -326,7 +283,9 @@ tx_to_exon <- select(txdb, keys = head(gene_to_tx, 10)$TXNAME ,
 table(duplicated(tx_to_exon$TXNAME))
 ```
 
-### Example application 1: Variant annotation
+---
+
+### Example application: Variant annotation
 
 Transcript annotation data can be used in many ways. One common usage example is in the annotation of variant calls, where we need to identify the transcriptional context of a variant set (e.g. promoter-associated, exon, intron, untranslated regions, etc.).
 
@@ -412,117 +371,4 @@ plotTracks(list(gtrack, txTr, track1), main="CD97B variants")
 	width="80%" height="80%" />
 </p>
 
-### Example application 2: Peak annotation
-
-Another example usage of how you might use a TxDb object is in the annotation of peak regions from a ChIP-seq experiment. To demonstrate how we could approach this task, we will return to the ChIP-seq data from [Gorkin *et al*, *Nature*, 2020](https://www.nature.com/articles/s41586-020-2093-3) used in the previous lesson, which describes the dynamic chromatin landscape of the developing mouse.
-
-Start by reading the peak regions back in from the narrowpeak files:
-```r
-# we will use a pre-loaded txdb for mm10 in this example
-library(TxDb.Mmusculus.UCSC.mm10.knownGene)
-
-# set txdb to variable
-txdb <- TxDb.Mmusculus.UCSC.mm10.knownGene
-
-# set extracols for reading in narrowpeak data
-extraCols_narrowPeak <- c(signalValue = "numeric", pValue = "numeric",
-                          qValue = "numeric", peak = "integer")
-
-# forbrain H3K27ac ChIP-seq peaks
-fr_h3k27ac <- rtracklayer::import("forebrain_E15.5_H3K27ac.bed",
-                                  format = "BED",
-                                  extraCols = extraCols_narrowPeak,
-                                  genome = "mm10")
-
-# heart H3K27ac ChIP-seq peaks
-ht_h3k27ac <- rtracklayer::import("heart_E15.5_H3K27ac.bed",
-                                  format = "BED",
-                                  extraCols = extraCols_narrowPeak,
-                                  genome = "mm10")
-
-# forbrain H3K9ac ChIP-seq peaks
-fr_h3k9ac <- rtracklayer::import("forebrain_E15.5_H3K9ac.bed",
-                                 format = "BED",
-                                 extraCols = extraCols_narrowPeak,
-                                 genome = "mm10")
-
-# heart H3K9ac ChIP-seq peaks
-ht_h3k9ac <- rtracklayer::import("heart_E15.5_H3K9ac.bed",
-                                 format = "BED",
-                                 extraCols = extraCols_narrowPeak,
-                                 genome = "mm10")
-
-# combine with H3K27ac peak sets to make GrangesList objects
-fr <- GRangesList("h3K27ac" = fr_h3k27ac, "h3K9ac" = fr_h3k9ac)
-ht <- GRangesList("h3K27ac" = ht_h3k27ac, "h3K9ac" = ht_h3k9ac)
-```
-
-To annotate the genomic context of the ChIP peaks, we will use functionality from the Bioconductor package [*ChIPseeker*](https://bioconductor.org/packages/devel/bioc/manuals/ChIPseeker/man/ChIPseeker.pdf) which provides object classes and methods for ChIP-seq peak annotation and visualization.
-
-The specific function we will use to perform the annotation is the `annotatePeak` function, which accepts a *TxDb* class object directly to define the regions that the peaks should be annotated based on. Lets `annotatePeak` on the forebrain H3K27ac peak set.
-```r
-# load the chipseeker package
-library('ChIPseeker')
-
-# run annotatePeak
-fr_h3K27ac_anno <- annotatePeak(fr$h3K27ac, tssRegion=c(-2000, 1000), TxDb = txdb)
-fr_h3K27ac_anno
-
-# extract and print the annotation data
-fr_h3K27ac_anno <- fr_h3K27ac_anno@anno
-fr_h3K27ac_anno
-
-# what class is it
-class(fr_h3K27ac_anno)
-```
-
-It would be useful if we could run `annotatePeak()` on all samples in one line. We can achieve this using `lapply()`:
-```r
-annolist <- lapply(list(fr$h3K27ac, ht$h3K27ac, fr$h3K9ac, ht$h3K9ac),
-                   annotatePeak,
-                   TxDb=txdb,
-                   tssRegion=c(-2000, 1000), verbose=FALSE)
-
-# set the names for each element of the list
-names(annolist) <- c('Forebrain_H3K27ac', 'Heart_H3K27ac',
-                     'Forebrain_H3K9ac', 'Heart_H3K9ac')
-
-annolist
-annolist[[1]]
-annolist$Forebrain_H3K27ac
-```
-
-One way to explore the annotations and compare them across peak sets is to use the `plotAnnoBar()` function from *ChIPseeker*, which plots the proportion of peaks falling into each of the annotation categories.
-```r
-plotAnnoBar(annolist)
-```
-
-<p align="center">
-<img src="../figures/chip-anno-example.png" title="xxxx" alt="context"
-	width="80%" height="80%" />
-</p>
-
-While the proprotion of H3K27ac peaks distributed across the various annotation groups seem relatively stable between the forebrain and heart peak sets, there seems to be a substantially larger proportion of promoter-associated peaks in the H3K9ac peak set from heart tissue compared to that of the forebrain. Perhaps this suggests more transcriptional activity in the heart tissue.
-
-If we were interested in specifically exploring the promoter-associated peaks further on their own, we could subset them.
-
-```r
-#extract annotation data for heart h3k9ac
-ht_h3K9ac_anno <- annolist$Heart_H3K9ac@anno
-
-# subset for promoter-associated peaks
-ht_h3K9ac_anno_promoter <- ht_h3K9ac_anno[ht_h3K9ac_anno$annotation=="Promoter (<=1kb)" |
-                                              ht_h3K9ac_anno$annotation=="Promoter (1-2kb)"]
-ht_h3K9ac_anno_promoter
-```
-
-If we wanted to create a flat file storing the annotated peaks in a sharable file type, we could do this simply by converting the GRanges object to a data frame, and writing that dataframe to a `.csv` file.
-```r
-# convert GRanges to dataframe
-df1 <- as.data.frame(fr_h3K27ac_anno)
-
-# write to csv
-write.csv(df1, file = "forebrain_h3K27ac_peaks_annotated_mm10.csv")
-```
-
-A far more comprehensive tutorial and description of the ChIPseeker package is available online at the [Bioconductor website](http://bioconductor.org/packages/devel/bioc/vignettes/ChIPseeker/inst/doc/ChIPseeker.html).
+---
