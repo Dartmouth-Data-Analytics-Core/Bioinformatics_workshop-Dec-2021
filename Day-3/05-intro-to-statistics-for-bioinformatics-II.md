@@ -52,15 +52,11 @@ Using the t-statistic and the *degrees of freedom* (sample number - 1) the P-val
 
 ### The multiple testing problem
 
-In bioinformatics and genomics, we measure thousands of features simultaneously (e.g. genes, peaks, methylation sites) and run a statistical test for each of them when trying to identify meaningful features with regard to our hypothesis.
+In bioinformatics, we measure thousands of features simultaneously (e.g. genes, peaks, methylation sites) and often run a statistical test for each of them. Given that P-values represent *the probability of observing data equal to or more extreme than that observed due to chance*, if we run enough tests, eventually we will obtain very small P-values simply due to chance, rather than because of a real effect.
 
-As we defined above, P-values are *the probability of observing data equal to or more extreme than that observed due to chance*. Therefore, by definition, if we accept a P-value threshold of 0.05, we will reject the null hypothesis by mistake, even if the null is true.
+Consider an RNA-seq experiment, where we test 20,000 genes for differential expression. If we set 5% as our &alpha;, we will **mistakenly claim** that 5% (1000 genes) of the genes we tested are significantly differentially expressed!
 
-if we use 0.05 as a P-value threshold, and test 20,000 features for statistical significance, by definition 5% of those features will have a test-statistic that large simply due to chance.
-
-Consider an RNA-seq experiment, where it is common to test >20,000 genes for differential expression across two or more conditions. If we set 5% as our &alpha;, we will mistakenly claim that 5% of the genes we tested are significantly differentially expressed. **5% of 20,000 is 1000 genes**, which is obviously an unacceptable amount of false-positives.
-
-We can classify the different types of errors and decisions we make during hypothesis testing according to how they fit with the actual truth observed in nature, as shown in the below table.
+Different types of errors made in hypothesis testing are classified based on the actual truth in nature vs. the decisions we make during hypothesis testing.
 
 <p align="center">
   <img src="../figures/desicions-table.png" height="80%" width="80%"/>
@@ -68,8 +64,6 @@ We can classify the different types of errors and decisions we make during hypot
 
 - False positives are generally referred to as **Type I error**.
 - False-negatives are referred to as **Type II error**.
-
-As we discussed above, at a 5% significance level, there is a 5% chance of rejecting the null by mistake (committing a type I error). As we perform more and more tests, the number of times we mistakenly reject the null will increase, causing us to make more and more false-positive claims.
 
 We can demonstrate the multiple testing problem by simulating some very simple data that come from exactly the same distribution, and therefore should have no significant differences between them, so we should never reject the null in theory.
 
@@ -162,9 +156,9 @@ By definition, Bonferroni correction guards against making even 1 false-positive
 
 #### False discovery rate
 
-The *false discovery rate (FDR)* is a less conservative method of multiple testing correction, and can therefore be more powerful in genomics experiments, as =it will lead to fewer false-negatives, at the expense of increased false positives (compared to Bonferroni).
+The *false discovery rate (FDR)* is a less conservative method of multiple testing correction, and therefore potentially more powerful, as it will lead to fewer false-negatives, at the expense of increased false positives (compared to Bonferroni).
 
-FDR is defined as the proportion of false discoveries among all significant results. Controlling the false discovery rate at 5% means we accept 1 in 20 of the results we call significant, are actually false positives.
+FDR is defined as the proportion of false discoveries among all significant results. Controlling the false discovery rate at 5% means we accept 1 in 20 of the results we call significant are actually false positives.
 
 <p align="center">
   <img src="../figures/hypo-test-3.png" height="80%" width="80%"/>
@@ -198,7 +192,7 @@ An good summary of multiple testing correction in high throughput genomics exper
 
 ### Supervised learning - Linear modeling
 
-Simple linear models, or linear regression, is used pervasively in bioinformatics and genomics for statistical inference. Linear models are relatively simple, flexible, and interpretable, meaning they make excellent tools for statistical inference and scale well to thousands of observations, which is critical for common genomics datasets. Example applications of linear models include:  
+Simple linear models, or linear regression, is used pervasively in bioinformatics and genomics for statistical inference. Linear models are relatively simple, flexible, & interpretable, meaning they make excellent tools for statistical inference and scale well to thousands of observations, which is critical for common genomics datasets. Example applications of linear models include:  
 - RNA-seq (differential expression)
 - ChIP-seq (differential binding)
 - ATAC-seq (differential accessibility)
@@ -206,22 +200,20 @@ Simple linear models, or linear regression, is used pervasively in bioinformatic
 - Variant identification (WES/WGS/RNA-seq)
 - Genome-wide association studies (GWAS)
 
-Understanding the basics of linear modeling is central to being able to perform these types of analyses in a statistical programming environment such as R.
+Understanding the basics of linear modeling is central to being able to perform these types of analyses in a statistical programming environment such as R. Given their importance and pervasive use in bioinformatics and genomics, we will introduce the fundamental concepts of linear models, and how you can fit these models in R.
 
-Given their importance and pervasive use in bioinformatics and genomics, we will introduce the fundamental concepts of linear models, and how you can fit these models in R.
+> **Note:** Linear modeling is the topic of entire independent courses and again requires knowledge of appropriate mathematics and probability to understand completely. This lesson should be considered an introduction rather than a standalone resource.
 
-> **Note:** Linear modeling is the topic of entire independent courses and again requires knowledge of appropriate mathematics and propbability to understand completely. Thus, this should be considered an introduction rather than a standalone resource.
-
-In a standard linear model, we assume that some *response* variable (*Y*) can be represented as a linear combination of a set of *predictors* (*X*, independent variables). In building a linear model, we estimate a set of *coefficients* that explain how the *predictors* are related to the *response*. We can use these *coefficients* for statistical inference to better understand which predictors are associated with our response, or for applying the model to new data where we wish to predict the response variable using only a set of predictors.
-
-Before reviewing out the statistical notation for a simple linear model, it can be useful to first consider the main components:
+Consider the key components of a simple linear model:
 `response = predictor(s) + error`
 
 - **The *response*** is the dependent variable we wish to model based on some set of predictors  
 
-- **The *predictor(s)*** is the independent variable, or variables, that we wish to model as a linear combination of the response (this is usually what we are interested in for statistical inference and hypothesis testing)  
+- **The *predictor(s)*** is the independent variable(s) that we wish to model as a linear combination of the response
 
-- **The *error*** component represents the information not explained by the model, and exists since we know that no set of predictors will perfectly explain the response variable. These are often referred to as the *residuals* of the model.  
+- **The *error*** component represents the information not explained by the model (the models *residuals*)
+
+We assume a *response* variable (*Y*) can be represented as a linear combination of some *predictors* (*X*, independent variable(s) ). The model estimates a set of *coefficients* that explain how the *predictors* are related to the *response*. We can use these *coefficients* for statistical inference to better understand which predictors are associated with our response, or for applying the model to new data where we wish to predict the response variable using only a set of predictors.
 
 Using the statistical notation for a simple linear regression model:
 
@@ -233,11 +225,13 @@ Y = &beta;<sub>0</sub> +  &beta;<sub>i</sub> X<sub>i</sub> + &epsilon;
 - &beta;<sub>0</sub> refers to the model intercept
 - &epsilon; refers to the error term (residuals) and are assumed to follow a normal distribution
 
-There can be any (reasonable) number of predictors (X) in a model, and predictors can be either *continuous* (e.g. age) or categorical (e.g. treatment group, batch).
+Each predictor is associated with a coefficient (also called the *slope*) that describes the relationship of that predictor to the response variable.
 
-Each predictor is associated with a coefficient that describes the relationship of that predictor to the response variable. In the context of linear regression, the coefficient is also referred to as the *slope*.
+---
 
-In R, the basic syntax for this model is: `lm(response ~ predictor)`. Lets simulate some data that we can use to illustrate the theory described above and fit out first linear model in R.
+#### Fitting linear models in R
+
+In R, the basic syntax for a linear model is: `lm(response ~ predictor)`. Lets simulate some data that we can use to illustrate the theory described above and fit our first linear model in R.
 
 ```r
 # read in the example data
@@ -290,11 +284,11 @@ The regression line (shown in black) illustrates the clear linear relationship b
 
 The residuals (blue lines) describe how far away each observation (the gene expression values) are from the predicted values from the linear model. All observations are close to the regression line, suggesting the model is a good fit for the data.
 
-**However**, by virtue of this being a statistical model, all coefficients are estimated with some level of uncertainty. If the model is a poor fit for the data, there will be a high uncertainty in the coefficient.
+**However**, by virtue of this being a statistical model, all coefficients are estimated with some level of uncertainty. If the model is a poor fit for the data, there will be a high uncertainty in the coefficient. To evaluate how much meaning we should attribute to the coefficient, we can calculate a *P*-value for it through hypothesis testing, which we will explore below.
 
-One way to evaluate how much meaning we should attribute to the coefficient, is to calculate a *P*-value for it through hypothesis testing, which we will explore below.
+> **Note:** Although standard models for modeling gene expression data would include expression values as the response variable, these models usually take on a more complicated form (see note on *Generalized linear models* at the end of this lesson), however we have set up a simple model for teaching purposes.
 
-> **Note:** Although standard models for modeling gene expression data would include expression values as the response variable, these models usually take on a more complicated form (see note on *Generalized linear models* below), however we have set up a simple model for teaching purposes.
+---
 
 #### Hypothesis testing with linear models
 
@@ -385,7 +379,7 @@ boxplot(dat3$exp_geneX ~ dat3$subject_group ,
 lm_2 <- lm(dat3$exp_geneX ~ dat3$subject_group)
 summary(lm_2)
 ```
-<img src="../figures/lm_example-3.png" height="50%" width="45%"/>
+<img src="../figures/lm_example-3.png" height="45%" width="45%"/>
 
 Looking at the model output, the *P*-value is very small, therefore we can conclude that there is an association between expression of gene X and disease status in this sample.
 
@@ -400,14 +394,12 @@ We could have simply addressed the above analysis using a more simple statistica
 
 For example, we might want to control for factors that could confound gene expression differences between the control and diseased groups. For example, we could control for age and sex of the subjects, or perhaps the batch the samples were collected in.
 
-In this scenario, we can use linear models to control for the additional variables by adding them into the statsitical model e.g.
-
-*Just an example do not run this code*
+In this scenario, we can use linear models to control for the additional variables by adding them into the statistical model:
 ```r
-lm(dat3$exp_geneX ~ dat3$subject_group + dat3$age + dat3$gender + dat3$batch)
+summary(lm(dat3$exp_geneX ~ dat3$subject_group + dat3$age + dat3$gender + dat3$batch))
 ```
 
-This approach is referred to as **multiple regression**. If you will be doing any sort of complex bioinformatics data analysis involving linear models, I strongly encourage you to use this primer as a starting point to learn more about multiple regression and more complex linear modeling scenarios.  
+This approach is referred to as **multiple regression**. Here, the coefficient for  `subject_group` can be interpreted as the average value across all ages, genders, & batches.
 
 ---
 
