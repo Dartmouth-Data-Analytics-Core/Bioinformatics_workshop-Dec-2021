@@ -1,6 +1,6 @@
 # Introduction to statistics for bioinformatics - Part I
 
-As we discussed on day 1, bioinformatics draws on knowledge from multiple disciplines. To effectively solve most bioinformatic problems, knowledge from each of these disciplines must be applied to address the overall problem. Developing a **working knowledge of statistics** is critical for anyone hoping to solve bioinformatic problems, particularly in genomics.
+Bioinformatics draws on knowledge from multiple disciplines. To effectively solve many bioinformatic problems, knowledge from each of these disciplines must be applied to address the overall problem. Developing a **working knowledge of statistics** is critical for anyone hoping to solve bioinformatic problems, particularly in genomics.
 
 In particular, this working knowledge of statistics is required to understand the downstream data analysis methods we employ after data reduction of NGS datasets (e.g. differential analysis on raw gene expression counts).
 
@@ -25,13 +25,15 @@ While a comprehensive introduction to *statistical learning and inference* is we
 - Model selection procedures & how to assess model fit
 - A comprehensive introduction to the methods used for statistical learning and inference in bioinformatics
 
-> **Important note:** Building a more complete understanding of the statistical procedures commonly used in bioinformatics, such that you are able to confidently implement, interpret, and troubleshoot these procedures, requires a strong working knowledge of relevant math and probability theory. Such training is best sought out through formal instruction, and is usually not included in applied bioinformatics courses. While developing an understanding of the fundamental concepts in statistical learning and inference covered here will allow you to begin leveraging more complex statistical analyses in your own research, and act as a solid fondation upon which to further your training in this domain, it is also important to recognize when more specialist expertise is needed to address your analytical questions.
+> **Important note:** Building a more complete understanding of the statistical procedures commonly used in bioinformatics, such that you are able to confidently implement, interpret, and troubleshoot these procedures, requires a working knowledge of relevant math and probability theory. Such training is best sought out through formal instruction, and is usually not included in applied bioinformatics courses. While developing an understanding of the fundamental concepts in statistical learning and inference covered here will allow you to begin leveraging more complex statistical analyses in your own research, and act as a solid foundation upon which to further your training in this domain, it is also important to recognize when more specialist expertise is needed to address your analytical questions.
 
 ---
 
 ## Statistical learning
 
-As described above, *statistical learning* describes the models and procedures we use in order to understand data. Generally, the methods we use can be categorized into *supervised* and *unsupervised* methods. In bioinformatic & genomic data analysis, we commonly perform these methods in sequence.
+*Statistical learning* describes the models and procedures we use in order to understand data. The methods we use can be loosely grouped into two main categories:
+- *Supervised methods*
+- *Unsupervised methods*
 
 **Unsupervised methods**
 
@@ -48,6 +50,15 @@ Unsupervised data analysis is often used in bioinformatics to adress questions l
 - Hidden markov modeling
 
 
+<img src="../figures/unsupervised.png" title="xxxx" alt="context"
+	width="70%" height="70%" />
+</p>
+
+Image Credit: https://towardsdatascience.com/supervised-vs-unsupervised-learning-14f68e32ea8d
+
+As depicted in the above example, an unsupervised approach could be used to group together similar characters (i.e. ducks, mice, bunnies), without using any information on the original identity of each.
+
+
 **Supervised methods**
 
 In contrast to unsupervised methods, we often wish to test a more specific question of hypothesis, for example in the context of a gene expression analysis, we might ask:
@@ -62,11 +73,20 @@ The statistical methods we use to address these sorts of questions are typically
 - Descision trees
 - Support vector machines
 
-Below, we provide more specific introductions to both supervised and unsupervised learnings, using basic linear modeling as an example for supervised approaches, while exploring PCA and hierachical clustering for unsupervised analysis.
+
+<img src="../figures/supervised.png" title="xxxx" alt="context"
+	width="70%" height="70%" />
+</p>
+
+Image Credit: https://towardsdatascience.com/supervised-vs-unsupervised-learning-14f68e32ea8d
+
+Supervised methods generally involve either **classification** or **regression**. In *classification* we attempt to assign labels to samples based on some sort of input data. In *regression* we aim to assess the relationship between a predictor variable, and one or more separate variable.
+
+---
+
+Below, we provide more specific introductions to both supervised and unsupervised learnings, using basic linear modeling as an example for supervised approaches, while exploring PCA and hierarchical clustering for unsupervised analysis.
 
 > A more comprehensive introduction to statistical learning can be found in the book: [An Introduction to Statistical Learning](http://faculty.marshall.usc.edu/gareth-james/ISL/), in addition to numerous other statistical texts and online resources.
-
-
 
 ---
 

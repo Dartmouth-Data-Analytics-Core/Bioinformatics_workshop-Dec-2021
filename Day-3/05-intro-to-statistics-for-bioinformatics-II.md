@@ -411,33 +411,34 @@ This approach is referred to as **multiple regression**. If you will be doing an
 
 ---
 
-#### Generalized linear models
+#### Final Note: Beyond simple linear models for NGS data analysis
 
-While standard linear models are very useful, there are situations where their use is not appropriate, for example:
+While standard linear models are very useful, there are many situations in analysis of NGS data where their use is not appropriate. NGS data are **count-based**, since most applications rely on counting read numbers and using these for inference.
 
-- when values of Y are restricted (e.g. must be positive integers or binary values)
-- when the variance of Y depends on the mean
+Count-based data have two major properties that violate the basic requirements for the dependent variable (Y) in basic linear models:
+- their values are restricted (i.e. must be positive integer)
+- the variance of an individual observation from such NGS count data depends on the mean
 
-One example from bioinformatics is RNA-seq gene expression data, where expression is measured in terms of read counts, whose values are restricted to being positive integers, and follow a distribution different from the normal distribution. Bulk RNA-seq data generally follow exhibit a distribution referred to as the *negative-binomial*.
+To address these issues, a family of statistical models called ***Generalized linear models (GLMs)*** are commonly used for analysis of NGS data. GLMs are an extension of more simple linear models that address the above limitations and allow their application to count data.
 
-<p align="center">
-<img src="../figures/neg-binom.png" title="xxxx" alt="context"
-	width="75%" height="75%" />
-</p>
-
-RNA-seq read counts are also referred to as *heteroscadistic*, meaning they have a *non-constant variance* at different values of the mean across samples.
+RNA-seq data is an excellent example, since we need to model read counts to make inferences on what we really care about: expression levels. Common software packages for differential expression analysis such as [DESeq2](http://bioconductor.org/packages/release/bioc/html/DESeq2.html) & [edgeR](https://www.bioconductor.org/packages/release/bioc/html/edgeR.html) utilize GLMs.
 
 <p align="center">
-<img src="../figures/heteroscad.png" title="xxxx" alt="context"
-	width="75%" height="75%" />
+<img src="../figures/count-matrix.png" title="xxxx" alt="context"
+	width="80%" height="80%" />
 </p>
 
-Linear models are therefore generally not suitable to model read count data, and we need a statistical model that can leverage distributions other than the normal. *Generalized linear models (GLM)* are a family of statistical models that can achieve this, and generalize standard linear regression in two ways:  
-- use of probability distributions other than the normal distribution
-- the use of a *link-function* that links the expression values in the linear model to the experimental groups, in a way that these other distributions can be used.
+While an comprehensive introduction to GLMs is beyond the scope of the workshop, this topic is covered in many good statistical textbooks and online/in-person courses. Below are some suggested online resources for learning more about GLMs.
 
-For analysis of bulk RNA-seq data, we use a GLM of the *negative-binomial family* in order to appropriately model RNA-seq counts and calculate P-values and test them for differential expression. This approach is adopted by popular Bioconductor-packages for differential expression such as [DESeq2](http://bioconductor.org/packages/release/bioc/html/DESeq2.html) and [edgeR](https://www.bioconductor.org/packages/release/bioc/html/edgeR.html).
+-
 
-If you will be using software such as DESeq2 and edgeR in your own analysis, it is recommended to build a good fundamental understqanding of linear modeling and GLMs. While an comprehensive introduction to GLMs is beyond the scope of this workshop, this topic is covered in many good statistical textbooks and online courses.
 
-> Note: We do cover the fundamentals of how GLMs are used in the context of RNA-seq data analysis in our RNA-seq dat analysis workshop.
+
+
+
+
+
+
+If you plan to do a significant amount of downstream statistical analysis of NGS data, a working knowledge of GLMs will be extremely valuable.  
+
+> Note: We cover the fundamentals of how GLMs are used in the context of RNA-seq data analysis in our RNA-seq dat analysis workshop, typically offered in the summer.
