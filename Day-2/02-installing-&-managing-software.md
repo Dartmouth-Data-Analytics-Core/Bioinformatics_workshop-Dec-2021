@@ -81,7 +81,7 @@ There are some pieces of software that you will want to make sure are loaded eac
 ```bash
 
 # Look at the contents of your .bash_profile
-cat .bash_profile
+cat ~/.bash_profile
 
 ```
 
@@ -89,10 +89,10 @@ You can see there is a location that says `# put your own module loads here` und
 
 ```bash
 #modify .bash_profile by adding the module load R/3.3.1 in the appropriace location
-nano .bash_profile
+nano ~/.bash_profile
 
 # Look at the contents of your modified .bash_profile
-cat .bash_profile
+cat ~/.bash_profile
 ```
 
 
