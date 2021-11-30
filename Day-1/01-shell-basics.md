@@ -155,15 +155,17 @@ cp /dartfs-hpc/scratch/fund_of_bioinfo/all_counts.txt ./
 
 ### Viewing the contents of files
 
-The shell provides us with a number of commands to view the contents of files in define ways. The `cat` command for example (standing for concatenate) will print the entire contents of a file to the terminal. This can be useful for smaller files, but as you will see with larger files can be an unweildy way to look at the contents of a file.
+The shell provides us with commands to view the contents of files in define ways. The `cat` command for example (which stands for for concatenate) will print the entire contents of a file to the terminal. This can be useful for smaller files, but as you will see with larger files can quickly fill the terminal with more lines of data than it can display.
+
 ```bash
 cat all_counts.txt
 ```
 
 When working with larger files, which we are usually doing in bioinformatics, you may not wish to print the whole file as it would overrun your terminal. Other commands exist that allow you to explore file contents with more control.
 - `more` shows you as much of the file as can be shown in the size of the terminal screen you have open, and you can continue to "scroll" through the rest of the file by using the space bar  
+- `less` is a similar command to `more`, and has advantages such as not persiting in the terminal, and being searchable
 - `head` will print the first 10 lines by default, but this number can be controlled with the `-n` option
-- `tail` will print the final lines of a file, and can also be controlled with the `-n` option
+- `tail` will print the final 10 lines of a file, and can also be controlled with the `-n` option
 
 We will use a larger text file to show the utility of these commands, as well as other commands in the subsequent parts of this lesson.
 ```bash
@@ -173,13 +175,13 @@ head -n 20 all_counts.txt
 # Show the last 50 lines of the all_counts.txt file
 tail -n 50 all_counts.txt
 
-# use word count (wc) command with the lines option (-l) to show how many lines (rows) are in the dataset
+# Use the word count (wc) command with the lines option (-l) to show how many lines (rows) are in the dataset
 wc -l all_counts.txt
 ```
 
 ### Renaming and removing files
 
-Sometimes you will need to reorganize your directories or rename a file, which can be achieved wuith the `mv` command. Let's start by copying the all_counts.txt file from the fundamentals_of_bioinformatics directory to your home directory.
+Sometimes you will need to reorganize your directories or rename a file, which can be achieved with the `mv` command. Let's start by copying the all_counts.txt file from the fundamentals_of_bioinformatics directory to your home directory.
 
 ```bash
 # Copy the all_counts.txt file to your home directory
@@ -192,16 +194,18 @@ mv ~/all_counts.txt ~/all_counts.copy.txt
 ```
 You can also use the `mv` command to move a file to a new location. Let's move the all_counts.copy.txt from your home directory into your fundamentals_of_bioinformatics directory.
 ```bash
-# Move the all_counts.copy.txt into your fundamentals_of_bioinformatics directory 
+# Move the all_counts.copy.txt into your fundamentals_of_bioinformatics directory.  Replace scratch directory with your own.
 mv ~/all_counts.copy.txt /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/all_counts.copy.txt
 
 #check the contents of your fundamentals_of_bioinformatics directory
 ls
 ```
 
-Copying the all_counts.copy.txt file was just an exercise to show you how the tools works, in practice you will want to keep your directories as neat as possible as you accumulate a lot of files. Let's remove the all_counts.copy.txt file with the `rm` command.
+Copying the all_counts.copy.txt file was just an exercise to show you how the tools work, in practice you will want to keep your directories as neat as possible as you accumulate a lot of files. Let's remove the all_counts.copy.txt file with the `rm` command.
 
 ```bash
+# For the sake of being careful, let's first list the details file to be removed
+ls -l all_counts.copy.txt
 # Remove the all_counts.copy.txt file
 rm all_counts.copy.txt
 ```
@@ -210,19 +214,19 @@ You will notice that before the file was deleted you were asked if you were sure
 
 ### Manipulating file contents
 
-Some commands enable you to maniuplate and subset files based on specific paramters. One useful example is the `cut` command, which allows you to 'cut' a file based on the options you select, such as the `f` option, which corresponds to fields (columns). We could use `cut` to obtain read counts for only the first 5 samples in `all_counts.txt`.
+Some commands enable you to manipulate and subset files based on specific parameters. One useful example is the `cut` command, which allows you to 'cut' a file based on the options you select, such as the `-f` option, which corresponds to fields (columns). We could use `cut` to obtain read counts for only the first 5 samples in `all_counts.txt`.
 ```bash
-# Look at only the counts from the first four samples
+# Look at only the counts from the first five columns
 cut -f 1,2,3,4,5 all_counts.txt
 ```
 
-To prevent all rows being printed to our console, we could combine the `cut` command with the `head` command using a *'pipe'*, specified by a '|'. Pipes send the output from one command an inital command to a subsequent command, all in the same line, such that you do not need to include an argument for the last command.
+To prevent all rows being printed to our console, we could combine the `cut` command with the `head` command using a *'pipe'*, specified by a '|'. Pipes send the output an initial command to a subsequent command, all in the same line, to allow the output of the first command to be used as the input to the second.
 ```bash
-# List only the first 100 lines of only samples SRR1039508 (col 2) and SRR1039523 (col 17)
-cut -f 1,2,17 all_counts.txt | head -n 100
+# List only the first 20 lines of only samples SRR1039508 (col 2) and SRR1039523 (col 17)
+cut -f 1,2,17 all_counts.txt | head -n 20
 ```
 
-Similarly to how we used the redirect command (>) above, we could redirect the output of the cut command to create a new counts file, that only contains the columns 1 (gene IDs), and samples in columns 2 and 17.
+Similarly to how we used the pipe operator (|) above, we could use the redirect operator(>) to send the output of the cut command to create a new counts file, that only contains the columns 1 (gene IDs), and samples in columns 2 and 17.
 ```bash
 # Print the counts from SRR1039508 and SRR1039523 to a new file
 cut -f 1,2,17 all_counts.txt > all_counts_sub.txt
