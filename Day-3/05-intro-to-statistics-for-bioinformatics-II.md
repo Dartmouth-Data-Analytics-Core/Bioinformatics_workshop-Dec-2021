@@ -425,19 +425,15 @@ RNA-seq data is an excellent example, since we need to model read counts to make
 
 <p align="center">
 <img src="../figures/count-matrix.png" title="xxxx" alt="context"
-	width="80%" height="80%" />
+	width="70%" height="70%" />
 </p>
 
-While an comprehensive introduction to GLMs is beyond the scope of the workshop, this topic is covered in many good statistical textbooks and online/in-person courses. Below are some suggested online resources for learning more about GLMs.
+While an comprehensive introduction to GLMs is beyond the scope of the workshop, this topic is covered in many good statistical textbooks and online/in-person courses. Below are some suggested (but not comprehensive) resources for learning more about GLMs.
 
--
-
-
-
-
-
-
-
+- edX course: [Data Analysis for the Life Sciences](https://www.edx.org/professional-certificate/harvardx-data-analysis-for-life-sciences)
+- Coursera course: [Generalized Linear Models and Nonparametric Regression](https://www.coursera.org/learn/generalized-linear-models-and-nonparametric-regression)
+- Book: [An Introduction to Generalized Linear Models, Annette J. Dobson, Adrian G. Barnett](https://www.routledge.com/An-Introduction-to-Generalized-Linear-Models/Dobson-Barnett/p/book/9781138741515)
+- PennState STAT-504 lesson: https://online.stat.psu.edu/stat504/lesson/6/6.1
 
 If you plan to do a significant amount of downstream statistical analysis of NGS data, a working knowledge of GLMs will be extremely valuable.  
 
