@@ -1,7 +1,7 @@
 
-## Fundamentals of Bioinformatics, December 2020
+## Fundamentals of Bioinformatics, December 2021
 
-This workshop will be delivered on December 14, 15, & 17 by the Data Analytics Core (DAC) of the [Center for Quantitative Biology at Dartmouth](https://sites.dartmouth.edu/cqb/). 
+This workshop will be delivered on December 6, 8, & 10 by the Data Analytics Core (DAC) of the [Center for Quantitative Biology at Dartmouth](https://sites.dartmouth.edu/cqb/). 
 
 The DAC aims to facilitate advanced bioinformatic, computational, and statistical analysis of complex genomics data for the Dartmouth research community. 
 
@@ -17,7 +17,7 @@ If you have questions about this workshop, or would like to discuss data analysi
 - Understand the concepts of reference genomes and genome annotations and where to find them 
 - Learn how to leverage the *Integrative Genomics Viewer (IGV)* for exploring genomics data 
 - Gain a working knowledge of basic programming in R and how it can be used for Bioinformatics 
-- Learn how to leverage high performance computing systems (HPCs) to perform Bioinformatic data-analysis 
+- Learn how to use high performance computing systems (HPCs) to perform Bioinformatic data-analysis 
 
 ### Workshop Contacts: 
 - Shannon Soucy (Shannon.Soucy@Dartmouth.edu)
