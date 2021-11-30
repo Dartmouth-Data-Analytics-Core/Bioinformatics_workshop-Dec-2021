@@ -345,9 +345,9 @@ dim(mat)
 
 # specific elements can be obtained through subsetting
 ### row 1
-mat1[1,]
+mat[1,]
 ### column 2
-mat1[,2]
+mat[,2]
 ### element 2 of row 3
 mat[3,2]
 
@@ -359,8 +359,8 @@ class(mat[1,])
 Since matrices have dimensions, `names()` cannot be used as we did for vectors. Instead, `names()` is generalized into `rownames()` and `colnames()`.
 
 ```r
-rownames(mat1) <- c("gene_1", "gene_2", "gene_3")
-colnames(mat1) <- c("subject_1", "subject_2", "subject_3")
+rownames(mat) <- c("gene_1", "gene_2", "gene_3")
+colnames(mat) <- c("subject_1", "subject_2", "subject_3", "subject_4")
 ```
 
 Matrices are a very important object class for mathematical and statistical applications in R, so it is certainly worth exploring more complex matrix operations if you will be doing any more complex statistical analysis in R.
