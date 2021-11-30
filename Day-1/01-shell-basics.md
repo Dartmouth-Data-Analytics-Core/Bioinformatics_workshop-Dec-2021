@@ -58,7 +58,7 @@ ls -a
 pwd
 
 # cd allows you to change your current working directory ('.' means current directory)
-cd ./
+cd .
 
 # '..' tells the shell to move your current directory up one directory
 cd ..
@@ -126,14 +126,14 @@ It is a good idea when working on projects on an HPC to stay organized, so let's
 # Navigate to scratch so you can make your own directory there 
 cd /dartfs-hpc/scratch/
 
-# Make the directory.  Replace 'owm' with your own username.
+# Make the directory.  Replace 'omw' with your own username.
 mkdir -p omw/fundamentals_of_bioinformatics
 
 # Change to the newly-created directory.
 cd omw/fundamentals_of_bioinformatics
 
 # Set an alias so we can get here quickly 
-alias biow='cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics'
+alias biow="cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics"
 # NOTE: you can add this line to your .bashrc so it get run every time you log in, we will cover this below 
 
 # Check your location on the cluster
@@ -295,7 +295,7 @@ echo $HOME
 Variables can also be set then called as needed. These can be virtually anything. For example, perhaps you want to save the name of the genome version you are working with in your current session, so it can be easily called multiple times in some bash code you are writing.
 ```bash
 # set the variable
-genv='hg38.patch13'
+genv="hg38.patch13"
 
 # call it with echo and the $
 echo $genv
