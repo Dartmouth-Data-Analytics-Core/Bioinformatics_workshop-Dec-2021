@@ -356,10 +356,10 @@ ll
 
 Another effective use of an alias is for accessing specific directories quickly. For example, if we had a project sub directory that we regularly want to access, such as `~/project/with/many/directories/`, we would need to write this out every time to get there from our $HOME directory, using `cd /project/with/many/directories/`. Using an alias, we can save this command so that it is more easily callable.
 ```bash
-# make a long directory that you may want to get to quickly in the future
+# make a long directory path that you may want to get to quickly in the future
 mkdir -p ~/project/with/many/directories/
 
-# make the alias for it
+# make an alias for it
 alias pd="cd ~/project/with/many/directories/"
 
 # now call the alias
@@ -376,13 +376,13 @@ nano .bash_profile
 
 ### The $PATH environment variable
 
-Another very important environment variable is `$PATH`, which stores a list of directories that tells bash where specific programs that we want to be available to us are stored. Programs are all essentially just files, and bash needs to know where these files are in order to run the commands as we call them.
+Another very important environment variable is `$PATH`, which stores a list of directories that tells bash where specific programs that we want to be available to us are stored. Programs are executable files, and bash needs to know where these files are in order to run the commands as we call them.
 
 The list is stored as strings separated by colons, so that many directories can be defined. Use `echo` to print `$PATH` variable.
 ```shell
 echo $PATH
 
-# make more readable using 'tr' to swap the colons for newlines
+# Make the output more readable using 'tr' to swap the colons for newlines
 echo $PATH| tr ":" "\n"
 ```
 
@@ -395,12 +395,12 @@ We will create an executable file and add it to our $PATH in another lesson, how
 export PATH="~/location/of/new/executables:$PATH"
 ```
 
-A command for finding where a program lives in the $PATH is the `which` command. This can be useful for debugging environment issues as they arise when trying to use or instal new software. Check where the executable for the `echo` command is located:
+A command for finding where a program lives in the $PATH is the `which` command. This can be useful for debugging environment issues as they arise when trying to use or install new software. Check where the executable for the `echo` command is located.  The `which` command :
 ```r
 which echo
 ```
 
-Many commands like `ls` will also accept wildcards, which are special character instances that allow you to do things like operate on multiple files at one time, or search for specific patterns (either in files or file names). We don't have time to review all the wildcard characters, however the most commonly used one is the asterisk, which can be used to represent any number of characters.
+Many commands like `ls` will also accept wildcards, which are special character instances that allow you to do things like operate on multiple files at one time, or search for specific patterns (either in files or file names). A wildcard character is the asterisk, which can be used to represent any number of characters.
 ```bash
 # list all files in my current directory with the file extension .txt
 ls *.txt
@@ -413,13 +413,14 @@ You will notice the prompt in your terminal when you are logged onto discovery s
 We will do this now by loading a new environment with the tool `conda`. We have pre-built this `conda` environment for you such that all of the tools you will need have been loaded into this environment, you should have created this environment with the commands included in the welcome and setup email. Tomorrow we will talk more about how to create your own custom `conda` environment.
 
 ```bash
-
 # Load conda environment
 conda activate bioinfo
+# Check your PATH compared to before activating, note the additional binaries folder
+echo $PATH| tr ":" "\n"
 ```
 This should change the word at the beginning of your prompt from `(base)` to the name of the conda environment that you just loaded `(bioinfo)`.
 
-> As we move through the subsequent lessons, we will introduce more complex bash commands in order to manipulate common bioinformatics file types. If you are ever confused about what a command does, remember you can always use `man` to check out the manual page (or google it). It you are confused about how commands are used in conjunction with each other, it can also be helpful to break them down and run parts individually, in order to understand what the constituent parts do.
+> As we move through the subsequent lessons, we will introduce more complex bash commands in order to manipulate common bioinformatics file types. If you are ever confused about what a command does, remember you can always use `man` to check out the manual page (or Google it). It you are confused about how commands are used in conjunction with each other, it can also be helpful to break them down and run parts individually, in order to understand what the constituent parts do.
 
 ### Breakout room activities
 
