@@ -10,8 +10,8 @@
 
 Make a new directory to work in: 
 ```bash 
-#log onto the n07 node
-mksub -I -l walltime=5:00:00 -l nodes=n07
+#log onto the q10 node
+mksub -I -l walltime=5:00:00 -l nodes=q10
 
 # go to our home dir for the wrkshop
 cd /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/
@@ -215,11 +215,15 @@ You can find the pre-built index at `/scratch/fund_of_bioinfo/ref/hg38_chr20_ind
 We are ready to align our reads, present in the paired-end FASTQ files `SRR1039508_1.trim.chr20.fastq.gz` and `SRR1039508_2.trim.chr20.fastq.gz`.
 
 ```bash
+# make a directory for aligned reads and enter it
+mkdir -p ../aligned
+cd ../aligned
+
 # run splice aware alignment
-STAR --genomeDir /dartfs-hpc/scratch/fund_of_bioinfo/ref/hg38_chr20_index \
+STAR --genomeDir /dartfs-hpc/scratch/fund_of_bioinfo/hg38_chr20_index \
   --readFilesIn ../trim/SRR1039508_1.trim.chr20.fastq.gz ../trim/SRR1039508_2.trim.chr20.fastq.gz \
   --readFilesCommand zcat \
-  --sjdbGTFfile /dartfs-hpc/scratch/fund_of_bioinfo/ref/Homo_sapiens.GRCh38.97.chr20.gtf \
+  --sjdbGTFfile /dartfs-hpc/scratch/fund_of_bioinfo/Homo_sapiens.GRCh38.97.chr20.gtf \
   --runThreadN 1 \
   --outSAMtype SAM \
   --outFilterType BySJout \
@@ -335,10 +339,10 @@ ls ../trim/*_1.trim.chr20.fastq.gz | while read x; do
   echo processing "$sample"
 
   # run STAR for each sample
-  STAR --genomeDir /dartfs-hpc/scratch/fund_of_bioinfo/ref/hg38_chr20_index \
+  STAR --genomeDir /dartfs-hpc/scratch/fund_of_bioinfo/hg38_chr20_index \
     --readFilesIn ../trim/${sample}_1.trim.chr20.fastq.gz ../trim/${sample}_2.trim.chr20.fastq.gz \
     --readFilesCommand zcat \
-    --sjdbGTFfile /dartfs-hpc/scratch/fund_of_bioinfo/ref/Homo_sapiens.GRCh38.97.chr20.gtf \
+    --sjdbGTFfile /dartfs-hpc/scratch/fund_of_bioinfo/Homo_sapiens.GRCh38.97.chr20.gtf \
     --runThreadN 4 \
     --outSAMtype BAM SortedByCoordinate \
     --outFilterType BySJout \
