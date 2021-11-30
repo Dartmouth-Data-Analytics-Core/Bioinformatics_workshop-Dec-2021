@@ -237,13 +237,13 @@ head all_counts_sub.txt
 
 ### Pattern matching with *Grep*
 
-Often we will want to pull a specific piece of information from a large file, lets say that we were interested in the read counts for a specific gene, ALDH3B1 (Ensembl ID: ENSG00000006534). We can use the `grep` command to search for this ID, or any other character string we are interested in, in our counts matrix.
+Often we will want to pull a specific piece of information from a large file, let's say that we were interested in the read counts for a specific gene, ALDH3B1 (Ensembl ID: ENSG00000006534). We can use the `grep` command to search for this ID, or any other character string we are interested in, in our counts matrix.
 ```bash
 # Get the count data for ENSG00000006534 (ALDH3B1) from all_counts.txt
 grep "ENSG00000006534" all_counts.txt
 ```
 
-`grep` is a pattern recognition tool that searches in files for a character string we can define. We can define the entire character string, as we did above, or combine regular characters with special characters (or 'wildcards') to search for specific types of matches. the most commonly used special characters are included in the table below.
+`grep` is a pattern recognition tool that searches in files for a character string we can define. We can define the entire character string, as we did above, or combine regular characters with special characters (or 'wildcards') to search for specific types of matches. Some commonly used special characters are included in the table below.
 
 Operator | Effect
 ---|---
@@ -276,7 +276,7 @@ X{*m*} | exactly *m* instances of X
 X{*m*,} | at least *m* instances of X
 X{*m*,*n*} | between *m* and *n* instances of X
 
-Now lets use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have no reads expressed for the first four samples. The flag `-P` indicates that we will be using regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
+Now let's use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have zero reads counted for the first four samples. The flag `-P` indicates that we will be using regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
 
 ```bash
 # Count the number of genes with no reads in the first four samples
@@ -288,17 +288,17 @@ grep -P "^ENSG[0-9]*\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0$" all_count
 
 ### Shell environment variables
 
-The command line *environment* essentially describes a collection of variables that have been set to provide context for the commands that you run. These variable are referred to as *environment variables*. A number of environment variables are set automatically everytime you log into the bash shell. The `env` command will show all environment variables available in the current shell. Try that now:
+The command line *environment* essentially describes a collection of variables that have been set to provide context for the commands that you run. These variables are referred to as *environment variables*. Several environment variables are set automatically every time you log into the bash shell. The `env` command will show all environment variables available in the current shell. Try that now:
 ```bash
 env
 ```
 
-One important environment variable is `$HOME`, which describes your home directory. Variable such as home can be evaluated by placing the `$` in front of them. For example:
+One important environment variable is `$HOME`, which contains the path to your home directory. Variables such as HOME can be evaluated by placing the `$` in front of them. For example:
 ```bash
 echo $HOME
 ```
 
-Environment variables can also be set on the fly and then called as needed. These can be virtually anything. For example, perhaps you want to save the name of the genome version you are working with in your current session, so it can be easily called multiple times in some bash code you are writing.
+Variables can also be set then called as needed. These can be virtually anything. For example, perhaps you want to save the name of the genome version you are working with in your current session, so it can be easily called multiple times in some bash code you are writing.
 ```bash
 # set the variable
 genv='hg38.patch13'
@@ -307,7 +307,7 @@ genv='hg38.patch13'
 echo $genv
 ```
 
-You can also use environment variables to store commands that you want to run without having to type the entire command out each time. For example, we might run the `ls` command often with the flags `-lah` to show files in a list format, including all hidden files, and with file sizes in human readable format. The entire command would be `ls -lah`, however if we save the command to a variable, and then call the varaible directly, the command will be evaluated by the shell.
+You can also use variables to store commands that you want to run without having to type the entire command out each time. For example, we might run the `ls` command often with the flags `-lah` to show files in a list format, including all hidden files, and with file sizes in human readable format. The entire command would be `ls -lah`, however if we save the command to a variable, and then call the variable directly, the command will be evaluated by the shell.
 
 ```bash
 # save to variable
@@ -332,19 +332,19 @@ ls -a
 cat .bash_profile
 ```
 
-The `.bash_profile` is run everytime you start a bash session and contains variables used to configure the bash environment in a way that is specific to the contents of the `.bash_profile` file. You can add lines to the `.bash_profile` to set environment variables that will be established each time you start a new session. Lets add the command we created above to our `.bash_profile`.
+The `.bash_profile` is run every time you start a bash session and contains variables used to configure the bash environment. You can add lines to the `.bash_profile` to set environment variables that will be established each time you start a new session. Lets add the command we created above to our `.bash_profile`.
 ```bash
 # use the nano text editor to add the line ' ll="ls -lah" ' to your bash_profile
 nano `.bash_profile`
 
-# run the new bash_profile to set the environment variables (or start a new bash session)
+# source the new bash_profile to add the environment variables to your current session (or start a new bash session)
 source ~/.bash_profile
 
 # now run the command as we did above
 $ll
 ```
 
-Now `$ll` will be set as an environment variable everytime we start a new bash terminal. It is also possible to avoid using the `$` to evaluate this variable by using the `alias` command in bash. `alias` allows you to set command that can be called directly using whatever characters you define, and can be added to your `.bash_profile` in the same way as we did above.
+Now `$ll` will be set as an environment variable every time we start a new bash terminal. It is also possible to avoid using the `$` to evaluate this variable by using the `alias` command in bash. `alias` allows you to set command that can be called directly using whatever characters you define, and can be added to your `.bash_profile` in the same way as we did above.
 
 ```bash
 # make an alias for the ls -lah command
@@ -354,7 +354,7 @@ alias ll="ls -lah"
 ll
 ```
 
-Another effective use of an alias is for accessing specific directories quickly. For example, if we had a project sub directory that we regularly want to access, such as `~/project/with/many/directories/`, we would need to write this out everytime to get there from our $HOME directory, using `cd /project/with/many/directories/`. Using an alias, we can save this command so that it is more easily callable.
+Another effective use of an alias is for accessing specific directories quickly. For example, if we had a project sub directory that we regularly want to access, such as `~/project/with/many/directories/`, we would need to write this out every time to get there from our $HOME directory, using `cd /project/with/many/directories/`. Using an alias, we can save this command so that it is more easily callable.
 ```bash
 # make a long directory that you may want to get to quickly in the future
 mkdir -p ~/project/with/many/directories/

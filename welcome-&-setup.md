@@ -199,9 +199,9 @@ if (!any(rownames(installed.packages()) == "ChIPseeker")){
 }
 library(ChIPseeker)
 
-install("BSgenome.Mmusculus.UCSC.mm10")
+BiocManager::install("BSgenome.Mmusculus.UCSC.mm10")
 
-install("BSgenome.Mmusculus.UCSC.mm10.masked")
+BiocManager::install("BSgenome.Mmusculus.UCSC.mm10.masked")
 
 sessionInfo()
 ```

@@ -175,11 +175,11 @@ ls *.fastq.gz | while read x; do \
    # tell me what the shell is doing
    echo $x is being processed...;
    # provide an empty line for ease of viewing
-   yes '' | sed 1q;  \
+   echo -e "\n";  \
    # unzip w/ zcat and print head of file
    zcat $x | head -n 4;  \
    # print 3 lines to for ease of viewing
-   yes '' | sed 3q ;
+   echo -e "\n\n\n" ;
 done
 ```
 
@@ -196,7 +196,7 @@ We could use one of these loops to perform the nucleotide counting task that we 
 
 ```bash
 ls *.fastq.gz | while read x; do \
-   yes '' | sed 1q
+   echo -e "\n"
    echo processing sample $x
    zcat $x | sed -n '2~4p' | sed -n '1,10000p' | grep -o . | sort | grep 'C\|G' | uniq -c ;
 done
@@ -284,7 +284,7 @@ fastqc -t 1 *.fastq.gz
 
 # move results to a new folder
 mkdir ../fastqc_results
-mv *fastqc* fastqc_results
+mv *fastqc* ../fastqc_results
 
 # move into it and ls
 cd ../fastqc_results
@@ -400,9 +400,9 @@ done
 You should now have trimmed FASTQ files in this directory that we will use for the alignment. You should also be able to see and print each of your reports from cutadapt. 
 ```bash
 ls *cutadapt.report | while read x; do
-   yes '' | sed 4q
+   echo -e "\n\n"
    echo Printing $x
-   yes '' | sed 1q
+   echo -e "\n"
    cat $x
 done
 ```
