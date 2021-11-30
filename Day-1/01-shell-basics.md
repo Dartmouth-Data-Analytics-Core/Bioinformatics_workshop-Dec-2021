@@ -13,7 +13,7 @@ Importantly, the Shell allows us to do each of these in the context of Bioinform
 ## Why learn to use a Shell?  
 Learning to use a Shell can be challenging, however it is a key skill in bioinformatics, as it is the primary way in which we interface with a lot of bioinformatics software and file types.
 
-Some bioinformatics softwares provide GUIs that enable users execute tasks with programs that you would otherwise execute using the Shell. While such softwares can be powerful in the right context, they can also make it very easy to perform tasks in bioinformatics incorrectly, and should therefore should treated with caution.
+Some bioinformatics software provides GUIs that enable users execute tasks with programs that you would otherwise execute using the Shell. While such software can be powerful in the right context, they can also make it very easy to perform tasks in bioinformatics incorrectly, and should therefore should treated with caution.
 
 
 ## The Bash shell
@@ -54,7 +54,7 @@ ls
 # run ls with the '-a' option to include hidden files
 ls -a
 
-# pwd show you your current working directory
+# The pwd command shows you your current working directory
 pwd
 
 # cd allows you to change your current working directory ('.' means current directory)
@@ -66,12 +66,12 @@ cd ..
 # check you directory again
 pwd
 
-# now go back down the tree
+# now go back down the tree.  Replace the directory name with your own.
 cd OwenW/
 pwd
 ```
 
-To go back down the directory structure, we specified a directory that was in our current working directory (cd). This is called a **relative path**, since it is relative to our current directory and will only work provided our currect directory is relative to the directory we are trying to reach.  
+To go back down the directory structure, we specified a directory that was in our current working directory (cd). This is called a **relative path**, since it is relative to our current directory and will only work if our current directory is relative to the directory we are trying to reach.  
 
 Relative paths are contrasted to **absolute paths** which always starts with a '/' and will start at the root (highest level) of the directory tree, and work from wherever you are in the directory substructure. For example:
 ```bash
@@ -85,12 +85,12 @@ cd ~
 
 Another useful command is `echo` which will evaluate and print characters provided to it.
 ```bash
-echo "words worsd words"
+echo "words words words"
 ```
 
 We can use the redirect command (>) to redirect the output of commands like echo into a file. As an example, lets save the important note we made above to a text file.
 ```bash
-echo "words worsd words" > mynotes.txt
+echo "words words words" > mynotes.txt
 ```
 ## Log on to discovery cluster
 
@@ -132,9 +132,9 @@ mkdir -p omw/fundamentals_of_bioinformatics
 # Change to the newly-created directory.
 cd omw/fundamentals_of_bioinformatics
 
-# Set an alias so we can get here quicly 
+# Set an alias so we can get here quickly 
 alias biow='cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics'
-# NOTE: you can add this line to your .bashrc so it get run everytime you log in, we will cover this below 
+# NOTE: you can add this line to your .bashrc so it get run every time you log in, we will cover this below 
 
 # Check your location on the cluster
 pwd
@@ -235,7 +235,7 @@ cut -f 1,2,17 all_counts.txt > all_counts_sub.txt
 head all_counts_sub.txt
 ```
 
-### Pattern matching with *Grep*
+### Pattern matching with *grep*
 
 Often we will want to pull a specific piece of information from a large file, let's say that we were interested in the read counts for a specific gene, ALDH3B1 (Ensembl ID: ENSG00000006534). We can use the `grep` command to search for this ID, or any other character string we are interested in, in our counts matrix.
 ```bash
@@ -254,9 +254,6 @@ $ | end of the line
 [a-z]| any lowercase letter
 [A-Z]| any uppercase letter
 \t | a tab
-\n | a newline
-\s | any white space (tab, newline, space)
-\S | non-white space (the opposite of \s)
 
 These regular expressions can be used with any of the tools that you have learned thus far, so if we wanted to list all of the files in our directory that end in .txt we could use the following command.
 
@@ -272,11 +269,8 @@ Quantifier| Operation
 X* | 0 or more repetitions of X
 X+ | 1 or more repetitions of X
 X? | 0 or 1 instances of X
-X{*m*} | exactly *m* instances of X
-X{*m*,} | at least *m* instances of X
-X{*m*,*n*} | between *m* and *n* instances of X
 
-Now let's use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have zero reads counted for the first four samples. The flag `-P` indicates that we will be using regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
+Now let's use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have zero reads counted for the first four samples. The flag `-P` indicates that we will be using perl-style regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
 
 ```bash
 # Count the number of genes with no reads in the first four samples
