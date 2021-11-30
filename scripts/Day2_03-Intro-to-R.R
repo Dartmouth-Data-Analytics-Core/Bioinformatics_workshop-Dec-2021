@@ -181,9 +181,9 @@ dim(mat)
 
 # specific elements can be obtained through subsetting
 ### row 1
-mat1[1,]
+mat[1,]
 ### column 2
-mat1[,2]
+mat[,2]
 ### element 2 of row 3
 mat[3,2]
 
@@ -191,8 +191,8 @@ mat[3,2]
 class(mat)
 class(mat[1,])
 
-rownames(mat1) <- c("gene_1", "gene_2", "gene_3")
-colnames(mat1) <- c("subject_1", "subject_2", "subject_3")
+rownames(mat) <- c("gene_1", "gene_2", "gene_3")
+colnames(mat) <- c("subject_1", "subject_2", "subject_3", "subject_4")
 
 ############################################## Data Frames
 df <- data.frame(subject_id = c("s1", "s2", "s3", "s4"),
