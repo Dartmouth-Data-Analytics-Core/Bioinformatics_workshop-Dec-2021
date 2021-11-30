@@ -13,7 +13,7 @@ Importantly, the Shell allows us to do each of these in the context of Bioinform
 ## Why learn to use a Shell?  
 Learning to use a Shell can be challenging, however it is a key skill in bioinformatics, as it is the primary way in which we interface with a lot of bioinformatics software and file types.
 
-Some bioinformatics softwares provide GUIs that enable users execute tasks with programs that you would otherwise execute using the Shell. While such softwares can be powerful in the right context, they can also make it very easy to perform tasks in bioinformatics incorrectly, and should therefore should treated with caution.
+Some bioinformatics software provides GUIs that enable users execute tasks with programs that you would otherwise execute using the Shell. While such software can be powerful in the right context, they can also make it very easy to perform tasks in bioinformatics incorrectly, and should therefore should treated with caution.
 
 
 ## The Bash shell
@@ -54,11 +54,11 @@ ls
 # run ls with the '-a' option to include hidden files
 ls -a
 
-# pwd show you your current working directory
+# The pwd command shows you your current working directory
 pwd
 
 # cd allows you to change your current working directory ('.' means current directory)
-cd ./
+cd .
 
 # '..' tells the shell to move your current directory up one directory
 cd ..
@@ -66,12 +66,12 @@ cd ..
 # check you directory again
 pwd
 
-# now go back down the tree
+# now go back down the tree.  Replace the directory name with your own.
 cd OwenW/
 pwd
 ```
 
-To go back down the directory structure, we specified a directory that was in our current working directory (cd). This is called a **relative path**, since it is relative to our current directory and will only work provided our currect directory is relative to the directory we are trying to reach.  
+To go back down the directory structure, we specified a directory that was in our current working directory (cd). This is called a **relative path**, since it is relative to our current directory and will only work if our current directory is relative to the directory we are trying to reach.  
 
 Relative paths are contrasted to **absolute paths** which always starts with a '/' and will start at the root (highest level) of the directory tree, and work from wherever you are in the directory substructure. For example:
 ```bash
@@ -85,12 +85,12 @@ cd ~
 
 Another useful command is `echo` which will evaluate and print characters provided to it.
 ```bash
-echo "words worsd words"
+echo "words words words"
 ```
 
 We can use the redirect command (>) to redirect the output of commands like echo into a file. As an example, lets save the important note we made above to a text file.
 ```bash
-echo "words worsd words" > mynotes.txt
+echo "words words words" > mynotes.txt
 ```
 ## Log on to discovery cluster
 
@@ -126,15 +126,15 @@ It is a good idea when working on projects on an HPC to stay organized, so let's
 # Navigate to scratch so you can make your own directory there 
 cd /dartfs-hpc/scratch/
 
-# Make the directory.  Replace 'owm' with your own username.
+# Make the directory.  Replace 'omw' with your own username.
 mkdir -p omw/fundamentals_of_bioinformatics
 
 # Change to the newly-created directory.
 cd omw/fundamentals_of_bioinformatics
 
-# Set an alias so we can get here quicly 
-alias biow='cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics'
-# NOTE: you can add this line to your .bashrc so it get run everytime you log in, we will cover this below 
+# Set an alias so we can get here quickly 
+alias biow="cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics"
+# NOTE: you can add this line to your .bashrc so it get run every time you log in, we will cover this below 
 
 # Check your location on the cluster
 pwd
@@ -235,7 +235,7 @@ cut -f 1,2,17 all_counts.txt > all_counts_sub.txt
 head all_counts_sub.txt
 ```
 
-### Pattern matching with *Grep*
+### Pattern matching with *grep*
 
 Often we will want to pull a specific piece of information from a large file, let's say that we were interested in the read counts for a specific gene, ALDH3B1 (Ensembl ID: ENSG00000006534). We can use the `grep` command to search for this ID, or any other character string we are interested in, in our counts matrix.
 ```bash
@@ -254,9 +254,6 @@ $ | end of the line
 [a-z]| any lowercase letter
 [A-Z]| any uppercase letter
 \t | a tab
-\n | a newline
-\s | any white space (tab, newline, space)
-\S | non-white space (the opposite of \s)
 
 These regular expressions can be used with any of the tools that you have learned thus far, so if we wanted to list all of the files in our directory that end in .txt we could use the following command.
 
@@ -272,11 +269,8 @@ Quantifier| Operation
 X* | 0 or more repetitions of X
 X+ | 1 or more repetitions of X
 X? | 0 or 1 instances of X
-X{*m*} | exactly *m* instances of X
-X{*m*,} | at least *m* instances of X
-X{*m*,*n*} | between *m* and *n* instances of X
 
-Now let's use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have zero reads counted for the first four samples. The flag `-P` indicates that we will be using regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
+Now let's use some of these regular expressions in a `grep` command  to see their utility. Let's use regular expressions to see how many genes have zero reads counted for the first four samples. The flag `-P` indicates that we will be using perl-style regular expressions in the pattern we are searching for, you can use `grep --h` to learn more about available flags for the `grep` command. 
 
 ```bash
 # Count the number of genes with no reads in the first four samples
@@ -301,7 +295,7 @@ echo $HOME
 Variables can also be set then called as needed. These can be virtually anything. For example, perhaps you want to save the name of the genome version you are working with in your current session, so it can be easily called multiple times in some bash code you are writing.
 ```bash
 # set the variable
-genv='hg38.patch13'
+genv="hg38.patch13"
 
 # call it with echo and the $
 echo $genv
@@ -356,10 +350,10 @@ ll
 
 Another effective use of an alias is for accessing specific directories quickly. For example, if we had a project sub directory that we regularly want to access, such as `~/project/with/many/directories/`, we would need to write this out every time to get there from our $HOME directory, using `cd /project/with/many/directories/`. Using an alias, we can save this command so that it is more easily callable.
 ```bash
-# make a long directory that you may want to get to quickly in the future
+# make a long directory path that you may want to get to quickly in the future
 mkdir -p ~/project/with/many/directories/
 
-# make the alias for it
+# make an alias for it
 alias pd="cd ~/project/with/many/directories/"
 
 # now call the alias
@@ -376,13 +370,13 @@ nano .bash_profile
 
 ### The $PATH environment variable
 
-Another very important environment variable is `$PATH`, which stores a list of directories that tells bash where specific programs that we want to be available to us are stored. Programs are all essentially just files, and bash needs to know where these files are in order to run the commands as we call them.
+Another very important environment variable is `$PATH`, which stores a list of directories that tells bash where specific programs that we want to be available to us are stored. Programs are executable files, and bash needs to know where these files are in order to run the commands as we call them.
 
 The list is stored as strings separated by colons, so that many directories can be defined. Use `echo` to print `$PATH` variable.
 ```shell
 echo $PATH
 
-# make more readable using 'tr' to swap the colons for newlines
+# Make the output more readable using 'tr' to swap the colons for newlines
 echo $PATH| tr ":" "\n"
 ```
 
@@ -395,12 +389,12 @@ We will create an executable file and add it to our $PATH in another lesson, how
 export PATH="~/location/of/new/executables:$PATH"
 ```
 
-A command for finding where a program lives in the $PATH is the `which` command. This can be useful for debugging environment issues as they arise when trying to use or instal new software. Check where the executable for the `echo` command is located:
+A command for finding where a program lives in the $PATH is the `which` command. This can be useful for debugging environment issues as they arise when trying to use or install new software. Check where the executable for the `echo` command is located.  The `which` command :
 ```r
 which echo
 ```
 
-Many commands like `ls` will also accept wildcards, which are special character instances that allow you to do things like operate on multiple files at one time, or search for specific patterns (either in files or file names). We don't have time to review all the wildcard characters, however the most commonly used one is the asterisk, which can be used to represent any number of characters.
+Many commands like `ls` will also accept wildcards, which are special character instances that allow you to do things like operate on multiple files at one time, or search for specific patterns (either in files or file names). A wildcard character is the asterisk, which can be used to represent any number of characters.
 ```bash
 # list all files in my current directory with the file extension .txt
 ls *.txt
@@ -413,13 +407,14 @@ You will notice the prompt in your terminal when you are logged onto discovery s
 We will do this now by loading a new environment with the tool `conda`. We have pre-built this `conda` environment for you such that all of the tools you will need have been loaded into this environment, you should have created this environment with the commands included in the welcome and setup email. Tomorrow we will talk more about how to create your own custom `conda` environment.
 
 ```bash
-
 # Load conda environment
 conda activate bioinfo
+# Check your PATH compared to before activating, note the additional binaries folder
+echo $PATH| tr ":" "\n"
 ```
 This should change the word at the beginning of your prompt from `(base)` to the name of the conda environment that you just loaded `(bioinfo)`.
 
-> As we move through the subsequent lessons, we will introduce more complex bash commands in order to manipulate common bioinformatics file types. If you are ever confused about what a command does, remember you can always use `man` to check out the manual page (or google it). It you are confused about how commands are used in conjunction with each other, it can also be helpful to break them down and run parts individually, in order to understand what the constituent parts do.
+> As we move through the subsequent lessons, we will introduce more complex bash commands in order to manipulate common bioinformatics file types. If you are ever confused about what a command does, remember you can always use `man` to check out the manual page (or Google it). It you are confused about how commands are used in conjunction with each other, it can also be helpful to break them down and run parts individually, in order to understand what the constituent parts do.
 
 ### Breakout room activities
 

@@ -14,7 +14,7 @@ We have designed the schedule so that breaks are essentially built into the brea
 ## Day1
 - **12:00-12:30 - Intro to workshop.**
 - **12:30-1:00 - Intro. to bioinformatics (lecture, Dr. Owen Wilkins)**
-- **1:05-2:00 - Recap of UNIX shell/Bash**
+- **1:05-2:00 - The UNIX shell/Bash**
 - **2:05-2:55 - Intro. to next-generation sequencing (lecture, Dr. Fred Kolling)**
 - **3:00-4:00 - Intro-to-NGS-data-analysis-I (FASTQ files)**  
 - **4:00-5:00 - Intro-to-NGS-data-analysis-II (BAM/SAM/CRAM files)**
