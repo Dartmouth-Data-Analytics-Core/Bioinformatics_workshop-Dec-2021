@@ -10,7 +10,7 @@ If you get lost, or do not have enough time to finish the commands before we mov
 # go to your scratch directory (e.g. /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/)
 
 # copy files 
-cp -r /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /scratch/omw/
+cp -r /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /dartfs-hpc/scratch/omw/
 ```
 
 ## Raw NGS data, FASTQ file format
