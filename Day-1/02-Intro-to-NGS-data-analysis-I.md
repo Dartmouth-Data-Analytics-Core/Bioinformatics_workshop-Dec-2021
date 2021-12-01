@@ -88,8 +88,6 @@ Given the size of these files, if everyone were to copy them to their home direc
 ```bash
 # move into your fundamentals_of_bioinformatics directory
 cd /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics
-### OR use the alias you made 
-biow
 
 # lets keep our data organized and make a folder for these raw fastq files
 mkdir raw_fastq
@@ -101,7 +99,7 @@ ln -s /dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/*fastq.gz ./
 # Check that your command worked
 ls -lah
 ```
-Sym-linked files are similar to an alias they are a file that points to a location. Any modifications made to the original files in `/dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/` will also be seen in the symlink files. Moving the original files or deleting the original files will cause the symlinks to malfunction.
+Any modifications made to the original files in `/dartfs-hpc/scratch/fund_of_bioinfo/raw_fastq_files/` will also be seen in the symlink files. Moving the original files or deleting the original files will cause the symlinks to malfunction.
 
 Remember, because your symlinks are pointing to something in the scratch directory these files are slated to be deleted in 45 days, at which point your symlinks will still exist but no longer function properly.
 
