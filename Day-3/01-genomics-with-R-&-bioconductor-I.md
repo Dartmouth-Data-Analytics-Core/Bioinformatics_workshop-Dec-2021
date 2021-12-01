@@ -183,8 +183,6 @@ RLE-style encoding is employed by the `bigWig` file format to allow efficient st
 ```r
 # index GRange object for specific elements
 gr[1]
-gr[[1]]
-gr[1][["r-1"]]
 
 # view the top X regions of interest
 head(gr, n=5)
@@ -372,18 +370,12 @@ Lets use `Gviz` to create a simple visualization of a specific genomic region, s
 
 ```r
 # create an annotation track from the Granges object for H3K27ac
-fr_h3k27ac_track <- AnnotationTrack(fr$h3K27ac,
-                                    chromosome = "chr17", start = 9e6, end = 10e6,
-                                    name = "Forebrain - H3K27ac",
-																		stacking = "dense",
-																		col = "indianred")
+fr_h3k27ac_track <- AnnotationTrack(fr$h3K27ac, chromosome = "chr17", start = 9e6, end = 10e6,
+                                    name = "Forebrain - H3K27ac", stacking = "dense", col = "indianred")
 
-# do the same for heart H3K27ac
-hr_h3k27ac_track <- AnnotationTrack(ht$h3K27ac,
-                                    chromosome = "chr17", start = 9e6, end = 10e6,
-                                    name = "Heart - H3K27ac",
-																		stacking = "dense",
-																		col = "cornflowblue")
+# do the same for heart H3K27ac - this takes ~ 1 minute
+hr_h3k27ac_track <- AnnotationTrack(ht$h3K27ac, chromosome = "chr17", start = 9e6, end = 10e6,
+                                    name = "Heart - H3K27ac", stacking = "dense", col = "cornflowerblue")
 
 # create a genomic axis object to add to plot
 gtrack <- GenomeAxisTrack()

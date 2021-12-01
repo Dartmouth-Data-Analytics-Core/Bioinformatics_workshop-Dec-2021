@@ -134,7 +134,7 @@ if (!any(rownames(installed.packages()) == "GenomicRanges")){
       install.packages("BiocManager")
   BiocManager::install("GenomicRanges")
 }
-library(biomaRt)
+library(GenomicRanges)
 
 if (!any(rownames(installed.packages()) == "Gviz")){
   if (!requireNamespace("BiocManager", quietly = TRUE))

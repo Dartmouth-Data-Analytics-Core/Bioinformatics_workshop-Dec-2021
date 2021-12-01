@@ -307,7 +307,7 @@ mkdir fund_of_bioinfo/
 cd fund_of_bioinfo/
 
 # use secure copy (scp) to download the files to your local machine - remember to change the netID before you paste this command into the terminal
-scp netID@discovery7.dartmouth.edu:/dartfs-hpc/scratch/fundamentals_of_bioinformatics/fastqc_results/multiqc_report.html .
+scp netID@discovery7.dartmouth.edu:/dartfs-hpc/scratch/NETID/fundamentals_of_bioinformatics/fastqc_results/multiqc_report.html .
 ```
 
 You can find the MultiQC report run on the complete dataset across all samples in the dataset in the github repository, under `QC-reports`. Lets open it and explore our QC data. If the `scp` command did not work for you there is a copy of the multiqc report in the github repo you downloaded under `Day-1/data/multiqc_report.html`.

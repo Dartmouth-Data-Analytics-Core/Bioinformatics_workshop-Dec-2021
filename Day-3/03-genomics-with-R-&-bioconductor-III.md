@@ -241,8 +241,8 @@ chr1 <- genome$chr1
 length(chr1)
 
 # subset it
-chr1[1:100]
-chr1[100498:100598]
+subseq(chr1, 1, 100)
+subseq(chr1, 100498, 100598)
 
 # what is the frequency of each base in your sequence
 alphabetFrequency(chr1, baseOnly=TRUE, as.prob=TRUE)
@@ -273,10 +273,10 @@ extraCols_narrowPeak <- c(signalValue = "numeric", pValue = "numeric",
                           qValue = "numeric", peak = "integer")
 
 # read in peaks
-bed <- import("data/CTCF-forebrain-mm10.bed",
-							format="BED",
-							extraCols = extraCols_narrowPeak,
-							genome = "mm10")
+bed <- import("CTCF-forebrain-mm10.bed",
+		format="BED",
+		extraCols = extraCols_narrowPeak,
+		genome = "mm10")
 
 # extract sequences for peak regions and print to console
 ctcf_seqs <- getSeq(genome, bed)
