@@ -117,7 +117,7 @@ Now lets use `EnsDb.Hsapiens.v86` to retrieve annotation data for our genes and 
 
 ```r
 # using mapIds but only to get gene symbol
-gene.symbols.2 <- mapIds(EnsDb.Hsapiens.v86, keys = head(entrez.ids), column = c("SYMBOL"), keytype="ENSEMBL")
+gene.symbols.2 <- mapIds(EnsDb.Hsapiens.v86, keys = head(entrez.ids), column = c("SYMBOL"), keytype="GENEID")
 
 # how long is it
 length(gene.symbols.2)
