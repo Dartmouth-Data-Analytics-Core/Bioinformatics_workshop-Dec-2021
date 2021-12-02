@@ -9,8 +9,12 @@ Examples of common annotation tasks include:
 * Identifying coding variants from a WGS/WES dataset based on transcriptional context (e.g. coding variants)
 * Annotation of genomic context for peak set from ChIP- or ATAC-seq experiment (e.g. promoter, intron, exon, intergenic)
 
-In this lesson, we will introduce the major Bioconductor packages for genome annotation and how you might use them to achieve common tasks in NGS data analysis.
+In this lesson, we will introduce the major Bioconductor packages for genome annotation and how you might use them to achieve common tasks in NGS data analysis. We will start by setting up our working directory to point to the Day-3/data/ folder.
 
+```r
+## You may need to ammend this path to the full path of where you have cloned the github repo on your machine
+setwd("Bioinformatics_workshop-Dec-2021/Day-3/data")
+```
 ---
 
 #### Key annotation packages in Bioconductor:
@@ -117,7 +121,7 @@ Now lets use `EnsDb.Hsapiens.v86` to retrieve annotation data for our genes and 
 
 ```r
 # using mapIds but only to get gene symbol
-gene.symbols.2 <- mapIds(EnsDb.Hsapiens.v86, keys = head(entrez.ids), column = c("SYMBOL"), keytype="GENEID")
+gene.symbols.2 <- mapIds(EnsDb.Hsapiens.v86, keys = entrez.ids, column = c("SYMBOL"), keytype="GENEID")
 
 # how long is it
 length(gene.symbols.2)
@@ -126,7 +130,7 @@ length(gene.symbols.2)
 table(is.na(gene.symbols.2))
 ```
 
-Many fewer NAs are identified, meaning we were able to annotate more of the genes in our dataset with gene symbols. There are still a few missing though, why might this be?
+Fewer NAs are identified, meaning we were able to annotate more of the genes in our dataset with gene symbols. There are still a few missing though, why might this be?
 
 To ensure we annotate all possible genes, we need to make sure we are using annotation data from the genome annotation used to in the read count quantification process for these data (think back to the `GTF` file we used during alignment and quantification).
 
@@ -199,7 +203,8 @@ Gather the metadata ... OK
 Make the TxDb object ... OK
 
 #### DO RUN ####
-txdb <- loadDb("data/TxDb.Hsapiens.Ensembl.101.db")
+### If you have not already done so you will first need to unzip this file before loading it
+txdb <- loadDb("TxDb.Hsapiens.Ensembl.101.db")
 txdb
 ```
 
@@ -231,6 +236,7 @@ ge <- genes(txdb)
 prom <- promoters(txdb, upstream=1000, downstream=0)
 
 # non-overlapping introns or exons
+# these commands each take a minute to run
 exonicParts(txdb)
 intronicParts(txdb)
 ```
@@ -321,13 +327,13 @@ sum.tab
 round(prop.table(sum.tab), digits = 2)
 
 # quick visualization
-barplot(round(prop.table(table(coding$LOCATION)), digits = 2))
+barplot(round(prop.table(table(vars$LOCATION)), digits = 2))
 ```
 
 It would also be nice to have the gene symbols included in the TxDb object. We can add gene symbols in the same way we did using above using annotation data downloaded from Biomart. For these data, we need annotation release 101, which has been provided for you in the `Day-3/data/` directory.
 ```r
 #
-anno <- read.table("data/GRCh38.p12_ensembl-101.txt", sep="\t", header=TRUE, stringsAsFactors = F)
+anno <- read.table("GRCh38.p12_ensembl-101.txt", sep="\t", header=TRUE, stringsAsFactors = F)
 
 # return indicies of ENSEMBL geneIDs from variants annotation in the Ensembl v101 annotation data
 indicies_of_matches <- match(vars$GENEID, anno$Gene.stable.ID)
@@ -336,10 +342,10 @@ indicies_of_matches <- match(vars$GENEID, anno$Gene.stable.ID)
 vars$GENE.SYMBOL <- anno$Gene.name[indicies_of_matches]
 ```
 
-Adding gene symbols allows us to easily search for genes of interest, by their transcript ID, gene ID, or gene symbol. We demonstrate this below by restricting to variants identified in the *CD97B* gene.
+Adding gene symbols allows us to easily search for genes of interest, by their transcript ID, gene ID, or gene symbol. We demonstrate this below by restricting to variants identified in the *CD79B* gene.
 ```r
 # exmaple gene of interest:
-vars_cd79b <- vars[vars$GENE.SYMBOL %in% "CD97B",]
+vars_cd79b <- vars[vars$GENE.SYMBOL %in% "CD79B",]
 vars_cd79b
 
 # check how many of each variant type
