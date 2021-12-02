@@ -218,7 +218,7 @@ In your terminal window **on your local machine** navigate to where you want to 
 **On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (preferably in the same location as you downloaded the setup materials) with the folloing command: 
 
 ```bash
-git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop/
+git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/
 ```
 
 ---
