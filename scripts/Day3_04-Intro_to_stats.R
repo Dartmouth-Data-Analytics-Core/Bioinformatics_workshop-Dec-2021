@@ -1,7 +1,7 @@
 ## 04-Intro to Stats
 
-setwd("/Users/omw/Documents/GitHub/Bioinformatics_workshop/Day-3/data/")
-
+setwd("Bioinformatics_workshop-Dec-2021/Day-3/data")
+##############################
 # read in data
 fpkm <- read.table("fpkm_sub.txt", stringsAsFactors = FALSE, header=TRUE)
 meta <- read.delim("metadata_sub.tsv", stringsAsFactors = FALSE, header = TRUE)
@@ -21,8 +21,7 @@ vars <- rev(vars[order(vars)])
 # plot variance for genes accross samples
 plot(vars, las = 1, main="Sample gene expression variance", xlab = "Gene", ylab = "Variance")
 abline(v=5000, col="red")
-
-########################################
+##############################
 # perform PCA and order by variance
 vars_sub <- vars[1:5000]
 
@@ -40,7 +39,7 @@ pca_df$sample_ids <- meta$File.accession
 
 # extract percent variance explained by each PC
 percentVar <- pca$sdev^2/sum(pca$sdev^2)
-barplot(percentVar[1:10])
+
 # add colors for plotting to df
 cols <- grDevices::rainbow(length(levels(pca_df$tissue)))
 
@@ -65,17 +64,17 @@ plot(pca_df[, 1], pca_df[, 2],
 # add a legend to the plot
 legend(1.5, 105, levels(pca_df$tissue), pch = 16, col = cols, cex = 0.9)
 
-########################################
-# subset metadata to 5 tissues of interest
+##############################
+# subset mnetadata to 5 tissues of interest
 meta_ord <- meta[meta$Biosample.term.name=="forebrain" |
-                 meta$Biosample.term.name=="heart" |
-                 meta$Biosample.term.name=="limb" |
-                 meta$Biosample.term.name=="liver" |
-                 meta$Biosample.term.name=="intestine", ]
+                   meta$Biosample.term.name=="heart" |
+                   meta$Biosample.term.name=="limb" |
+                   meta$Biosample.term.name=="liver" |
+                   meta$Biosample.term.name=="intestine", ]
 
 # subset FPKM matrix to contain the same subset of samples
 log_fpkm_sub <- log_fpkm[, c(colnames(log_fpkm) %in%  meta_ord$File.accession)]
-########################################
+##############################
 # calculate variance of each gene across samples for new subset of data
 vars <- apply(log_fpkm_sub, 1, var)
 
@@ -87,7 +86,7 @@ plot(vars, las = 1, main="Sample gene expression variance",
      xlab = "Gene", ylab = "Variance")
 # add vertical line
 abline(v=1000, col="red")
-########################################
+##############################
 # subset var to only top 2000 genes with most variance
 vars_sub <- vars[1:2000]
 
@@ -102,8 +101,7 @@ mat_scaled = t(apply(mat, 1, scale))
 
 # set column names for this matrix (they were removed during transposition)
 colnames(mat_scaled) <- colnames(mat)
-head(mat)
-########################################
+##############################
 # load the pheatmap package
 library(pheatmap)
 
@@ -118,3 +116,4 @@ pheatmap(mat_scaled,
          cluster_cols = TRUE,
          clustering_method = "average",
          clustering_distance_cols = "correlation")
+##############################
