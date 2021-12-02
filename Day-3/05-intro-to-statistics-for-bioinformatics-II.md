@@ -130,11 +130,11 @@ plot(-log10(p.value), las = 1,
 
 # add a horizontal line
 abline(h=-log10(0.05), col = "red", lty = 2)
-text(600, 4.5, "Bonferroni")
+text(600, 1.5, "Original threshold")
 
 # add a horizontal line
 abline(h=-log10(0.05/1000), col = "red", lty = 2)
-text(600, 1.5, "Original threshold")
+text(600, 4.5, "Bonferroni")
 ```
 
 <p align="center">
@@ -171,7 +171,7 @@ For example, if an individual gene for an RNA-seq differential expression analys
 You can calculate q-values using the Bioconductor package `qvalue`.
 ```r
 #BiocManager::install("qvalue")
-# library(qvalue)
+library(qvalue)
 qvalue(p.value)$qvalues
 p.adj.fdr <- qvalue(p.value)$qvalues
 
