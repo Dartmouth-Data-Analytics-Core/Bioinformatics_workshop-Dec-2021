@@ -6,9 +6,9 @@ Before you attend the workshop there are a couple of things we would like you to
 
 ## The terminal emulator ##
 
-A terminal emulator is a more streamlined way of navigating a computational environment (once you get the hang of it). We will cover some basic command to help orient you with using the terminal to interact with your machine on Day 1 of the workshop.
+A terminal emulator is a more streamlined way of navigating a computational environment (once you get the hang of it). We will cover some basic commands to help orient you with using the terminal to interact with your machine on Day 1 of the workshop.
 
-If you are using a Mac there is a terminal emulator program pre-installed on your machine, if you are using another OS we have included some links to popular terminal emulator porgrams below. Please select one of them download the progam and open it up for the next step.
+If you are using a Mac there is a terminal emulator program pre-installed on your machine, if you are using another OS we have included some links to popular terminal emulator programs below. Please select one of them download the program and open it up for the next step.
 
 Operating system| Terminal emulators
 ---|---
@@ -20,7 +20,7 @@ Linux| Konsole, Terminal, etc. (should be pre-installed but depends on the deskt
 
 ## The discovery HPC system ##
 
-For those of you that indicated that you did not have an account on *discovery* you will need to request one [here](https://rc.dartmouth.edu) **AT LEAST** two (business) days before the workshop begins. There is a green button at the top of the page that says **Request an Accoun**, once you click the button you will be prompted to log in with your netID and password and then you can fill in the form to request your account.
+For those of you that indicated that you did not have an account on *discovery* you will need to request one [here](https://rc.dartmouth.edu) **AT LEAST** two (business) days before the workshop begins. There is a green button at the top of the page that says **Request an Account**, once you click the button you will be prompted to log in with your netID and password and then you can fill in the form to request your account.
 
 Once you have a discovery account you can follow along with this video [here](https://youtu.be/VoHBlblsQfg) to log onto discovery using the command line.
 
@@ -36,7 +36,7 @@ You will be prompted for a password and when you start typing nothing will show 
 
 ## Setting up a Conda Environment ## 
 
-Once you are logged onto discovery you can load the all of the software we will need for the workshop. 
+Once you are logged onto discovery you can load all of the software we will need for the workshop. 
 
 Conda is a package management system that helps you find, install, and organize groups of packages needed for a particular task. Conda environments are really useful when working on HPC environments like Dartmouth's Discovery system because you can install packages locally without needing administrator permission. Conda environments are also useful for project continuity, the versions of the packages that you install in your environment and all of their dependencies will remain the same (unless you update them). We will be using a conda environment to make sure we all have the same version of many different bioinformatics software programs available to us. 
 
@@ -49,7 +49,7 @@ source /optnfs/common/miniconda3/etc/profile.d/conda.sh
 We recommend that you add the above line of code to your `.bashrc` file in your home directory, otherwise you will need to run this command each time you start a new session on discovery. To do this use the `nano` text editing program on discovery (this comes pre-installed) to copy the line above into your `.bashrc` file (we will talk more about what this file is and how to use it on Day 1).
 
 ```bash
-# open the file with the text editor
+# open the file with the Nano text editor
 nano .bashrc
 
 # copy this line to the file : source /optnfs/common/miniconda3/etc/profile.d/conda.sh
@@ -58,7 +58,7 @@ nano .bashrc
 ```
 
 
-Next you will have to run the following command to create a .conda/ directory in your home drive. This directory will store all of your personal conda environments, including the one we are about to build for this workshop. **You only have to run this command once to make this directory, so it does not need to be added to your .bashrc file.**
+Next you will have to run the following command to create a .conda/ directory in your home directory. This directory will store all of your personal conda environments, including the one we are about to build for this workshop. **You only have to run this command once to make this directory, so it does not need to be added to your .bashrc file.**
 
 ```bash
 cd ~
@@ -71,13 +71,13 @@ Lastly you will need to create the conda environment that we will be using for t
 conda env create -f /dartfs-hpc/scratch/fund_of_bioinfo/environment.yml
 ```
 
-When you are ready activate the conda environment, which you will need for the work we are doing for days 1 and 2 of the workshop you can use the following command. 
+When you are ready activate the conda environment, which you will need for the work we are doing for days 1 and 2 of the workshop, you can use the following command. 
 
 ```bash
 conda activate bioinfo
 ```
 
-You will see that the activate command has worked when it reads (fund_of_bioinfo) rather than (base) to the left of the prompt. When you are finished using a conda environment it is good practice to deactivate your session with the following command.
+You will see that the activate command has worked when it reads (bioinfo) rather than (base) to the left of the prompt. When you are finished using a conda environment it is good practice to deactivate your session with the following command.
 
 ```bash
 conda deactivate
@@ -210,12 +210,12 @@ sessionInfo()
 
 ## Downloading the data ##
 
-The commands that you will be following can be found in markdown `(.md)` files where there is a brief description of each command and how it is applied to the data and what it does followed by an example command that you can copy and paste into the terminal window. The majority of day 1 and 2 will be using the terminal window on your local machine, with an open `ssh` connection to discovery, as we will be running `bash` code. For some of day 2 and most of day 3 you will be using RStudio on your local machine to run the commands in the  markdown files (`.md`) located in this GitHub repo. 
+The commands that you will be following can be found in markdown `(.md)` files where there is a brief description of each command and how it is applied to the data and what it does followed by an example command that you can copy and paste into the terminal window. The majority of day 1 and 2 will be using the terminal window on your local machine, with an open `ssh` connection to discovery, as we will be running `bash` code. For some of day 2 and most of day 3 you will be using RStudio on your local machine to run the commands in the markdown files (`.md`) located in this GitHub repo. 
 
 
 In your terminal window **on your local machine** navigate to where you want to download the files needed for this workshop. 
 
-**On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (preferably in the same location as you downloaded the setup materials) with the folloing command: 
+**On Monday** before you log onto the first zoom session we will make the workshop materials public and you should download those to your local machine (preferably in the same location as you downloaded the setup materials) with the following command: 
 
 ```bash
 git clone https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/
