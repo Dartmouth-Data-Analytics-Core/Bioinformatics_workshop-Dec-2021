@@ -13,14 +13,14 @@ Make a new directory to work in:
 #log onto the q10 node
 mksub -I -l walltime=5:00:00 -l nodes=q10
 
-# go to our home dir for the wrkshop
+# go to our home dir for the workshop
 cd /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/
 
 # IF YOU DIDN'T HAVE TIME TO FINISH TRIMMING COPY THOSE FILES NOW 
 mkdir trim
 cp /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/trim/
 
-# make the directroy and cd into it 
+# make the directory and cd into it 
 mkdir aligned
 cd aligned
 ```
@@ -115,7 +115,7 @@ As discussed above, numerous aligners exist, consisting of both ***splice-aware*
 
 
 **What input do I need for an alignment?**  
-At miniumum:  
+At minimum:  
 - `FASTQ` file(s)
 - A reference genome (`.fasta`)
 
@@ -147,7 +147,7 @@ The alignment section contains a number of 'slots' for each read alignment that 
 	width="95%" height="95%" />
 </p>
 
-SAM/BAM/CRAM files can be viewed, queried, and maniuplated using the [Samtools software suite](http://www.htslib.org/), which we will explore the usage of in more detail later in this lesson.
+SAM/BAM/CRAM files can be viewed, queried, and manipulated using the [Samtools software suite](http://www.htslib.org/), which we will explore the usage of in more detail later in this lesson.
 
 
 #### Notes on select SAM fields:
@@ -155,13 +155,13 @@ SAM/BAM/CRAM files can be viewed, queried, and maniuplated using the [Samtools s
 **FLAG:**  
 Encodes important information about the read, for example, is it a *primary*, *secondary*, or *supplementary* alignment. Since a single read will likely have a number of properties that we want to *'flag'*, SAM files use a special way of encoding the FLAG field to pack as much information as possible into a single number. While we won't go into detail on this here, SAM/BAM file use a bit-wise system to combine information across flags into a single integer.
 
-I encourage you to go read more about FLAGs and how they are specified in the SAM/BAM documentation.The Broad institute also provides an [excellent tool](https://broadinstitute.github.io/picard/explain-flags.html) for decomposing SAM flags into the properties of the read that make up a specific `FLAG` value.
+I encourage you to go read more about FLAGs and how they are specified in the SAM/BAM documentation. The Broad institute also provides an [excellent tool](https://broadinstitute.github.io/picard/explain-flags.html) for decomposing SAM flags into the properties of the read that make up a specific `FLAG` value.
 
 This command will provide basic information on FLAGs from samtools.
 ```bash
 samtools flags
 ```
-The values shown here relate the the [hexadecimal system](https://www.electronics-tutorials.ws/binary/bin_3.html)
+The values shown here relate to the [hexadecimal system](https://www.electronics-tutorials.ws/binary/bin_3.html)
 
 **MAPQ:**  
 Corresponds to the quality of the mapping. These are calculated in the same way as the Phred scores `Q = -10 x log10(P)`, although are generally considered to be a best guess form the aligner. A MAPQ of 255 is used where mapping quality is not available. Some aligners also use specific values to represent certain types of alignments, which may affect use of downstream tools, so it is worth understanding those that are specific to your aligner.
@@ -182,11 +182,11 @@ So for example, alignment in row 3 of our SAM file example above (`5S6M`) would 
 
 ### Generating alignments
 
-Since the reads we have been working with were generated as part of a eukaryotic RNA-seq experiment, we ned to use a splice aware aligner that can generate gapped alignments. [STAR](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) (Spliced Transcripts Alignment to a Reference) is a  flexible and efficient short read aligner. We will use STAR as a general example of aligning short reads to a reference genome. Other short read aligners (e.g. `bwa` and `bowtie/bowtie2`) will use different syntax on the command line and you should carefully read the documnetation for the aligner you plan to use.
+Since the reads we have been working with were generated as part of a eukaryotic RNA-seq experiment, we need to use a splice aware aligner that can generate gapped alignments. [STAR](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf) (Spliced Transcripts Alignment to a Reference) is a  flexible and efficient short read aligner. We will use STAR as a general example of aligning short reads to a reference genome. Other short read aligners (e.g. `bwa` and `bowtie/bowtie2`) will use different syntax on the command line and you should carefully read the documentation for the aligner you plan to use.
 
 #### Constructing a genome index
 
-Short read aligners require you to create an index of your reference genome before you can conduct an alignment. The index The index is in principle similar to how one might index a book, so that specific items or information can be found more quickly. For the genome index, we are indexing the genome so that the aligner can narrow down where a read may map to and speed up mapping.
+Short read aligners require you to create an index of your reference genome before you can conduct an alignment. The index is in principle similar to how one might index a book, so that specific items or information can be found more quickly. For the genome index, we are indexing the genome so that the aligner can narrow down where a read may map to and speed up mapping.
 
 Index generation can be time consuming, so we are providing you with a pre-built genome index consisting of only chromosome 20 (hg38). Alignments will therefore only be generated for this chromosome. The code chunk below shows example usage of STAR to create a STAR index of hg38.
 
@@ -234,7 +234,7 @@ Option details:
 - `--genomeDir`: the path to the directory with genome indices
 - `--readFilesIn`: read files to map to reference alignment
 - `--readFilesCommand`: uncompression command to apply to read files
-- `--sjdbGTFfile`: the path to the annotation file that includes cooordinates of splice-junctions
+- `--sjdbGTFfile`: the path to the annotation file that includes coordinates of splice-junctions
 - `--runThreadN`: number of threads to use in the run
 - `--outSAMtype`: (SAM/BAM unsorted/ BAM SortedByCoordinate)
 - `--outFilterType`: how mapped reads will be filtered (normal/BySJout)
@@ -242,7 +242,7 @@ Option details:
 
 > *NOTE:* It usually makes sense to set `outSAMtype` to `BAM SortedByCoordinate`, so that I do not need to convert the default SAM file output by STAR to BAM, then sort it. However, since we want to look inside the file at the alignments, we are creating a SAM first, and will convert to a BAM afterwards.
 
-As with most aligning, there are many options that can be set to control how read mapping is performed and define properties of alignments that can be generated. The setting you need to use depend you your data type and analysis workflow. Always read the documentation for the aligner you are using in detail.
+As with most aligning, there are many options that can be set to control how read mapping is performed and define properties of alignments that can be generated. The settings you need to use depend you your data type and analysis workflow. Always read the documentation for the aligner you are using in detail.
 
 **Alignment output**
 
@@ -253,7 +253,7 @@ Once the alignment has finished, you should have a number of new files in your d
 - `Log.progress.out` - a summary file that is updated with key mapping statistics as the run progresses
 - `SJ.out.tab` - high-confidence splice-functions
 
-There are a number of ways that alignment quality can be assessed, many of them depending on your data type (e.g. RNA-seq, ChIP-seq), and you should always do a detailed post-alignment QC analysis.  Regardless of data-type, the most important alignment QC metric is generally the percentage of uniquely mapping reads. For STAR alignments, this metric is included in the `Log.final.out` file.
+There are a number of ways that alignment quality can be assessed, many of them depending on your data type (e.g. RNA-seq, ChIP-seq), and you should always do a detailed post-alignment QC analysis.  Regardless of data type, the most important alignment QC metric is generally the percentage of uniquely mapping reads. For STAR alignments, this metric is included in the `Log.final.out` file.
 
 ```bash
 cat SRR1039508.Log.final.out
@@ -261,7 +261,7 @@ cat SRR1039508.Log.final.out
 
 ### Working with SAM/BAM files
 
-[Samtools](http://www.htslib.org/doc/samtools.html) is an extensive software suite that provides tools for working with alignment files. We will use Samtools to explore our alignments, and demonstrate some common tasks that can be performed using this software. While our alignments were generated from RNA-seq reads, the samtools usage examples below will be aplpiciable to analysis of any NGS data type.
+[Samtools](http://www.htslib.org/doc/samtools.html) is an extensive software suite that provides tools for working with alignment files. We will use Samtools to explore our alignments, and demonstrate some common tasks that can be performed using this software. While our alignments were generated from RNA-seq reads, the samtools usage examples below will be appliciable to analysis of any NGS data type.
 
 Using samtools with the `view` command and `-H` flag allows you to view the header line of a SAM file.
 ```bash
