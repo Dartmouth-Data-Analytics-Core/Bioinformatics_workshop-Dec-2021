@@ -4,7 +4,7 @@
 
 ### Statistical inference
 
-Before we discuss supervised methods, it is useful to first discuss the fundamental concepts behind statistical inference, and importantly hypothesis testing, as we build the hypothesis testing framework to infer biological insights from data that has been modeled using a supervised statistical approaches.
+Before we discuss supervised methods, it is useful to first discuss the fundamental concepts behind statistical inference, and importantly hypothesis testing, as we build the hypothesis testing framework to infer biological insights from data that has been modeled using supervised statistical approaches.
 
 **Statistical inference** refers to the process we use to draw conclusions from models and procedures applied to the sample of the population we are studying, and is often broken down into two parts:
 - **estimation** where we learn or determine a population parameter through fitting a statistical model fitted to our data (e.g. though using supervised learning approaches)
@@ -37,7 +37,7 @@ Using quantities that we observe from our sample of the population (means, stand
   <img src="../figures/t-dist.png" height="70%" width="70%"/>
 </p>
 
-By assuming this test-statistic follows a know distribution such as the z- or t-distribution, we know how much to tolerate deviations that could be due to chance before rejecting the null hypothesis. Larger test-statistic values are less probable under the null hypothesis, meaning we are more likely to reject the null when the test-statistic value is high.
+By assuming this test-statistic follows a known distribution such as the z- or t-distribution, we know how much to tolerate deviations that could be due to chance before rejecting the null hypothesis. Larger test-statistic values are less probable under the null hypothesis, meaning we are more likely to reject the null when the test-statistic value is high.
 
 Using the t-statistic and the *degrees of freedom* (sample number - 1) the P-value is determined. If the P-value is < our threshold (&alpha;), we will reject the null and accept the alternative hypothesis. By setting &alpha; to 0.05, this means we will interpret results as meaningful if they have at most a 5 in 100 probability of being due to chance.
 
@@ -116,11 +116,11 @@ We address this problem through *multiple testing correction*, which describes a
 
 #### Bonferroni correction
 
-The simplest multiple testing correction method is the *Bonferonni* correction, which seeks to control the family-wise error rate (FWER): *the probability of making at least 1 false positive claim.*
+The simplest multiple testing correction method is the *Bonferroni* correction, which seeks to control the family-wise error rate (FWER): *the probability of making at least 1 false positive claim.*
 
 To control for the FWER, the &alpha; threshold you have chosen for your experiment is divided by the number of tests performed, and any P-value must achieve significance below this threshold to be described as significant. In our example above where we ran 1000 tests at a 5% significance level, the correct alpha would be 0.05/1000 = 5e-5, so any P-value needs to be < 5e-5 to be deemed significant.
 
-We can demonstrate this by plotting the Bonferonni threshold on the plot for our previous example:
+We can demonstrate this by plotting the Bonferroni threshold on the plot for our previous example:
 ```r
 # visualize P-value magnitude
 plot(-log10(p.value), las = 1,
@@ -141,7 +141,7 @@ text(600, 4.5, "Bonferroni")
   <img src="../figures/hypo-test-22.png" height="180%" width="80%"/>
 </p>
 
-We can also calculate a new set of P-values that have been adjusted by the Bonferonni method (P-values are multiplied by the number of comparisons), which can be evaluated at the 0.05 significance value.
+We can also calculate a new set of P-values that have been adjusted by the Bonferroni method (P-values are multiplied by the number of comparisons), which can be evaluated at the 0.05 significance value.
 ```r
 # bonferroni correction
 p.adj.bonf <- p.adjust(p.value, method = "bonferroni")
@@ -315,7 +315,7 @@ coef(sum_lm1)[2,4]
 
 The *P*-value is very small, so we can reject the null, and conclude that Hba1c levels are associated with expression of gene X, and interpret the coefficient as a meaningful quantity.
 
-If the *P*-value does not pass the *a priori* significance threshold for your analysis, the coefficient should be ignored as that predcitor is **not associated** with the response variable.
+If the *P*-value does not pass the *a priori* significance threshold for your analysis, the coefficient should be ignored as that predictor is **not associated** with the response variable.
 
 You can always confirm by looking at the slope in a simple linear model. To demonstrate this, explore the example below for Gene Y and its relation to Hba1c levels.
 ```r
@@ -385,7 +385,7 @@ Looking at the model output, the *P*-value is very small, therefore we can concl
 
 Again, the coefficient tells us about the relationship between the predictor and the response. The coefficient for the predictor `subject_group` tells us that for each unit increase in this variable, there is an increase of 11.2 expression units for gene X.
 
-Since a 'unit increase' in `subject_group` simply means controls vs diseased subjects, we can interpret this as the difference in expression between controls and cases. This is analgous to how we would calculate a fold-change value in an RNA-seq analysis.
+Since a 'unit increase' in `subject_group` simply means controls vs diseased subjects, we can interpret this as the difference in expression between controls and cases. This is analogous to how we would calculate a fold-change value in an RNA-seq analysis.
 
 ---
 #### Multiple regression
@@ -429,4 +429,4 @@ While an comprehensive introduction to GLMs is beyond the scope of the workshop,
 
 If you plan to do a significant amount of downstream statistical analysis of NGS data, a working knowledge of GLMs will be extremely valuable.  
 
-> Note: We cover the fundamentals of how GLMs are used in the context of RNA-seq data analysis in our RNA-seq dat analysis workshop, typically offered in the summer.
+> Note: We cover the fundamentals of how GLMs are used in the context of RNA-seq data analysis in our RNA-seq data analysis workshop, typically offered in the summer.
