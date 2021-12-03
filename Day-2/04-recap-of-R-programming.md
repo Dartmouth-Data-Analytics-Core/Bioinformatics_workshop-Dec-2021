@@ -76,14 +76,14 @@ Programming in R is achieved by assigning values to *objects*. Objects are speci
 
 ### Vectors
 
-Vectors can only hold one type of data (a property referred to as being *atomic*).In R, five basic object classes exist:  
+Vectors can only hold one type of data (a property referred to as being *atomic*). In R, five basic object classes exist:  
 - numeric - real numbers (e.g. 1.342)
 - integer - whole numbers (e.g. 1.0)Â
 - character - strings of characters (e.g. letters, words, sentences)
 - logical - `TRUE` or `FALSE`
 - complex - numbers with 'imaginary' parts (not commonly used)
 
-Vectors can be created using the `c()` function (standing for *combine*), which concatenates its arguments together into a single vector. c() can be used in conjucntion with the assignment operator `<-` which tells R you want to assign that vector to a specific value.
+Vectors can be created using the `c()` function (standing for *combine*), which concatenates its arguments together into a single vector. c() can be used in conjunction with the assignment operator `<-` which tells R you want to assign that vector to a specific value.
 ```r
 # numeric
 x <- c(1.63, 2.25, 3.83, 4.99)
@@ -133,7 +133,7 @@ as.integer(x)
 
 Elements within vectors can be subset or indexed based on their position in that vector. Individual elements can also be assigned names, which can also be used to perform indexing.
 ```r
-# define a chacter string
+# define a character string
 x <- c("a", "b", "c", "d")
 
 # get elements 1 and 3
@@ -246,7 +246,7 @@ x < 2 | x ==4
 # which elements are less than 2 AND equal to 4
 x < 2 & x == 4
 ```
-**Note:** When combining operators, operator precedence applies, such that operators with high precedence will be evaluated first. For example, in the above line, `x < 2` will be evaluated before `x == 4` as the `<` has greater precedence than `==`. You can explore operator precendence in R using the man page returned by `?Syntax`.
+**Note:** When combining operators, operator precedence applies, such that operators with high precedence will be evaluated first. For example, in the above line, `x < 2` will be evaluated before `x == 4` as the `<` has greater precedence than `==`. You can explore operator precedence in R using the man page returned by `?Syntax`.
 
 Relational and logical operators can be used to subset a vector based on the values returned by the operator, and the brackets, as we did above for specific elements.
 ```r
@@ -457,7 +457,7 @@ Beyond the functions implemented in base R and packages that you install, R allo
 
 Defining your own functions can be useful when you want to perform a specific set of tasks repeatedly on some input(s) and return a defined output. Furthermore, once defined functions become part of your global environment and are therefore preserved for future use they minimize the need for repetitive code.
 
-Functions are created using using `function()` with the assignment operator `<-`. The arguments you use in the `function()` command define the variables that those arguments will be assigned to when you call the function. The last line of the function defines what output is returned.
+Functions are created by using `function()` with the assignment operator `<-`. The arguments you use in the `function()` command define the variables that those arguments will be assigned to when you call the function. The last line of the function defines what output is returned.
 
 Let's define a basic function as an example.
 ```r
@@ -597,7 +597,7 @@ When datasets get very large, these base R functions can be quite slow. Although
 
 The major functions in base R that exist for writing tabular data to file are `write.table()` and `write.csv()`. Similarly to the read functions, `write.table()` provides a more generalized solution to writing data that requires you to specify the separator value.
 
-In both functions, the first argyument specifies the object in your global environment that you wish to write to file. The second argument defines the absolute or relative path to the location you wish to save this file.
+In both functions, the first argument specifies the object in your global environment that you wish to write to file. The second argument defines the absolute or relative path to the location you wish to save this file.
 ```r
 # subset counts for first 5 columns and first 2000 genes
 counts_sub <- counts[1:2000, 1:5]
@@ -606,7 +606,7 @@ counts_sub <- counts[1:2000, 1:5]
 write.table(counts_sub, file = "all_counts_sub.txt", sep = "\t")
 ```
 
-In contrast, `read.csv()` does not require you to set the delimitor value, and by default writes data to comma separated value files (.csv).
+In contrast, `read.csv()` does not require you to set the delimiter value, and by default writes data to comma separated value files (.csv).
 ```r
 write.csv(counts_sub, file = "all_counts_sub.csv")
 ```
