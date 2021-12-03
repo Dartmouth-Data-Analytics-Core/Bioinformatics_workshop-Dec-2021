@@ -75,6 +75,20 @@ New genome builds are produced when significant improvements have been made to t
 
 Image Credit: [Broad Institute](https://gatk.broadinstitute.org/hc/en-us/articles/360041155232-Reference-Genome-Components#:~:text=GRCh38%2Fhg38%20is%20the%20assembly,complex%20variation%2C%20including%20HLA%20loci.&text=The%20ideogram%20is%20from%20the%20Genome%20Reference%20Consortium%20website%20and%20showcases%20GRCh38.)
 
+
+Reference genomes are generally distributed in FASTA file format, with separate entries for each chromosome/contig in the assembly. Use the code below to explore an a recent version of the human reference genome GRCh38/hg38.
+
+```bash
+# print head of FASTA file
+head /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+
+# print tail of FASTA file
+tail /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+
+# print only header lines for each FASTA record
+grep ">" /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.dna.primary_assembly.fa
+```
+
 #### Limitations of reference genomes
 
 However, there are a number imitations to using reference genomes in the ways described above:  
@@ -88,9 +102,21 @@ In recent years, long read sequencing technologies have allowed us to improve th
 
 #### Sources of reference genomes & genome annotations
 
-Reference genomes are hosted on a number of different websites, usually distributed in FASTA format, and often accompanied by genome annotations, which describe the gene/transcript models for that genome. These annotations are the product specific pipelines utilized by large-scale genome annotation projects.
+Reference genomes are hosted on a number of different websites and often accompanied by genome annotations, which describe the gene/transcript models for that genome. These annotations are the product specific pipelines utilized by large-scale genome annotation projects.
 
 For example, [*RefSeq (NCBI)*](https://ftp.ncbi.nlm.nih.gov/genomes/refseq/), [*UCSC*](https://hgdownload.soe.ucsc.edu/downloads.html), and [*Ensembl*](http://ftp.ensembl.org/pub/) all generate genome annotations based on specific annotation pipelines, and currently host annotations for a wide range of organisms.
+
+Genome annotations are most commonly distributed using the GTF (Gene transfer format) file format. We will explore this format in more detail later in the lesson, however we can briefly look at an example annotation file for hg38:
+```bash
+# print head of GTF file
+head /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.97.gtf
+
+# print tail of GTF file
+tail /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.97.gtf
+
+# print all lines containing CDK9
+grep "CDK9" /dartfs-hpc/scratch/fund_of_bioinfo/references/Homo_sapiens.GRCh38.97.gtf
+```
 
 The table below from the [UCSC website](https://genome.ucsc.edu/FAQ/FAQgenes.html#gene) highlights how different genome annotation from different annotation pipelines can be with respect to availability of transcript models for human genome build GRCh38/hg38 (as of March 2019).  
 
@@ -98,6 +124,7 @@ The table below from the [UCSC website](https://genome.ucsc.edu/FAQ/FAQgenes.htm
 <img src="../figures/genome-anno.png" title="xxxx" alt="context"
 	width="60%" height="60%" />
 </p>
+
 
 Several genome annotation project websites will also host current and archived versions of the reference genome sequence. For common genomes, the hosted reference genomes (and their sequences) are identical and come from the same source/submitter. For example, the human genome reference sequences hosted on NCBI, UCSC, and Ensembl all use the sequence provided by the Genome Reference Consortium (GRC)](https://www.ncbi.nlm.nih.gov/grc) which provides genome assemblies for human, mouse, zebrafish and chicken.
 
@@ -109,6 +136,8 @@ Most reference genomes and genome annotations can be downloaded through ftp site
 # the -a option denotes archive mode, the -P option indicates you want to show the progress as files are downloaded
 rsync -a -P rsync://hgdownload.soe.ucsc.edu/goldenPath/hg38/hg38Patch11/ ./
 ```
+
+The above is a simple example. It is generally best to follow instructions on downloading references from the website/center hosting them.
 
 ---
 
