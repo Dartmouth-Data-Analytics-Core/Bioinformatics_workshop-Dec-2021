@@ -2,7 +2,7 @@
 
 ## Genome annotation
 
-Commonly in genomic data analysis, we want to provide additional context to our data that helps us addrees our scientific hypothesis. We often achieve this through integrating results from an analysis with publicly available annotation data. Bioconductor provides functionality to directly interface with many popular annotation databases (NCBI, Ensembl, GenBank, UniProt) and import these data into your R environment as Bioconductor type objects (e.g. GRanges).
+Commonly in genomic data analysis, we want to provide additional context to our data that helps us address our scientific hypothesis. We often achieve this through integrating results from an analysis with publicly available annotation data. Bioconductor provides functionality to directly interface with many popular annotation databases (NCBI, Ensembl, GenBank, UniProt) and import these data into your R environment as Bioconductor type objects (e.g. GRanges).
 
 Examples of common annotation tasks include:  
 * Mapping unique gene identifiers (e.g. ENSEMBL or NCBI IDs) to gene symbols in an RNA-seq experiment
@@ -33,7 +33,7 @@ These packages can be broadly categorized into **annotation-centric** packages a
 
 **Annotation-centric** packages such as *Org.X.Db*, *EnsDb.X.vX*, *biomaRT*, and *BS.genome* are designed to provide access to specific annotations, e.g. Ensembl annotations for all organisms from a specific release, or access to legacy Ensembl genome annotations.
 
-**Method-centric** packages such as *AnnotationDbi* and *GenomicFeatures* provide functionality for convienient and efficient access to multiple databases, and do not focus on providing access to any one annotation resource alone. For example, *Org.X.DB*, *EnsDb.X.vX*, and *biomaRT* objects all inherit methods from *AnnotationDbi*, meaning that we can use these common methods to access data from different annotation packages (as we will see in this lesson).
+**Method-centric** packages such as *AnnotationDbi* and *GenomicFeatures* provide functionality for convenient and efficient access to multiple databases, and do not focus on providing access to any one annotation resource alone. For example, *Org.X.DB*, *EnsDb.X.vX*, and *biomaRT* objects all inherit methods from *AnnotationDbi*, meaning that we can use these common methods to access data from different annotation packages (as we will see in this lesson).
 
 **Note:** Another method-centric package that we won't discuss here is [*AnnotationHub*](https://www.bioconductor.org/packages/release/bioc/html/AnnotationHub.html), which provides methods to query annotation data from a very large range of databases.
 
@@ -134,7 +134,7 @@ Fewer NAs are identified, meaning we were able to annotate more of the genes in 
 
 To ensure we annotate all possible genes, we need to make sure we are using annotation data from the genome annotation used to in the read count quantification process for these data (think back to the `GTF` file we used during alignment and quantification).
 
-These data were annotated using Ensembl verion **97** (which explains why the R-package based off of Ensembl v86 was not able to find matching symbols for all our Ensembl IDs) therefore we could read the GTF file directly into R and manually link ensembl IDs to gene symbols. However, the GTF file is very large and may exceed available memory on our local machines if we load it into R.
+These data were annotated using Ensembl version **97** (which explains why the R-package based off of Ensembl v86 was not able to find matching symbols for all our Ensembl IDs) therefore we could read the GTF file directly into R and manually link ensembl IDs to gene symbols. However, the GTF file is very large and may exceed available memory on our local machines if we load it into R.
 
 Alternatively, we can download annotation data for the human Ensembl annotation releases **97**, and all other Ensembl genomes, using the [BioMart annotation database](https://www.ensembl.org/biomart/martview/6f49181a012124dc5569c6e9d5f71720). BioMart is an easy to use web-based tool that allows you to efficiently obtain annotation data for Ensembl genomes. **Use BioMart to obtain annotation data for the human genome version hg38 from annotation release v97.**
 
@@ -262,9 +262,9 @@ Equivalent functions exist to return organized GRangesLists for specific feature
 * `threeUTRsByTranscript()` - 3'UTRs by transcript
 * `fiveUTRsByTranscript()` - 5'-UTRs by transcript
 
-Data can also be accessed from a TxDb object using the `select()` method with the `columns` and `keytypes` arguments just as we did for *OrgDBb* objects. This convenient approach is made possible by the fact that *TxDb* objects inheret from *AnnotationDbi* objects, just as *OrgDb* objects do. Using `select` in this way allows us to return data for a large list of features, or a specific subset that we request using the `keys` argument. For example, we might wish to return transcript to gene mapping for specific gene IDs, or we may want to obtain all the exon IDs and their genomic location info for a specific set of transcripts.
+Data can also be accessed from a TxDb object using the `select()` method with the `columns` and `keytypes` arguments just as we did for *OrgDBb* objects. This convenient approach is made possible by the fact that *TxDb* objects inherit from *AnnotationDbi* objects, just as *OrgDb* objects do. Using `select` in this way allows us to return data for a large list of features, or a specific subset that we request using the `keys` argument. For example, we might wish to return transcript to gene mapping for specific gene IDs, or we may want to obtain all the exon IDs and their genomic location info for a specific set of transcripts.
 ```r
-# look at the columns avaialble to be returned in the Txdb
+# look at the columns available to be returned in the Txdb
 columns(txdb)
 
 # return the transcripts annotated to a specific gene of interest
@@ -316,7 +316,7 @@ vars <- locateVariants(bed, txdb, AllVariants())
 vars
 ```
 
-As you can see by printing this object to the console, we now have variants annotated by their transcriptional context, as it relates to the human Ensembl annotation release 101. We can perform some simple operations on this object to explore it further and answer some basic questions, such as how many variants are annotated in each group variuant class.
+As you can see by printing this object to the console, we now have variants annotated by their transcriptional context, as it relates to the human Ensembl annotation release 101. We can perform some simple operations on this object to explore it further and answer some basic questions, such as how many variants are annotated in each group variant class.
 
 ```r
 # sum up variants in each group
@@ -352,7 +352,7 @@ vars_cd79b
 table(vars_cd79b$LOCATION)
 ```
 
-We could also use the visualization approaches we learn't in the last lesson to plot the variants in this region using the `Gviz` package.
+We could also use the visualization approaches we learned in the last lesson to plot the variants in this region using the `Gviz` package.
 ```r
 # required to set expectation for format of chromosome names ('chr17' vs '17')
 options(ucscChromosomeNames=FALSE)
