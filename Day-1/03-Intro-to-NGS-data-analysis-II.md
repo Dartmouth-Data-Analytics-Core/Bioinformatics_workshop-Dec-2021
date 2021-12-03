@@ -70,7 +70,7 @@ New genome builds are produced when significant improvements have been made to t
 
 <p align="center">
 <img src="../figures/hg38.png" title="xxxx" alt="context"
-	width="80%" height="80%" />
+	width="100%" height="100%" />
 </p>
 
 #### Limitations of reference genomes
