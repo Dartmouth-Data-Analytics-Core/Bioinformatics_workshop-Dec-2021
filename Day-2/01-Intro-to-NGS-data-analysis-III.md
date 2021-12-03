@@ -26,7 +26,7 @@ In this lesson, we will briefly explore the fundamental concepts of *read quanti
 
 ## Read count quantification
 
-For most downstream analyses in RNA-seq, especially differential expression, we care about how many reads aligned to a specific gene, as this tells us about the genes expression level, which we can then compare to other samples. Inherently, this means that we want to make these data count-based, so that we can use statistical models to compare these counts between experimental conditions of interest.
+For most downstream analyses in RNA-seq, especially differential expression, we care about how many reads aligned to a specific gene, as this tells us about the gene's expression level, which we can then compare to other samples. Inherently, this means that we want to make these data count-based, so that we can use statistical models to compare these counts between experimental conditions of interest.
 
 <p align="center">
 <img src="../figures/genoic-content.png" title="xxxx" alt="context"
@@ -45,13 +45,13 @@ Recall that a GTF/GFF file is used to store genome annotation data, therefore co
 
 The most simplistic methods (e.g. [htseq-count](https://htseq.readthedocs.io/en/release_0.11.1/count.html), [featureCounts](http://subread.sourceforge.net/)) use a specific set of rules to count the number of reads overlapping specific features. These are a good choice if your data is less complex, e.g. 3'-end data. More complex methods such as [RSEM](https://deweylab.github.io/RSEM/)), determines the probability that a read should be counted for a particular feature.
 
-As an example, lets use [htseq-count](https://htseq.readthedocs.io/en/release_0.11.1/count.html) to quantify reads for an alignment we created in the previous lesson. Some important options in *htseq-count* include:
+As an example, let's use [htseq-count](https://htseq.readthedocs.io/en/release_0.11.1/count.html) to quantify reads for an alignment we created in the previous lesson. Some important options in *htseq-count* include:
 
 **Feature type (`-t`):**  
 Specifies the feature in your GTF file you want to count over (3rd column). The default is **exon**. However, this can be changed to any feature in your GTF file, so theoretically can be used to count any feature you have annotated.
 
 **Strandedness (`-s`):**  
-Specifies if reads in your experiment come from a stranded (`yes`) or unstranded (`no`) library type. It is critical to set this correctly, as incorrect selection will result in needlessesly throwing away 50% of your reads.  
+Specifies if reads in your experiment come from a stranded (`yes`) or unstranded (`no`) library type. It is critical to set this correctly, as incorrect selection will result in needlessly throwing away 50% of your reads.  
 
 ```r
 # go to your scratch dir
@@ -134,7 +134,7 @@ macs2 callpeak \
 ```
 
 - `t` denotes the file containing enriched sequence tags/alignments
-- `c` denotes the file containing control aignments, where no enrichment was performed
+- `c` denotes the file containing control alignments, where no enrichment was performed
 - `f` describes the file type of the inputs
 - `g` is the total size of the genome
 - `--outdir` the file path you want results to be written to
@@ -208,4 +208,4 @@ The standard file format output by variant callers is Variant Call Format, or VC
 	width="90%" height="90%" />
 </p>
 
-After variant calling is performed and a confident set of variants is determined for each sample, some downstream analyses could include comparing variants found in tumor vs. normal pairs, variants found in resistant vs. non-resistant cell lines, or stastical analysis of the presence of variants in any case-control disease populations.
+After variant calling is performed and a confident set of variants is determined for each sample, some downstream analyses could include comparing variants found in tumor vs. normal pairs, variants found in resistant vs. non-resistant cell lines, or statistical analysis of the presence of variants in any case-control disease populations.
