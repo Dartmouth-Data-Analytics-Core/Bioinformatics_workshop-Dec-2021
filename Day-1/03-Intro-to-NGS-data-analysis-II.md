@@ -70,8 +70,10 @@ New genome builds are produced when significant improvements have been made to t
 
 <p align="center">
 <img src="../figures/hg38.png" title="xxxx" alt="context"
-	width="80%" height="80%" />
+	width="100%" height="100%" />
 </p>
+
+Image Credit: [Broad Institute](https://gatk.broadinstitute.org/hc/en-us/articles/360041155232-Reference-Genome-Components#:~:text=GRCh38%2Fhg38%20is%20the%20assembly,complex%20variation%2C%20including%20HLA%20loci.&text=The%20ideogram%20is%20from%20the%20Genome%20Reference%20Consortium%20website%20and%20showcases%20GRCh38.)
 
 #### Limitations of reference genomes
 
