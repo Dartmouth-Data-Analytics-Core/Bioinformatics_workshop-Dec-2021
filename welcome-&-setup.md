@@ -54,7 +54,7 @@ nano .bashrc
 
 # copy this line to the file : source /optnfs/common/miniconda3/etc/profile.d/conda.sh
 
-# use ctrl+x to exit the editor and type "Y" to save the changes you made
+# use ctrl+x to exit the editor, then type "Y" to save the changes you made, then press Enter write the changes to .bashrc
 ```
 
 
