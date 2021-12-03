@@ -2,40 +2,42 @@
 
 ## Alignment files (BAM/SAM/CRAM formats)
 
-### Learning objectives: 
+### Learning objectives:
 - Understand the major principles behind short-read alignment
 - Learn how alignment data is stored in SAM/BAM format
 - Learn how to perform basic operations on BAM files using `Samtools`
 - Perform an alignment with `STAR`
 
-Make a new directory to work in: 
-```bash 
+Make a new directory to work in:
+```bash
 #log onto the q10 node
 mksub -I -l walltime=5:00:00 -l nodes=q10
 
 # go to our home dir for the workshop
 cd /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/
 
-# IF YOU DIDN'T HAVE TIME TO FINISH TRIMMING COPY THOSE FILES NOW 
+# IF YOU DIDN'T HAVE TIME TO FINISH TRIMMING COPY THOSE FILES NOW
 mkdir trim
 cp /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/trim/
 
-# make the directory and cd into it 
+# make the directory and cd into it
 mkdir aligned
 cd aligned
 ```
 
-If you get lost, or do not have enough time to finish the commands before we move to the next session you can copy the files needed for the next step with the following command from the scratch directory you have created for yourself. Again, you will need to update the target directory to your own directory on scratch. 
+If you get lost, or do not have enough time to finish the commands before we move to the next session you can copy the files needed for the next step with the following command from the scratch directory you have created for yourself. Again, you will need to update the target directory to your own directory on scratch.
 
 ```bash
 # go to your scratch directory (e.g. /dartfs-hpc/scratch/YOUR_INTIALS_HERE/fundamentals_of_bioinformatics/)
-#make a directory to store aligned files 
+#make a directory to store aligned files
 mkdir aligned
 
-# copy files 
+# copy files
 # REMEMBER TO CHANGE THE DESTINATION DIRECTORY TO YOUR OWN INITIALS
 cp /dartfs-hpc/scratch/fund_of_bioinfo/aligned/* /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/aligned/
 ```
+
+---
 
 ### Principles of read mapping for RNA-seq
 
@@ -56,14 +58,22 @@ Challenges of aligning millions of short reads to a reference genome involve:
 
 It is important when selecting an aligner to select one appropriate for your experiment. Different aligners exist and generally have different properties and applications. For example, some aligners are **splice-aware** while others are not. Splice-aware aligners can generate alignments that span intronic regions and therefore account for splicing, e.g. `STAR` and `HISAT2`. If your dataset is prokaryotic (non-splicosomal) you would not want to use a splice-aware aligner, and instead using an aligner that is not designed to map across intronic regions such as `bwa-mem` or `bowtie2`.
 
+---
 
 ### What is a reference genome?
 
 Reference genomes are more of a concept, not a reality. A reference genome (or reference assembly) is an idealized representation of the genome of particular organism, generated through [*de novo* *genome assembly*](https://link.springer.com/referenceworkentry/10.1007%2F978-0-387-09766-4_402) of sequencing reads from one or several individuals. In NGS analysis, we commonly use reference genomes as a scaffold upon which to construct alignments of sequencing reads via read mapping.
 
-Reference genomes have proven a powerful tool that allows us to appropriately address many scientific questions, as well as providing the scientific community a standardized coordinate system for that is used for specific genome builds. For example, the permanent start coordinate for the human gene in reference genome GRCh38/p.13 is chr9:127,786,034.
+Reference genomes have proven a powerful tool that allows us to appropriately address many scientific questions, as well as providing the scientific community a standardized coordinate system for that is used for specific genome builds. For example, the permanent start coordinate for the human gene *CDK9* in reference genome GRCh38/p.13 is chr9:127,786,034.
 
 New genome builds are produced when significant improvements have been made to the sequence, warranting release of an updated sequence with a new coordinate system. For example, genome coordinates are different between GRCh38 and GRCh37. Individual genome builds are sometime updated through *patches*, for example, when a previously ambiguous sequence becomes available.
+
+<p align="center">
+<img src="../figures/hg38.png" title="xxxx" alt="context"
+	width="80%" height="80%" />
+</p>
+
+#### Limitations of reference genomes
 
 However, there are a number imitations to using reference genomes in the ways described above:  
 - do not appropriately account for genetic variation, as they are composed of one linear sequence
@@ -98,6 +108,7 @@ Most reference genomes and genome annotations can be downloaded through ftp site
 rsync -a -P rsync://hgdownload.soe.ucsc.edu/goldenPath/hg38/hg38Patch11/ ./
 ```
 
+---
 
 ### General concepts for read alignment
 
@@ -347,7 +358,7 @@ ls ../trim/*_1.trim.chr20.fastq.gz | while read x; do
     --outSAMtype BAM SortedByCoordinate \
     --outFilterType BySJout \
     --outFileNamePrefix ${sample}.
-    
+
    #index the BAMs for each sample
    samtools index ${sample}.Aligned.sortedByCoord.out.bam
 done
