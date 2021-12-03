@@ -15,7 +15,7 @@ cp -r /dartfs-hpc/scratch/fund_of_bioinfo/trim/* /dartfs-hpc/scratch/omw/
 
 ## Raw NGS data, FASTQ file format
 
-FASTQ files are a workhorse file format of bioinformatics, and contain sequence reads generated in next-generatoon sequencing (NGS) experiments. We often refer to FASTQ files as the *'raw'* data for an NGS experiment, although these are technically the BCL image files captured by the sequencer and are used to synthesize the FASTQ files.
+FASTQ files are a workhorse file format of bioinformatics, and contain sequence reads generated in next-generation sequencing (NGS) experiments. We often refer to FASTQ files as the *'raw'* data for an NGS experiment, although these are technically the BCL image files captured by the sequencer and are used to synthesize the FASTQ files.
 
 FASTQ files contain four lines per sequence record:
 
@@ -25,7 +25,7 @@ Four rows exist for each record in a FASTQ file:
 - *Line 3:* Usually just a `+` and sometimes followed by the read information in line 1
 - *Line 4:* Individual base qualities (must be same length as line 2)
 
-Here is what a the first record of an example FASTQ file looks like
+Here is what the first record of an example FASTQ file looks like
 ```
 @SRR1039508.1 HWI-ST177:290:C0TECACXX:1:1101:1225:2130 length=63
 CATTGCTGATACCAANNNNNNNNGCATTCCTCAAGGTCTTCCTCCTTCCCTTACGGAATTACA
@@ -50,7 +50,7 @@ In FASTQ files, Q-score is linked to a specific ASCII character by **adding 33 t
 
 Consider the first base call in our sequence example above, the `C` has a quality score encoded by an `H`, which corresponds to a Q-score of 39 (this information is in the linked table), meaning this is a good quality base call.
 
-Generally, you can see this would be a good quality read if not for the strech of `#`s indicating a Q-score of 2. Looking at the FASTQ record, you can see these correspond to a string of `N` calls, which are bases that the sequencer was not able to make a base call for. Stretches of Ns' are generally not useful for your analysis.
+Generally, you can see this would be a good quality read if not for the stretch of `#`s indicating a Q-score of 2. Looking at the FASTQ record, you can see these correspond to a string of `N` calls, which are bases that the sequencer was not able to make a base call for. Stretches of Ns' are generally not useful for your analysis.
 
 **Paired-end reads:**  
 
@@ -125,7 +125,7 @@ Remember, paired-end reads should have the same number of records!
 
 What if we want to count how many unique barcodes exist in the FASTQ file. To do this, we would need to print all the sequence lines of each FASTQ entry, then search those for the barcode by specifying a regular expression. To print all the sequence lines (2nd line) of each FASTQ entry, we can use a command called `sed`, short for *stream editor* which allows you to streamline edits to text that are redirected to the command. You can find a tutorial on using `sed` [here](https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor-to-manipulate-text-in-linux).
 
-First we can use `sed` with with the `'p'` argument to tell it that we want the output to be printed, and the `-n` option to tell `sed` we want to suppress automatic printing (so we don't get the results printed 2x). Piping this to the `head` command, we can get the first line of the first 10 entries in the FASTQ file. We specify `'1-4p'` as we want `sed` to *print 1 line, then skip forward 4*.
+First we can use `sed` with the `'p'` argument to tell it that we want the output to be printed, and the `-n` option to tell `sed` we want to suppress automatic printing (so we don't get the results printed 2x). Piping this to the `head` command, we can get the first line of the first 10 entries in the FASTQ file. We specify `'1-4p'` as we want `sed` to *print 1 line, then skip forward 4*.
 ```bash
 zcat SRR1039508_1.chr20.fastq.gz | sed -n '1~4p' | head -10
 ```
@@ -253,7 +253,7 @@ cat stout.txt
 
 These example programs run fairly quickly, but stringing together mutiple commands in a bash script is common and these programs can take much longer to run. In these cases we might want to close our computer and go and do some other stuff while our program is running.
 
-We can do this using `nohup` which allows us to run a series of commands in the background, but disconnects the process from the shell you initally submit it through, so you are free to close this shell and the process will continue to run until completion.
+We can do this using `nohup` which allows us to run a series of commands in the background, but disconnects the process from the shell you initially submit it through, so you are free to close this shell and the process will continue to run until completion.
 ```bash
 # run your GC content program using the executable you just made
 nohup bash count_GC_content.sh SRR1039508_1.chr20.fastq.gz &
@@ -313,9 +313,9 @@ You can find the MultiQC report run on the complete dataset across all samples i
 
 ### Read pre-processing & trimming
 
-An additional QC step one should perform on raw FASTQ data is to *pre-process* or *trim* the sequences to remove sequences that we are not interested in, or were not called confidently by the sequenecer.
+An additional QC step one should perform on raw FASTQ data is to *pre-process* or *trim* the sequences to remove sequences that we are not interested in, or were not called confidently by the sequencer.
 
-This step is **optional** in most analysis, although should be based on an empirical decision that leverages the QC assessment of raw FASTQs using a quality report like the one we just generated with FASTQC/MultiQC. For example, if we see we have a large number of adapter seqeunces in our data, or a high proportion of low-quality bases near our read ends, we may wish to trim our raw reads. Otherwise, we could skip this step in the analysis.
+This step is **optional** in most analysis, although should be based on an empirical decision that leverages the QC assessment of raw FASTQs using a quality report like the one we just generated with FASTQC/MultiQC. For example, if we see we have a large number of adapter sequences in our data, or a high proportion of low-quality bases near our read ends, we may wish to trim our raw reads. Otherwise, we could skip this step in the analysis.
 
 Notably, some read mappers account for mismatches or low quality bases at the end of reads in a process called *soft-clipping*, where these bases are masked from being included in the alignment, but are technically still part of the sequence read in the FASTQ. If you are using an aligner that performs soft-clipping, you could consider omitting read trimming of FASTQ files.
 
@@ -353,7 +353,7 @@ If we wanted to trim polyA sequences, as we often do in RNA-seq, and save the ou
 ```bash
 cutadapt -a 'A{76}' -o out.trimmed.fastq.gz input.fastq.gz > cutadapt.logout;
 ```
-`-a A{76}` tells cutadapt to search for streches of A bases at the end of reads, with a maximum length of the read length (76bp).
+`-a A{76}` tells cutadapt to search for stretches of A bases at the end of reads, with a maximum length of the read length (76bp).
 
 Since the polyA and adapter sequence contamination is relatively low for this dataset, we won't trim any specific sequences, although we will perform basic quality and length processing of the raw reads. Lets make a new directory and do this for do this for one sample.
 ```bash
@@ -367,8 +367,8 @@ cutadapt \
    -m 1 -q 20 -j 1 > SRR1039508.cutadapt.report
 ```
 
-- `-m` removes reads that are samller than the minimum threshold
-- `-q` qulaity threshold for trimming bases
+- `-m` removes reads that are smaller than the minimum threshold
+- `-q` quality threshold for trimming bases
 - `-j` number of cores/threads to use
 
 You should now have a trimmed FASTQ file in this directory that can be used for an alignment. Lets look at the report that cutadapt generated.
@@ -407,7 +407,7 @@ done
 
 **Additional note:** For data generated at Dartmouth, since much of the data in the Genomics core is generated using an *Illumina NextSeq 500*, we also often use the `--nextseq-trim` option in cutadapt.
 
-This option works in a similar way to the qulaity threshold option `-q` BUT ignores Q-scores for streches of G bases, as some Illumina instruments, such as the NextSeq, generate strings of Gs when when the sequencer 'falls off' the end of a fragment and dark cycles occur, and therefore provides more appropriate quality trimming for data generated on these instrucments.
+This option works in a similar way to the quality threshold option `-q` BUT ignores Q-scores for stretches of G bases, as some Illumina instruments, such as the NextSeq, generate strings of Gs when the sequencer 'falls off' the end of a fragment and dark cycles occur, and therefore provides more appropriate quality trimming for data generated on these instruments.
 
 ### Break out exercises
 
@@ -416,7 +416,7 @@ This option works in a similar way to the qulaity threshold option `-q` BUT igno
 - What do we think about the quality of our dataset?
 
 - How would this affect the flags you might choose to use when preprocessing the data?
-   - higher or lower qulaity threshold?
+   - higher or lower quality threshold?
    - leave off the quality filter?
    - adjust the minimum read size threshold?
 
