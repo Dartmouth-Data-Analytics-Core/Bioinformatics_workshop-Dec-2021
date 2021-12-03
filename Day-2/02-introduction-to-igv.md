@@ -17,11 +17,11 @@ The **Integrative Genomics Viewer (IGV)** is a very powerful piece of genomics s
 
 <hr>
 
-IGV supports a wide-range of genomic file formats that contain data ranging from simple genomic regions, to complex alignments and signal tracks. File types suppoprted by IGV include:  
+IGV supports a wide-range of genomic file formats that contain data ranging from simple genomic regions, to complex alignments and signal tracks. File types supported by IGV include:  
 * .BAM - alignments  
 * .GTF/GFF - genomic features  
 * .VCF - variant call format  
-* .BED - genmoic regions   
+* .BED - genomic regions   
 * .BIGWIG - signal tracks
 
 The range of file formats supported by IGV means it is able to facilitate exploration and visualization of virtually all types of genomics data generated from diverse experimental procedures, for example:
@@ -36,7 +36,7 @@ The IGV server also hosts a number of reference genomes and annotations, meaning
 
 If you use IGV in your publications, you should at cite at least the original publication [(found here)](https://www.nature.com/articles/nbt.1754).
 
-Other genome broswers do exist and have various strengths/weaknesses. For example, the [*UCSC Genome Broswer*](https://genome.ucsc.edu/), is an excellent web-based tool that allows you to perform many of the same visualizations that you would using IGV using your own data, however also provides access to a large collection of hosted datasets. The major advantage of IGV is the ease and speed with which it allows you to explore your own data, which can be slower to explore using a web-based tool.
+Other genome browsers do exist and have various strengths/weaknesses. For example, the [*UCSC Genome Broswer*](https://genome.ucsc.edu/), is an excellent web-based tool that allows you to perform many of the same visualizations that you would using IGV using your own data, and also provides access to a large collection of hosted datasets. The major advantage of IGV is the ease and speed with which it allows you to explore your own data, which can be slower to explore using a web-based tool.
 
 ---
 
@@ -70,7 +70,7 @@ Some of the main UI features include:
 
 * **Zoom bar** - Zoom in and out of the currently shown region
 
-* **Schematic of currently loaded chromosome or contig** - Red box indcates location of the region you are currently viewing. Full width of current region is shown below, with a scale bar indicating specific coordinates. Both can be used to navigate directly.
+* **Schematic of currently loaded chromosome or contig** - Red box indicates location of the region you are currently viewing. Full width of current region is shown below, with a scale bar indicating specific coordinates. Both can be used to navigate directly.
 
 * **Gene track** - Shows gene included in currently loaded annotation (Refseq genes in example). Right click track for additional formatting options. Features included in annotation are indicated by thickness (introns, exons, UTRs). Gene orientation is shown with arrows pointing right for FWD/+, left for REV/- strand.
 
@@ -111,20 +111,20 @@ Zoom in closer to view the *MYLK2* gene.
 
 Now we have zoomed in closer, we can see more detail about the reads (e.g. direction indicated by their arrowhead) and the gene features they cover. Since this is WGS data, it makes sense for alignments to cover exons, introns, UTRs, and intergenic regions.
 
-To gain more information on specific reads, hover over a single read. Some of this information may look familar based on our discussions of the BAM file format.
+To gain more information on specific reads, hover over a single read. Some of this information may look familiar based on our discussions of the BAM file format.
 
 
 ![](../figures/igv-04.png)
 |:--:|
 | **Figure 4 - IGV highlights bases mismatched to the reference** |
 
-You can also see some features on specific reads are highlighed. IGV uses colors within reads to highlight features of individual bases. For example, IGV will highlight bases that are mismatched compared the reference. Such bases could represent genetic variants.
+You can also see some features on specific reads are highlighted. IGV uses colors within reads to highlight features of individual bases. For example, IGV will highlight bases that are mismatched compared the reference. Such bases could represent genetic variants.
 
 ![](../figures/igv-05.png)
 |:--:|
 | **Figure 5 - IGV highlights bases mismatched to the reference** |
 
-If you right click in the alignment track, you will see a number of options appear for changing how the alignments are displayed. One useful option is `View reads as pairs`. Provided your data are paired-end, R1 and R2 reads will be connected by a small gray line, representing the unsequenced portion of the insert.
+If you right click in the alignment track, you will see a number of options appear for changing how the alignments are displayed. One useful option is `View reads as pairs`. Provided your data are paired-end, R1 and R2 reads will be connected by a thin gray line, representing a region that exists in the genome, but was not captured by either end of the paired end sequencing, either because the fragment length was larger than the read lengths or because the read spans and intron or long deletion.
 
 Another useful alignment viewing option available from this menu is changing how reads are colored. By default, read are colored according to the strand they are aligned to, which is useful in several contexts, for example, when working with stranded RNA-seq data, however other coloring schemes can be selected, e.g.
 - by read group
@@ -140,17 +140,17 @@ Insertions and deletions are also highlighted using a purple I (for insertions) 
 |:--:|
 | **Figure 7 - IGV shows insertions and deletions in reads** |
 
-You can start to appreciate how IGV helps idnetify features of our data, e.g. potential variants. In fact IGV allows us to bring in multiple file types simulatneously so that they can be evaluated together.
+You can start to appreciate how IGV helps identify features of our data, e.g. potential variants. In fact IGV allows us to bring in multiple file types simultaneously so that they can be evaluated together.
 
 For example, it can be very useful to visualize variant calls alongside the alignment file used to generate them, in order to review evidence for specific variants.
 
-Lets load in the VCF file (`Day-2/data/1000G.chr20.sub.vcf.gz`) for the same region on chr20, containing all the called variants across subjects in the 1000 Genomes project, and explore the called variants using the VCF and alignment files simultaneously.  
+Let's load in the VCF file (`Day-2/data/1000G.chr20.sub.vcf.gz`) for the same region on chr20, containing all the called variants across subjects in the 1000 Genomes project, and explore the called variants using the VCF and alignment files simultaneously.  
 
 ---
 While a comprehensive overview variant review contrasting called variants against read alignments is beyond the scope of this workshop and more of an advanced topic, some aspects typically considered include:  
-- Confiriming all ALT reads are not strand-specific
-- Mapping qualities are consitent across reads representing the REF & ALT allele
-- Variants are not called at end of reads
+- Confriming all ALT reads are not strand-specific
+- Mapping qualities and base qualities are consistent across reads representing the REF & ALT allele
+- Variants are not called only at ends of reads
 ---
 
 ![](../figures/igv-08.png)
@@ -175,7 +175,7 @@ IGV allows you to customize how tracks are presented, and can be modified using 
 
 ### Alignment distributions are unique to experimental procedures
 
-As mentioned above, we expect reads to span all types of genomic features in a WGS experiment. However, in other types of experiments we may have very specific expectations of where alignments should be loacted.
+As mentioned above, we expect reads to span all types of genomic features in a WGS experiment. However, in other types of experiments we may have very specific expectations of where alignments should be located.
 
 For example, in RNA-seq, reads should only align to regions that are transcribed, as libraries are prepared from the transcriptome. The figure below shows an example region with some RNA-seq alignments to hg38.
 
@@ -191,7 +191,7 @@ Reads clearly line up over exons and span introns, which fits with our expectati
 
 IGV also allows us to visualize a number of other genomic file types beyond BAM and VCF files. Very often in genomics experiments, we are interested in identifying regions of the genome that demonstrate increased signal compared to background. For example, DNA regions immunoprecipitated with a transcription-factor specific antibody in a ChIP-seq experiment.
 
-In such experiments, we are usually interested in **which regions** show increased signal, which we call *peaks* and often store the genomic corrdinates for these peaks in BED format.
+In such experiments, we are usually interested in **which regions** show increased signal, which we call *peaks* and often store the genomic coordinates for these peaks in BED format.
 
 We are also often in interested in *how much signal* these regions show in comparison to their surrounding regions, and commonly represent these data using the BigWig file format, often referred to as a *signal track*.
 
@@ -200,27 +200,27 @@ We are also often in interested in *how much signal* these regions show in compa
 |:--:|
 | **Figure 11 - ChIP signal, peak regions, and alignments for an example experiment** |
 
-Lets read in some example ChIP-seq data (as shown in Figure 11) to demonstrate how you might go about exploring these types of data. We will use data from a recently published study of the dynamic regulaorty landscape in the developing mouse ([Gorkin *et al*, 2020](https://www.nature.com/articles/s41586-020-2093-3?proof=t)).
+Lets read in some example ChIP-seq data (as shown in Figure 11) to demonstrate how you might go about exploring these types of data. We will use data from a recently published study of the dynamic regulatory landscape in the developing mouse ([Gorkin *et al*, 2020](https://www.nature.com/articles/s41586-020-2093-3?proof=t)).
 
 In this study, the authors generate an atlas of the dynamic chromatin landscape at various time points during mouse embryonic development, conducting over 1100 ChIP-seq experiments and 132 ATAC-seq experiments spanning 72 stages of development across various tissues.
 
 **Figure 1A-B from Gorkin *et al*, 2020, Nature**.
 ![](../figures/mouse-atlas-fig1a.png)
 
-In particular, we will use the ChIP-seq data generated in immunoprecipation experiments for several histone modifications, whose presence and absence can be used to infer the functional state of chromatin at specific loci (e.g. active transcription, enhancers, heterochromatin). These data have been downloaded and made available in this github repo, in: `Bioinformatics_workshop/Day-2/data/`.
+In particular, we will use the ChIP-seq data generated in immunoprecipitation experiments for several histone modifications, whose presence and absence can be used to infer the functional state of chromatin at specific loci (e.g. active transcription, enhancers, heterochromatin). These data have been downloaded and made available in this github repo, in: `Bioinformatics_workshop/Day-2/data/`.
 
 Specifically, we will use ChIP-seq data for two histone modifications that are known to represent transcriptionally active chromatin regions:  
 * H3K27ac - Acetylation of lysine 27 of histone 3
 * H3K9ac - Acetylation of lysine 9 of histone 3
 
-Since this experiment uses an alignment generated against mouse refernce mm10, we need to switch the genome slected in IGV before we load in any data. Then, load in the following files:  
+Since this experiment uses an alignment generated against mouse reference mm10, we need to switch the genome selected in IGV before we load in any data. Then, load in the following files:  
 * `forebrain_E15.5_H3K27ac-chr11.bw` - ChIP signal
 * `forebrain_E15.5_H3K27ac.bed` - Peak coordinates
 * `forebrain_E15.5_H3K27ac-chr11.bam` - Read alignments
 
 Peak regions for the BED file track clearly line up with the ChIP-signal track (.BigWig), and these regions also show high read densities, suggesting signal over the background level (as shown in *Figure 11*).
 
-However, commonly in a ChIP-seq analysis, we are interested in comparing how TF binding sites or histone modifications change between samples. Lets load in some additional data so that we can compare chromatin states in the developing mouse forebrain to heart tissues. Start with the BED files:
+However, commonly in a ChIP-seq analysis, we are interested in comparing how TF binding sites or histone modifications change between samples. Let's load in some additional data so that we can compare chromatin states in the developing mouse forebrain to heart tissues. Start with the BED files:
 * `forebrain_E15.5_H3K27ac.bed`
 * `forebrain_E15.5_H3K9ac.bed`
 * `heart_E15.5_H3K27ac.bed`
@@ -266,13 +266,13 @@ Enter the following into the search bar to activate split view:
 |:--:|
 | **Figure 15 - ChIP peaks **& signal** for region surrounding *Neurod2* ** |
 
-Split view has a number of useful aplications, however it is especially useful when reviewing alignment evidence for complex structural variants or translocations (although we won't cover that today).
+Split view has a number of useful applications, however it is especially useful when reviewing alignment evidence for complex structural variants or translocations (although we won't cover that today).
 
 ---
 
 ## Saving and restoring sessions in IGV
 
-We did a lot of work loading in all these data and setting everything up just how we want it. It would be a shame to have to do this everytime we want to revisit these data. Fortunately, IGV allows you to save sessions, allowing you to re-load everything just as you had it before.
+We did a lot of work loading in all these data and setting everything up just how we want it. It would be a shame to have to do this every time we want to revisit these data. Fortunately, IGV allows you to save sessions, allowing you to re-load everything just as you had it before.
 
 Try saving the current session using `Save session...` under the `File` tab.
 
