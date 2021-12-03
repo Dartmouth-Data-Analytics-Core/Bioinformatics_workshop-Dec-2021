@@ -39,15 +39,15 @@ While a comprehensive introduction to *statistical learning and inference* is we
 
 We are often interested in identifying clusters and groups that form naturally in our data, meaning that we do not supervise the analysis using any dependent variable (e.g. tx group, WT vs KO). This part of an analysis is often referred to as an *exploratory data analysis*, and make use of *unsupervised statistical methods* to perform this analysis.
 
-Unsupervised data analysis is often used in bioinformatics to adress questions like:
+Unsupervised data analysis is often used in bioinformatics to address questions like:
 - How similar are my samples based on genome-wide profiles?
 - Are any samples in the dataset clear outliers?
 - Do any variables systematically affect genome-wide profiles (e.g. batch)?
 
 **Examples of unsupervised methods:**    
 - Dimensionality reduction (e.g. PCA, NMF, t-SNE, UMAP)
-- Clustering methods (e.g. hierachical, K-means)
-- Hidden markov modeling
+- Clustering methods (e.g. hierarchical, K-means)
+- Hidden Markov modeling
 
 
 <img src="../figures/unsupervised.png" title="xxxx" alt="context"
@@ -70,7 +70,7 @@ The statistical methods we use to address these sorts of questions are typically
 **Examples of supervised methods:**   
 - Linear regression
 - Generalized linear regression models
-- Descision trees
+- Decision trees
 - Support vector machines
 
 
@@ -100,7 +100,7 @@ As mentioned above, unsupervised learning methods are very powerful tools to con
 
 - ***clustering-based methods***: involves calculation of the similarity/dissimilarity between samples, resulting in organization of these samples into *'clusters'* defined by their relatedness to one-another
 
-We will explore an example of each approach below, using *principal components analysis (PCA)* as an example of dimensionality reduction, and *unsupervised hierachical clustering* as an example of a clustering-based method.
+We will explore an example of each approach below, using *principal components analysis (PCA)* as an example of dimensionality reduction, and *unsupervised hierarchical clustering* as an example of a clustering-based method.
 
 #### Principal components analysis (PCA)
 
@@ -145,7 +145,7 @@ vars <- apply(log_fpkm, 1, var)
 # order variances based on magnitude of variance
 vars <- rev(vars[order(vars)])
 
-# plot variance for genes accross samples
+# plot variance for genes across samples
 plot(vars, las = 1, main="Sample gene expression variance", xlab = "Gene", ylab = "Variance")
 abline(v=5000, col="red")
 ```
@@ -220,7 +220,7 @@ Unsupervised hierarchical clustering describes a specific approach to performing
   <img src="../figures/heatmap-exp.png" height="90%" width="90%"/>
 </p>
 
-To demonstrate how one could perform an unsupervised hierachical clustering analysis in R, we will use the same RNA-seq dataset from [He *et al*](https://www.nature.com/articles/s41586-020-2536-x), describing transcriptomic changes in the developing mouse embryo.
+To demonstrate how one could perform an unsupervised hierarchical clustering analysis in R, we will use the same RNA-seq dataset from [He *et al*](https://www.nature.com/articles/s41586-020-2536-x), describing transcriptomic changes in the developing mouse embryo.
 
 Clustering can be quite computationally intensive, therefore we will first generate a subset of the gene expression data containing five specific tissues, rather than all 17.
 ```r
