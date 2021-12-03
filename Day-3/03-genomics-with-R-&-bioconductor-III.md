@@ -38,7 +38,7 @@ The most basic object class in BioStrings is the *XString* class, which is techn
 
 Lets start by creating a simple DNAString object and looking at some of its basic features:
 ```r
-# use the DNAString contructor function to create a 10 letter DNA sequence
+# use the DNAString constructor function to create a 10 letter DNA sequence
 seq <- DNAString(x="AGCT", start=1, nchar=NA)
 seq
 
@@ -85,7 +85,7 @@ The standard IUPAC code is used by numerous bioinformatics tools and softwares i
 
 This table was adapted from [Johnson, 2010, *Bioinformatics*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/#B1).
 
-An extended IUPAC genetic alphabet was also described in 2010 [(Johnson, 2010, *Bioinformatics*)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/#B1). The extended code uses additional characters, underlining, and bolding as well as the original 16 character code (all meanings maintained) to denote all possible combinations or relationships between bases. Among other uses, this has been valuable for representing genetic varaition in DNA sequences. You can explore the details on the extended code in Tables 2 & 3 of [(Johnson, 2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/#B1).
+An extended IUPAC genetic alphabet was also described in 2010 [(Johnson, 2010, *Bioinformatics*)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/#B1). The extended code uses additional characters, underlining, and bolding as well as the original 16 character code (all meanings maintained) to denote all possible combinations or relationships between bases. Among other uses, this has been valuable for representing genetic variation in DNA sequences. You can explore the details on the extended code in Tables 2 & 3 of [(Johnson, 2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2865858/#B1).
 
 If you're working with BioStrings objects, and need a reminder of the basic characters of the extended code, you can just type `IUPAC_CODE_MAP` when you have the BioStrings package loaded into your R session.
 
@@ -195,7 +195,7 @@ str(genome)
 metadata(genome)
 ```
 
-By default, the *BSGenomes* come with no sequence masking. It is common when woprking with reference genomes to mask regions that may ciontain ambiguous sequences, such as repeat regions, that you wish to ignore in your analyses. To obtain a masked genome, you should set `masked=TRUE` in the `getBSgenome()` function. This will load a genome in which specific sequences have been masked in a hierachical fashion using the following criteria:  
+By default, the *BSGenomes* come with no sequence masking. It is common when woprking with reference genomes to mask regions that may contain ambiguous sequences, such as repeat regions, that you wish to ignore in your analyses. To obtain a masked genome, you should set `masked=TRUE` in the `getBSgenome()` function. This will load a genome in which specific sequences have been masked in a hierarchical fashion using the following criteria:  
 1. Gaps in the genome assembly
 2. Sequences with intra-contig ambiguities
 3. regions flagged by [*RepeatMasker*](http://www.repeatmasker.org/)
@@ -225,7 +225,7 @@ seqinfo(genome)
 genome$chr1
 ```
 
-Lets move forward with the masked genome for today. Remove the `genome` variable from your working environment and replace it with the masked genome for convenience.
+Let's move forward with the masked genome for today. Remove the `genome` variable from your working environment and replace it with the masked genome for convenience.
 ```r
 rm(genome)
 
@@ -300,7 +300,7 @@ hist(width(ctcf_seqs),
      main = "CTCF peak width distribution")
 ```
 
-We could now export these sequences to a FASTA file (using `writeXStringSet()`) however several motif discovery softwares require that peaks be of the same size (width). To do this in a meaningful way for our ChIP-seq data, we will need to find the center of each peak, and then restrict to the a certain number of bases flanking either side of the center position. We will need to go back to the ranges from our original BED file to resize the peaks to the desired width around the center, then re-extract the sequences fopr those regions.
+We could now export these sequences to a FASTA file (using `writeXStringSet()`) however several motif discovery softwares require that peaks be of the same size (width). To do this in a meaningful way for our ChIP-seq data, we will need to find the center of each peak, and then restrict to the a certain number of bases flanking either side of the center position. We will need to go back to the ranges from our original BED file to resize the peaks to the desired width around the center, then re-extract the sequences for those regions.
 ```r
 # resize the regions from the BED file
 bed_centered <- resize(bed, width = 400, fix = "center")
