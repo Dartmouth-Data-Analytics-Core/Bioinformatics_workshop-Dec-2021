@@ -45,7 +45,7 @@ Gene ontology analysis | *GO.db*, *DO.db*, *rGREAT*, *fGSEA*, *clusterProfiler*,
 In these lessons, we will focus on introducing you to the core set of Bioconductor packages, and how they can be used to perform common tasks in bioinformatics.
 
 The primary topics we will cover include:
-- analyzing genomic region data with bioconductor
+- analyzing genomic region data with Bioconductor
 - retrieve and apply data from genome annotation databases
 - biological sequence analysis and reference genomes in R
 
@@ -167,7 +167,7 @@ Instead, *GenomicRanges* leverages a data compression approach called **run-leng
 	width="90%" height="90%" />
 </p?>
 
-**RLE** is an especially efficient way of storing genomics data since there are often streches of repeated values in the final data representation, and often long streches of sequences are not considered in an experiment (e.g. non-coding regions in RNA-seq) so we shouldn't waste space storing information on those positions.
+**RLE** is an especially efficient way of storing genomics data since there are often stretches of repeated values in the final data representation, and often long stretches of sequences are not considered in an experiment (e.g. non-coding regions in RNA-seq) so we shouldn't waste space storing information on those positions.
 
 RLE-style encoding is employed by the `bigWig` file format to allow efficient storage and access to signal track data. These points are illustrated in the example below in the context of a ChIP-seq experiment.
 
@@ -178,7 +178,7 @@ RLE-style encoding is employed by the `bigWig` file format to allow efficient st
 
 #### Manipulating *GRanges* objects
 
-*GRanges* objects can be indexed similar to regular objects in R, their intervals can be manipulating using the same functions introduced above for *IRanges* objects, and queried/manipulated using additional method functions available in the GenomicRanges package.
+*GRanges* objects can be indexed similar to regular objects in R, their intervals can be manipulated using the same functions introduced above for *IRanges* objects, and queried/manipulated using additional method functions available in the GenomicRanges package.
 
 ```r
 # index GRange object for specific elements
@@ -225,7 +225,7 @@ In this study, the authors generate an atlas of the dynamic chromatin landscape 
 	width="100%" height="100%" />
 </p>
 
-In particular, we will use ChIP-seq data generated in immunoprecipation experiments for several histone modifications, whose presence and absence can be used to infer the functional state of chromatin at specific loci (e.g. active transcription, enhancers, heterochromatin). These data have been downloaded and made available in this github repo, in: `Bioinformatics_workshop/Day-3/data/`.
+In particular, we will use ChIP-seq data generated in immunoprecipitation experiments for several histone modifications, whose presence and absence can be used to infer the functional state of chromatin at specific loci (e.g. active transcription, enhancers, heterochromatin). These data have been downloaded and made available in this github repo, in: `Bioinformatics_workshop/Day-3/data/`.
 
 The first analysis we will perform is a comparison of ChIP-seq peaks for two important chromatin marks in forebrain and heart tissues:
 - H3K27ac - acetylation at the 27th lysine residue of histone H3
@@ -300,7 +300,7 @@ fr_h3k27ac_uniq1 <- fr_h3k27ac[-queryHits(overlaps)]
 fr_h3k27ac_uniq1
 ```
 
-Now lets read in the peaks for H3K9ac in both forebrain and heart. To help keep the objects in our R environment organized, we can use another class available in GenomicRanges, the `GRangesList` class, which allows storage or multiple Granges objects in a list style object. This makes sense to do for our analysis, as we have multiple sets of peaks for each tissue that we want to be in our global environment.
+Now let's read in the peaks for H3K9ac in both forebrain and heart. To help keep the objects in our R environment organized, we can use another class available in GenomicRanges, the `GRangesList` class, which allows storage or multiple Granges objects in a list style object. This makes sense to do for our analysis, as we have multiple sets of peaks for each tissue that we want to be in our global environment.
 ```r
 # forebrain H3K9ac ChIP-seq peaks
 fr_h3k9ac <- rtracklayer::import("forebrain_E15.5_H3K9ac.bed",
@@ -393,11 +393,11 @@ The plot clearly supports the hypothesis that H3K27ac profiles vary in this regi
 - which genes/transcripts do these regions overlap?
 - how do these profiles compare to other relevant published ChIP profiles?
 
-In order to address these questions, we need to obtain relevant annotation data. Fortunately, Bioconductor provides a functions that allow you to interface directly with public databases like *UCSC*, *Ensembl*, and *NCBI* to obtain the most up to date annotation data available. **This will be the focus of our next lesson**.
+In order to address these questions, we need to obtain relevant annotation data. Fortunately, Bioconductor provides functions that allow you to interface directly with public databases like *UCSC*, *Ensembl*, and *NCBI* to obtain the most up to date annotation data available. **This will be the focus of our next lesson**.
 
 ### Practical considerations:
 
-- I would not explore a new dataset using Bioconductor-based visualization packages. Generally, *IGV* will allow you to explore a new dataset faster, without having to do any coding. However, packages such as `Gviz` provide a comprehensive and flexible way to display data in numerous ways not possible in standard genome browsers, and therefore are an excellent way to explore candidate regions in more detail, or generate a number of plots programmatically.
+- I would not explore a new dataset using Bioconductor-based visualization packages. Generally, *IGV* will allow you to explore a new dataset faster, without having to do any coding. However, packages such as `Gviz` provide a comprehensive and flexible way to display data in numerous ways not possible in standard genome browsers, and therefore are an excellent way to explore candidate regions in more detail, or to generate a number of plots programmatically.
 
 - There are other ways to perform the sorts of tasks that we did in this lesson, both within and outside of R. For example, [*BEDTools*](https://bedtools.readthedocs.io/en/latest/), the so-called *"swiss-army knife for genomic-arithmetic"* allows you to intersect, subset, merge, count, and manipulate genomic regions directly via the UNIX shell. Alternatively, [*Biopython*](https://biopython.org/) provides similar functionality from within python.
 
