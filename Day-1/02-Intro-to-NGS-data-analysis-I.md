@@ -7,6 +7,9 @@
 If you get lost, or do not have enough time to finish the commands before we move to the next session you can copy the files needed for the next step with the following command from the scratch directory you have created for yourself. You will just need to update the target directory to your own directory on scratch. 
 
 ```bash
+#log on to a compute node if not already on one:
+srun --nodes=1 --ntasks-per-node=1 --mem-per-cpu=4GB --cpus-per-task=1 --time=08:00:00 --partition=standard  --pty /bin/bash
+
 # go to your scratch directory (e.g. /dartfs-hpc/scratch/omw/fundamentals_of_bioinformatics/)
 
 # copy files 
