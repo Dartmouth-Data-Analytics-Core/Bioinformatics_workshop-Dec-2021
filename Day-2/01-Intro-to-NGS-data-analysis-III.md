@@ -1,6 +1,10 @@
 # Working with NGS data Part III
 If you got lost or missed the last session you can copy all of the files we built in the alignment section with the following commands.
 ```bash
+
+#log on to a compute node if not already on one:
+srun --nodes=1 --ntasks-per-node=1 --mem-per-cpu=4GB --cpus-per-task=1 --time=08:00:00 --partition=standard  --pty /bin/bash
+
 # navigate to your scratch directory
 cd /dartfs-hpc/scratch/YOUR_INTIALS_HERE/fundamentals_of_bioinformatics/
 
