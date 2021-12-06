@@ -338,14 +338,14 @@ samtools flagstat SRR1039508.Aligned.out.sorted.bam
 We can even use the specific FLAGs in the BAM file to extract specific alignments. For example, you might want to produce BAM files where all of the *secondary alignments* have been filtered out:
 ```bash
 # use -F option in view to filter out reads that were unmapped
-samtools view -F 256 SRR1039508.Aligned.out.sorted.bam -o SRR1039508.Aligned.out.sorted.unmapped.bam
+samtools view -F 4 SRR1039508.Aligned.out.sorted.bam -o SRR1039508.Aligned.out.sorted.unmapped.bam
 
 # count number of alignments
 samtools view -c SRR1039508.Aligned.out.sorted.unmapped.bam
 
 # directly count reads with specific flag without making an intermediate file
 ### Note: using lower case -f retains alignments with flag specified, upper case -F filters out alignments with that flag  
-samtools view -c -f 256 SRR1039508.Aligned.out.sorted.unmapped.bam
+samtools view -c -f 4 SRR1039508.Aligned.out.sorted.unmapped.bam
 ```
 
 
