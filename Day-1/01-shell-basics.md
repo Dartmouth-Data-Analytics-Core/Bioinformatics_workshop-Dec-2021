@@ -416,6 +416,19 @@ This should change the word at the beginning of your prompt from `(base)` to the
 
 > As we move through the subsequent lessons, we will introduce more complex bash commands in order to manipulate common bioinformatics file types. If you are ever confused about what a command does, remember you can always use `man` to check out the manual page (or Google it). It you are confused about how commands are used in conjunction with each other, it can also be helpful to break them down and run parts individually, in order to understand what the constituent parts do.
 
+### Logging in to an compute node on Discovery ### 
+
+When you log into Discovery using SSH, your session will begin on a computer known as a head node.  This is a computer that sits atop the computing cluster, and should be used for setting up programs or managing files, but not for large-scale computational tasks.  In this workshop, we will be running our tasks interactively, by asking the job scheduler to assign us a compute node on the cluster to work on.  Running the following command will ask for sufficient resources:
+```bash
+srun --nodes=1 --ntasks-per-node=1 --mem-per-cpu=4GB --cpus-per-task=1 --time=08:00:00 --partition=standard  --pty /bin/bash
+```
+
+When you are finished with your computations, you can exit the compute node with the 'exit' command:
+```
+exit
+```
+
+
 ### Breakout room activities
 
 - PRACTICE the bash commands - getting muscle memory for these commands and how to combine them and how they work are going free up your brain power to think about the analysis you want to perform rather than the commands you need to use. 
