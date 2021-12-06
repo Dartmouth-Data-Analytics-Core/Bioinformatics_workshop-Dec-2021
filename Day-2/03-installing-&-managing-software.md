@@ -23,9 +23,6 @@ In this lesson, we will introduce the major ways bioinformatics packages can be 
 ## Software pre-installed on the system
 Linux systems will have many core utilities for navigating the file system, creating, editing and removing files, downloading and uploading files, compiling code, submitting jobs to a cluster, and many more.  These utilities are commonly found in `/usr/bin`.  
 
-On Discovery, software is also made available to users via system-wide modules. See section in lesson on high performance computing (HPC) and the discovery cluster.
-
-
 ---
 
 ## Language-specific package managers
