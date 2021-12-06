@@ -10,8 +10,8 @@
 
 Make a new directory to work in:
 ```bash
-#log onto the q10 node
-mksub -I -l walltime=5:00:00 -l nodes=q10
+#log onto a compute node
+srun --nodes=1 --ntasks-per-node=1 --mem-per-cpu=4GB --cpus-per-task=1 --time=08:00:00 --partition=standard  --pty /bin/bash
 
 # go to our home dir for the workshop
 cd /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/
