@@ -1,4 +1,4 @@
-# Optional Exercise: Annotation of ChIP-seq data
+# Working with genomics data in R/Bioconductor - Part II
 
 ## Genome annotation & reference genomes
 
