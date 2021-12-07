@@ -181,7 +181,7 @@ To provide a more significant introduction to Bioconductor functionality for gen
 
 They may also be accessed directrlty from in the `Day-3` folder of the GitHub repo.
 
-- [Programmatic access to BioMart using the BioMart package](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
+- [Programmatic access to BioMart using the BioMart package](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/optionalExercise_BioMart-R-package.md).
 - [Transcript-based annotation using the Txdb objects](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/optionalExercise-transcript-annotation.md).
 - [Annotation of ChIP-seq peaks with Ensembl gene & transcript IDs](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---ChIPseq-annotation.md).
 
@@ -267,7 +267,7 @@ letterFrequency(chr1, "A", as.prob=TRUE)
 matchPattern("ATG", chr1)
 ```
 
-> OPTIONAL EXERCISE: An optional exercise that provides that provides a more in depth introduction to functionality available in the BioStrings package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/03-optional-exercise---BioStrings-extra-stuff.md).
+> OPTIONAL EXERCISE: An optional exercise that provides that provides a more in depth introduction to functionality available in the BioStrings package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/optionalExercise-BioStrings-extra-stuff.md).
 
 > An excellent BioStrings tutorial is available [here](https://bioconductor.org/help/course-materials/2011/BioC2011/LabStuff/BiostringsBSgenomeOverview.pdf) from one of the BioStrings creators.
 
