@@ -1,41 +1,48 @@
-# Working with genomics data in R/Bioconductor - Part II
+# Optional Exercise: Annotation of ChIP-seq data
 
-## Genome annotation
+## Genome annotation & reference genomes
 
-Commonly in genomic data analysis, we want to provide additional context to our data that helps us address our scientific hypothesis. We often achieve this through integrating results from an analysis with publicly available annotation data. Bioconductor provides functionality to directly interface with many popular annotation databases (NCBI, Ensembl, GenBank, UniProt) and import these data into your R environment as Bioconductor type objects (e.g. GRanges).
+Bioconductor provides a number of packages that allow users to perform advanced genome annotation tasks in a programmatic way. Furthermore, Bioconductor packages also offer convenient and efficient ways to interface with common reference genomes, and can facilitate complex sequence analysis tasks using these reference genomes.
 
-Examples of common annotation tasks include:  
-* Mapping unique gene identifiers (e.g. ENSEMBL or NCBI IDs) to gene symbols in an RNA-seq experiment
-* Identifying coding variants from a WGS/WES dataset based on transcriptional context (e.g. coding variants)
-* Annotation of genomic context for peak set from ChIP- or ATAC-seq experiment (e.g. promoter, intron, exon, intergenic)
+In this lesson we will introduce you to some of these packages and explore their basic functionality. We also provide links to a number of additional **optional lessons** that provide more in depth examples of how these packages can be used to accomplish specific data analysis tasks common in genomics.
 
-In this lesson, we will introduce the major Bioconductor packages for genome annotation and how you might use them to achieve common tasks in NGS data analysis. We will start by setting up our working directory to point to the Day-3/data/ folder.
+---
 
+## Learning objectives:
+
+- Gain an appreciation for how Bioconductor packages can be used to perform genome annotation
+- Understand how Bioconductor can be used to obtain & analyze common reference genomes
+
+Set your working directory to point to the `Day-3/data/` folder:
 ```r
 ## You may need to ammend this path to the full path of where you have cloned the github repo on your machine
 setwd("Bioinformatics_workshop-Dec-2021/Day-3/data")
 ```
+
 ---
 
-#### Key annotation packages in Bioconductor:
+### Genome annotation with Bioconductor:
+
+Commonly in genomic data analysis, we want to provide additional context to our data that helps us address our hypothesis. We often achieve this through integrating results from an analysis with publicly available annotation data. Bioconductor provides functionality to directly interface with many popular annotation databases (NCBI, Ensembl, GenBank, UniProt) and import these data into your R environment as Bioconductor type objects (e.g. GRanges).
+
+Examples of common annotation tasks include:  
+* Mapping unique gene identifiers (e.g. ENSEMBL or NCBI IDs) to gene symbols in an RNA-seq experiment
+* Identifying coding variants from a WGS/WES dataset based on transcriptional context (e.g. coding variants)
+* Annotation of genomic context for peak sets from an ChIP- or ATAC-seq experiment (e.g. promoter, intron, exon, intergenic)
+
+Numerous packages are available for such annotation through Bioconductor. Some are built to provide access to specific annotations from a particular database, while others are designed to provide broad access to a number of databases (e.g. Ensembl, NCBI, Biomart).
 
 | **Package/package-family** | **Contents & uses**                                                |
 |------------------------|-------------------------------------------------------------|
 | *AnnotationDbi*      | Methods for accessing data from SQLite-based annotation packages |
 | *GenomicFeatures*   | Methods for storing and manipulating transcriptome annotations using the *TxDb* object class  |
 | *Org.X.db*               | Gene-based annotation for current genome versions, useful for mapping IDs, symbols and identifiers |
-| *EnsDb.X.vX*   | Access to the most up-to-date transcriptome annotations directrly from Ensembl       |
+| *EnsDb.X.vX*   | Access to the most up-to-date transcriptome annotations directly from Ensembl       |
 | *biomaRT*   | Release-specific transcriptome annotations from Ensembl for any version or organism     |
 | *BS.genome*              | Full sequences for common reference genomes                 |
 | *genomation*             | annotation of genomic context and basic data visualization  |
 
-These packages can be broadly categorized into **annotation-centric** packages and **method-centric** packages.
-
-**Annotation-centric** packages such as *Org.X.Db*, *EnsDb.X.vX*, *biomaRT*, and *BS.genome* are designed to provide access to specific annotations, e.g. Ensembl annotations for all organisms from a specific release, or access to legacy Ensembl genome annotations.
-
-**Method-centric** packages such as *AnnotationDbi* and *GenomicFeatures* provide functionality for convenient and efficient access to multiple databases, and do not focus on providing access to any one annotation resource alone. For example, *Org.X.DB*, *EnsDb.X.vX*, and *biomaRT* objects all inherit methods from *AnnotationDbi*, meaning that we can use these common methods to access data from different annotation packages (as we will see in this lesson).
-
-**Note:** Another method-centric package that we won't discuss here is [*AnnotationHub*](https://www.bioconductor.org/packages/release/bioc/html/AnnotationHub.html), which provides methods to query annotation data from a very large range of databases.
+In this lesson, we provide examples of how specific Bioconductor packages can be used for particular annotation tasks, however it is worth noting that we are really only scratching the surface in terms of potential annotation applications that Bioconductor packages can be used for. To provide a more expansive introduction to these applications, please see the **optional lessons** in the `Day-3` folder.
 
 ---
 
@@ -166,220 +173,181 @@ write.csv(results_merge, file = "diff-exp-results-annotated.csv")
 
 As we have seen, while the R-packages discussed above can present powerful and quick ways to access lots of annotation data (e.g. gene ontology etc.), there are some obvious limitations which are important to understand when you are annotating your own datasets.
 
-Using BioMart is also valuable if you need annotation data for a model organism that doesn't have an EnsDb or OrgDb R-package available for it.
+---
 
-> ATTENTION: An optional lesson (performed at home or during extra time) that introduces how BioMart can be accessed programmatically using an R-package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
+### Optional lessons:
 
+To provide a more significant introduction to Bioconductor functionality for genome annotation, we have made available a number of optional lessons, which can be completed at home or during any extra time you may have during the workshop. Links to these lessons are provided below.
+
+They may also be accessed directrlty from in the `Day-3` folder of the GitHub repo.
+
+- [Programmatic access to BioMart using the BioMart package](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
+- [Transcript-based annotation using the Txdb objects](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
+- [Annotation of ChIP-seq peaks with Ensembl gene & transcript IDs](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---ChIPseq-annotation.md).
 
 ---
 
-### Transcript-specific annotation data with Bioconductor
+## References genomes & sequence analysis with Bioconductor
 
-Another core Bioconductor package is the **GenomicFeatures** package, which implements the *TxDb* object class, and provides a convenient and efficient way to store and access transcript specific data from a genome annotation. TxDb objects store a wide-range of transcript-specific information including coordinates and sequences for promoters, exons, introns, and untranslated regions (UTRs).
+Bioconductor also provides functionality for accessing and analyzing complete reference sequences for commonly used genomes. Namely, the [BSgenome](https://bioconductor.org/packages/release/bioc/html/BSgenome.html) family of Bioconductor packages provides an efficient way to obtain, query, and manipulate genomic sequence data from reference genomes. You can return a vector of the currently available genomes to your console by printing `available.genomes()` after loading the `BSgenome` package.
 
-TxDb objects for common genome annotations can be loaded directly by calling the corresponding annotation package. We can view the available TxDb packages by going to the Bioconductor website and using the search tool. Lets start by loading the TxDb package for the human genome and having a look at the contents.
+Analyzing genomic sequence data directly can be used for a number of common research tasks, for example:  
+* Extracting DNA/RNA/protein sequences for specific genomic features  
+* Calculating nucleotide frequencies for defined sequences
+* Searching for matching sequences of interest
+
 ```r
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+# load the package
+library(BSgenome)
 
-# assign to txdb variable
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-txdb
+# check currently available genomes
+available.genomes()
 ```
 
-You can see this available TxDb object is for gene annotations generated under the UCSC annotation pipeline. What if your genome is not included in the available TxDb packages, for example, if we wanted to continue using an Ensembl annotation? Or perhaps there is no pre-constructed TxDb object available for your organism. GenomicFeatures provides a number of functions specifically to address these issues, for example:  
-* `makeTxDbFromEnsembl()` - Construct a TxDb object from Ensembl
-* `makeTxDbPackageFromBiomaRt()` - Construct a TxDb object from Biomart
-* `makeTxDbPackageFromGFF()` - Construct a TxDb object from a GFF/GTF file
+> Note: These genomes are focused predominantly on those available from NCBI and UCSC genomes, however functionality exists to [forge a BSGenome](https://bioconductor.org/packages/release/bioc/html/BSgenome.html) package, allowing you to leverage the BSGenome framework for genomes not part of the currently available set.
 
-Lets construct a TxDb object from the latest release for human genes from Ensembl. We won't actually build it from scratch right now as it takes a bit of time, but we have a pre-made TxDb ready for you to read into your environment and work with.
+Lets load the *'mm10'* build of the mouse reference genome into our R session:
 ```r
-#### DO NOT RUN ####
-txdb <- makeTxDbFromEnsembl("homo_sapiens", release = 101)
+# assign the genome to a variable using getBSgenome() (you need to have the package for the BSgenome you are trying to load already installed)
+genome <- getBSgenome("BSgenome.Mmusculus.UCSC.mm10")
+genome
 
-Fetch transcripts and genes from Ensembl ... OK
-Fetch exons and CDS from Ensembl ... OK
-Fetch chromosome names and lengths from Ensembl ...OK
-Gather the metadata ... OK
-Make the TxDb object ... OK
+# check the structure
+str(genome)
 
-#### DO RUN ####
-### If you have not already done so you will first need to unzip this file before loading it
-txdb <- loadDb("TxDb.Hsapiens.Ensembl.101.db")
-txdb
+# print the metadata for the genome
+metadata(genome)
 ```
 
-Printing the object to the console tells us some basic information about the annotation. For example, you can see the data include hundreds of thousands of rows for unique transcripts, exons, and coding sequences. We can access this information with some basic accessor functions provided by the GenomicFeatures package.
+By default, the *BSGenomes* come with no sequence masking. It is common when working with reference genomes to mask regions that may contain ambiguous sequences, such as repeat regions, that you wish to ignore in your analyses. To obtain a masked genome, you should set `masked=TRUE` in the `getBSgenome()` function. This will load a genome in which specific sequences have been masked in a hierarchical fashion using the following criteria:  
+1. Gaps in the genome assembly
+2. Sequences with intra-contig ambiguities
+3. regions flagged by [*RepeatMasker*](http://www.repeatmasker.org/)
+4. regions flagged by [*Tandem Repeat Finder*](https://tandem.bu.edu/trf/trf.html)
+
+Load the masked reference and compare to the unmasked version.
 ```r
-# retrieve all transcript level info
-txs <- transcripts(txdb)
-txs
+genome.m <- getBSgenome("BSgenome.Mmusculus.UCSC.mm10.masked")
+class(genome.m)
+genome.m
 
-# what class is it?
-class(txs)
+# unmasked genome
+class(genome)
+genome
 
-# how long is it
-length(txs)
+# return basic sequence information summary
+seqinfo(genome.m)
 
-# what is the distribution of transcripts across strands
-table(strand(txs))
+# print chromosome 1
+genome.m$chr1
 ```
 
-The `transcripts()` function conveniently returns a GRanges class object. This means we can apply all the same methods and accessor functions we used in the previous lesson to the transcript data here (e.g. `seqnames()`, `strand()`, `findOverlaps()`, etc.). There are also several other useful accessor functions that we can use to return specific subsets of the data in our TxDb object.
+If we use the `BSgenome.Mmusculus.UCSC.mm10.masked` then any regions that have been identified as problematic will be ignored in any downstream analysis we perform of the sequences.
+
+BSgenome is heavily dependent on functionality from another Bioconductor package:  [BioStrings](http://bioconductor.org/packÂages/release/bioc/html/Biostrings.html), which defines a set of methods and object classes for storing and analyzing sequence data. BioStrings is loaded automatically when you loaded BSgenome.
+
+Examples of sequence analysis tasks that can be performed by the BioStrings package:
+- calculate frequencies of specific nucleotides or patterns in a sequence
+- generate translated or reverse complemented sequences
+- solve local, global, or pairwise alignment problems
+- motif searches with a Position Weight Matrix (PWM) (e.g. for ChIP- or ATAC-seq)
+
+Since BSGenome is dependent on the BioStrings package for much of its functionality, all of the methods implemented in BioStrings can be applied to BSGenome objects. For example:
 ```r
-# retireve all the exon ranges
-ex <- exons(txdb)
+# assign chr 1
+chr1 <- genome$chr1
 
-# retireve all the gene ranges
-ge <- genes(txdb)
+# what is the frequency of each base in your sequence
+alphabetFrequency(chr1, baseOnly=TRUE, as.prob=TRUE)
 
-# promoter ranges for a specified width around TSS
-prom <- promoters(txdb, upstream=1000, downstream=0)
+# what is the frequency of your favourite base
+letterFrequency(chr1, "A", as.prob=TRUE)
 
-# non-overlapping introns or exons
-# these commands each take a minute to run
-exonicParts(txdb)
-intronicParts(txdb)
+# where are all incidences of 'ATG'
+matchPattern("ATG", chr1)
 ```
 
-Some of these ranges might be more useful if they were organized by their relation to a specific transcript or gene. There are several accessor functions that provide functionality to achieve this, and return a GRangesList class object rather than ordinary Granges objects.
-```r
-# return all transcript ranges organized by gene
-txs_by_gene <- transcriptsBy(txdb, by = "gene")
-txs_by_gene
+> OPTIONAL EXERCISE: An optional exercise that provides that provides a more in depth introduction to functionality available in the BioStrings package can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/03-optional-exercise---BioStrings-extra-stuff.md).
 
-# index by gene.id of interest to get all transcripts annotated to that gene
-txs_by_gene["ENSG00000000419"]
-
-# index by exons by transcript (to identify unique exons)
-ex_by_gene <- exonsBy(txdb, by = "tx")
-ex_by_gene
-```
-
-Equivalent functions exist to return organized GRangesLists for specific features, including:  
-* `exonsBy()` - exons by feature
-* `intronsByTranscript()` - introns by transcript
-* `exonsByTranscript()` - exons by transcript
-* `threeUTRsByTranscript()` - 3'UTRs by transcript
-* `fiveUTRsByTranscript()` - 5'-UTRs by transcript
-
-Data can also be accessed from a TxDb object using the `select()` method with the `columns` and `keytypes` arguments just as we did for *OrgDBb* objects. This convenient approach is made possible by the fact that *TxDb* objects inherit from *AnnotationDbi* objects, just as *OrgDb* objects do. Using `select` in this way allows us to return data for a large list of features, or a specific subset that we request using the `keys` argument. For example, we might wish to return transcript to gene mapping for specific gene IDs, or we may want to obtain all the exon IDs and their genomic location info for a specific set of transcripts.
-```r
-# look at the columns available to be returned in the Txdb
-columns(txdb)
-
-# return the transcripts annotated to a specific gene of interest
-gene_to_tx <- select(txdb, keys = "ENSG00000273696", columns="TXNAME", keytype="GENEID")
-gene_to_tx
-
-# return tx to gene mapping for top 500 RNA-seq diff. exp. results
-gene_to_tx <- select(txdb, keys = head(rownames(results), 500) ,
-                     columns="TXNAME",
-                     keytype="GENEID")
-head(gene_to_tx)
-dim(gene_to_tx)
-
-# check for duplicate entries
-table(duplicated(gene_to_tx$GENEID))
-table(duplicated(gene_to_tx$TXNAME))
-
-# return exons IDs, their coordinates, and strand for top 10 transcripts from RNA-seq results
-tx_to_exon <- select(txdb, keys = head(gene_to_tx, 10)$TXNAME ,
-                      columns=c("EXONCHROM", "EXONNAME", "EXONSTART",
-                      "EXONEND", "EXONSTRAND", "GENEID"),
-                      keytype="TXNAME")
-
-# again, check for duplicate entries
-table(duplicated(tx_to_exon$TXNAME))
-```
+> An excellent BioStrings tutorial is available [here](https://bioconductor.org/help/course-materials/2011/BioC2011/LabStuff/BiostringsBSgenomeOverview.pdf) from one of the BioStrings creators.
 
 ---
 
-### Example application: Variant annotation
+### Example: Extracting sequences flanking ChIP-seq peaks
 
-Transcript annotation data can be used in many ways. One common usage example is in the annotation of variant calls, where we need to identify the transcriptional context of a variant set (e.g. promoter-associated, exon, intron, untranslated regions, etc.).
-
-To demonstrate how we could achieve this in Bioconductor, we will also use the `VariantAnnotation` package that uses TxDb objects directly to annotate a set of variants. An example set of variant calls is provided, representing variants present over multiple cancer types, identified as part of The Cancer Genome Atlas (TCGA) [*Pan-Cancer Analysis of Whole Genomes (PCAWG) project*](https://www.nature.com/articles/s41586-020-1969-6). Genomic coordinates (hg38) for all identified variants present on chromosome 17 are included in the file `../data/TCGA.pcawg.chr17.bed`.
-
-> Note that *'variant annotation'* also commonly includes annotating variants with their functional consequence
-
-To demonstrate how we could use our TxDb object created above to annotate variants, we will leverage functionality from another BioConductor package, `VariantAnnotation` that uses TxDb objects directly to annotate a set of variants (that can be in GRanges format).
-
-```r
-library(VariantAnnotation)
-
-# import the variant locations in bed file format
-bed <- import("data/TCGA.pcawg.chr17.bed", format="BED")
-bed
-
-# annotate the variants based on our Ensembl Txdb
-vars <- locateVariants(bed, txdb, AllVariants())
-vars
-```
-
-As you can see by printing this object to the console, we now have variants annotated by their transcriptional context, as it relates to the human Ensembl annotation release 101. We can perform some simple operations on this object to explore it further and answer some basic questions, such as how many variants are annotated in each group variant class.
-
-```r
-# sum up variants in each group
-sum.tab <- table(vars$LOCATION)
-sum.tab
-
-# calculate a quick proprtions table
-round(prop.table(sum.tab), digits = 2)
-
-# quick visualization
-barplot(round(prop.table(table(vars$LOCATION)), digits = 2))
-```
-
-It would also be nice to have the gene symbols included in the TxDb object. We can add gene symbols in the same way we did using above using annotation data downloaded from Biomart. For these data, we need annotation release 101, which has been provided for you in the `Day-3/data/` directory.
-```r
-#
-anno <- read.table("GRCh38.p12_ensembl-101.txt", sep="\t", header=TRUE, stringsAsFactors = F)
-
-# return indicies of ENSEMBL geneIDs from variants annotation in the Ensembl v101 annotation data
-indicies_of_matches <- match(vars$GENEID, anno$Gene.stable.ID)
-
-# add gene symbols to vars object
-vars$GENE.SYMBOL <- anno$Gene.name[indicies_of_matches]
-```
-
-Adding gene symbols allows us to easily search for genes of interest, by their transcript ID, gene ID, or gene symbol. We demonstrate this below by restricting to variants identified in the *CD79B* gene.
-```r
-# exmaple gene of interest:
-vars_cd79b <- vars[vars$GENE.SYMBOL %in% "CD79B",]
-vars_cd79b
-
-# check how many of each variant type
-table(vars_cd79b$LOCATION)
-```
-
-We could also use the visualization approaches we learned in the last lesson to plot the variants in this region using the `Gviz` package.
-```r
-# required to set expectation for format of chromosome names ('chr17' vs '17')
-options(ucscChromosomeNames=FALSE)
-
-# set gene region track from our txdb
-txTr <- GeneRegionTrack(txdb,
-                        chromosome = "17",
-                        start = (min(start(vars_cd79b)) - 500),  
-                        end =  (max(start(vars_cd79b) + 500)),
-                        name = "Ensembl v101")
-
-# create the annotation track for the variants of interest
-track1 <- AnnotationTrack(granges(vars_cd79b), name = "TCGA variants",
-                          col.line = "red", fill = "red")
-
-# add the genome axis for scale
-gtrack <- GenomeAxisTrack()
-
-# generate the plot
-plotTracks(list(gtrack, txTr, track1), main="CD97B variants")
-```
+Once peak regions have been identified to describe the potential binding locations of transcription factor (TF) or histone modification, a common task in the analysis of ChIP-seq data is to scan the sequences immediately surrounding these peaks in order to identify sequences enriched over these peak regions that may represent the binding motif for that TF. To achieve this, we need to obtain the sequences for these peaks from the reference genome that the samples were aligned to (mm10). The cartoon below depicts this overall workflow.
 
 <p align="center">
-<img src="../figures/cd97b-variants.png" title="xxxx" alt="context"
-	width="80%" height="80%" />
+<img src="../figures/motif-example.png" title="xxxx" alt="context"
+	width="90%" height="90%" />
 </p>
+
+As an example, we will again use data from the ENCDOE project, where mouse forebrain tissues were ChIP'd for CTCF, a critical TF for diverse cellular processes that performs a wide range of transcriptional activation/repression functions at a genome-wide level. Called CTCF peaks for this experiment were downloaded from the ENCODE website [here](https://www.encodeproject.org/experiments/ENCSR677HXC/).
+
+Read in the BED file as a *GRanges* object using *rtracklayer* function `import()` as we have done previously. We can then use the `getSeq()` function to return sequences from our previously assigned BSGenome object (UCSC - mm10, assigned to the variable *genome*) that cover the regions specified in the GRanges object.
+```r
+# we need to establish a vector describing what the extra extended BED columns are
+extraCols_narrowPeak <- c(signalValue = "numeric", pValue = "numeric",
+                          qValue = "numeric", peak = "integer")
+
+# read in peaks
+bed <- import("CTCF-forebrain-mm10.bed",
+		format="BED",
+		extraCols = extraCols_narrowPeak,
+		genome = "mm10")
+
+# extract sequences for peak regions and print to console
+ctcf_seqs <- getSeq(genome, bed)
+ctcf_seqs
+```
+
+Since the object returned by `getSeq()` is a DNAStringSet class object, we can use BioStrings based methods to perform operations on the sequences directly. For example, we might be interested in checking the nucleotide frequencies across all peaks.
+```r
+# calculate nucleotide freqs.
+nt_freqs <- alphabetFrequency(ctcf_seqs, baseOnly=TRUE, as.prob=TRUE)
+
+# calculate mean value for nucleotide freqs across all peaks
+round(apply(nt_freqs, 2, mean), digits=2)
+```
+
+We might also be interested in visualizing the distribution of the peak width, to get an idea of how much they vary. We can use the `width` accessor function to extract the width of each peak, and base R functions for plotting.
+```r
+hist(width(ctcf_seqs),
+     col = "darkgray",
+     xlab = "Peak width (bp)",
+     main = "CTCF peak width distribution")
+```
+
+We could now export these sequences to a FASTA file (using `writeXStringSet()`) however several motif discovery softwares require that peaks be of the same size (width). To do this in a meaningful way for our ChIP-seq data, we will need to find the center of each peak, and then restrict to the a certain number of bases flanking either side of the center position. We will need to go back to the ranges from our original BED file to resize the peaks to the desired width around the center, then re-extract the sequences for those regions.
+```r
+# resize the regions from the BED file
+bed_centered <- resize(bed, width = 400, fix = "center")
+bed_centered
+
+# check their with
+width(bed_centered)
+
+# extract sequences again
+ctcf_seqs_cent <- getSeq(genome, bed_centered)
+ctcf_seqs_cent
+```
+
+Now we are ready to export these sequences in FASTA file format, which is used as the default format as input to many motif discovery algorithms. As mentioned above, we can do this for DNAStringSet objects with the function `writeXStringSet()`.
+```r
+# add names to peaks in ctcf_seqs so that FASTA entries have names
+names(ctcf_seqs) <- paste0(seqnames(bed), ":", start(bed), "-", end(bed))
+
+# export peaks to FASTA file
+writeXStringSet(ctcf_seqs, file="CTCF-peaks-resized.fa")
+```
+
+After you write the file, go to your the UNIX command line and have a look at your FASTA file to confirm it looks correct.
 
 ---
 
-> ATTENTION: An optional lesson (performed at home or during extra time) that that explores another example application of annotating genomic data (ChIP-seq) using TxDB objects can be found [here](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---ChIPseq-annotation.md).
+**Note:** Other software tools (within and outside of R) could have been used to achieve the above tasks, such as those implemented in [*bedtools*](https://bedtools.readthedocs.io/en/latest/) or [*biopython*](https://biopython.org/). The major advantage of performing this analysis in R is the built in interoperability between Bioconductor packages (e.g. *BioStrings*, *BSGenome*, *GRanges*) that can be leveraged for your analysis.
+
+<p align="center">
+<img src="../figures/bedtools-biopython.png" title="xxxx" alt="context"
+	width="40%" height="40%" />
+</p>
