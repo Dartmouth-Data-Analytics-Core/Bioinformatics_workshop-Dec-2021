@@ -182,7 +182,7 @@ To provide a more significant introduction to Bioconductor functionality for gen
 They may also be accessed directrlty from in the `Day-3` folder of the GitHub repo.
 
 - [Programmatic access to BioMart using the BioMart package](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
-- [Transcript-based annotation using the Txdb objects](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---BioMart-R-package.md).
+- [Transcript-based annotation using the Txdb objects](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/optionalExercise-transcript-annotation.md).
 - [Annotation of ChIP-seq peaks with Ensembl gene & transcript IDs](https://github.com/Dartmouth-Data-Analytics-Core/Bioinformatics_workshop-Dec-2021/blob/master/Day-3/02-optional-exercise---ChIPseq-annotation.md).
 
 ---
