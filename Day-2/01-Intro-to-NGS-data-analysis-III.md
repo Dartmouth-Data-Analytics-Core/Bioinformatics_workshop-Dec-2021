@@ -1,4 +1,20 @@
 # Working with NGS data Part III
+
+After generating read alignments to a reference genome, there are several downstream analysis tasks that can be performed to represent the final reduced representation of the dataset. How we use the read alignments to generate the reduced representation of teh dataset is dependent on what type of data we are working with (e.g. RNA-seq, ChIP-seq, WGS/WES). 
+
+**Read quantification:**
+- Often referred to as read counting, several NGS applications require us to count reads overlapping specific features to extract insights. For example, in RNA-seq, the number of reads overlapping each gene is used to infer expression level. 
+
+**Peak calling:**
+- In some experiments, we are interested in identifying genomic regions with significant accumulations of sequencing reads (i.e. peaks). This is the case for data types where we have performed enrichment for a specific type of DNA, such as those bound by a particular protein (ChIP-seq) or accessible chromatin ((e.g. DNAase-seq, ATAC-seq). 
+
+**Variant Calling:**
+- In WGS/WES experiments, we are usually interested in identifying genetic variants that are present in a sequenced sample, but not in teh reference genome that the sample was aligned to. 
+
+In this lesson, we will briefly explore the fundamental concepts of *read quantification*, *peak calling*, and *variant calling*, while introducing useful software and relevant file formats for each.
+
+---
+
 If you got lost or missed the last session you can copy all of the files we built in the alignment section with the following commands.
 ```bash
 
@@ -12,19 +28,6 @@ cd /dartfs-hpc/scratch/YOUR_INTIALS_HERE/fundamentals_of_bioinformatics/
 mkdir aligned
 cp /dartfs-hpc/scratch/fund_of_bioinfo/aligned/* /dartfs-hpc/scratch/YOUR_INITIALS_HERE/fundamentals_of_bioinformatics/aligned/
 ```
-After aligning reads to a reference genome, there are a couple of different ways we can continue with the analysis, which are dependent on the data type.
-
-**Read quantification:**
-- When working with RNA-seq data for example, we are often interested in counting how many reads overlap each gene. This process, often referred to as *quantification*, allows us to infer the expression levels of individual genes.
-
-**Peak calling:**
-- Alternatively, in experiments where we have performed some sort of enrichment for genomic regions of interest (e.g. DNAase-seq, ChIP-seq, ATAC-seq), we are usually interested in identifying regions containing signal above some background level. This is referred to as *peak calling* and allows us to confidently identify the regions containing enriched signals, e.g. transcription-factor binding sites in a ChIP-seq experiment.
-
-**Variant Calling:**
-- Another downstream analysis is *variant calling*, or the process of determining which loci in the sequenced genome differ from the reference genome, or from another sample from the same experiment.  Calling variants, such as SNPs and insertions/deletions, can be used for purposes such as population-level genotyping or somatic mutation analysis.
-
-
-In this lesson, we will briefly explore the fundamental concepts of *read quantification*, *peak calling*, and *variant calling*, while introducing useful software and relevant file formats for each.
 
 ---
 
