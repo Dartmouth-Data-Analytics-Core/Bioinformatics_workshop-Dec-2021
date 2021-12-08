@@ -4,34 +4,28 @@
 setwd("Bioinformatics_workshop-Dec-2021/Day-3/data")
 ##############################
 library(org.Hs.eg.db)
-##############################
 org.Hs.eg.db
-
 # what class is it
 class(org.Hs.eg.db)
-
 # what types of data can be extracted?
 keytypes(org.Hs.eg.db)
-##############################
 # obtain all ENSEMBL IDs
 entrez.ids <- keys(org.Hs.eg.db, keytype="ENSEMBL")
 head(entrez.ids)
 
 # how many are there
 length(entrez.ids)
-##############################
 # use ensembl id of first 6 in entrez.ids to get desired keytypes
 select(org.Hs.eg.db, keys = head(entrez.ids), columns = c("SYMBOL","ENTREZID", "REFSEQ"), keytype="ENSEMBL")
-
 # using mapIds but only to get gene symbol
 mapIds(org.Hs.eg.db, keys = head(entrez.ids), column = c("SYMBOL"), keytype="ENSEMBL")
-##############################
+
 # read in data
 results <- read.csv("diff-exp-results.csv", stringsAsFactors = F, row.names = "ensembl")
 
 # check the first few lines  
 head(results)
-##############################
+
 # using mapIds but only to get gene symbol
 gene.symbols <- mapIds(org.Hs.eg.db, keys = rownames(results), column = c("SYMBOL"), keytype="ENSEMBL")
 
@@ -43,9 +37,11 @@ head(results)
 
 # make sure there are no NAs in the symbols column we just created
 table(is.na(results$symbol))
-##############################
+
+
 library(EnsDb.Hsapiens.v86)
-##############################
+
+
 # using mapIds but only to get gene symbol
 gene.symbols.2 <- mapIds(EnsDb.Hsapiens.v86, keys = entrez.ids, column = c("SYMBOL"), keytype="GENEID")
 
@@ -54,7 +50,8 @@ length(gene.symbols.2)
 
 # how many NAs
 table(is.na(gene.symbols.2))
-##############################
+
+
 anno <- read.table("GRCh38.p12_ensembl-97.txt", sep="\t", header=TRUE, stringsAsFactors = F)
 
 # check the first few rows and dimensions
@@ -73,143 +70,89 @@ results_merge <- merge(results, anno, by="ensembl")
 head(results_merge)
 table(is.na(results_merge$Gene.name))
 
-##############################
 write.csv(results_merge, file = "diff-exp-results-annotated.csv")
-##############################
-library(TxDb.Hsapiens.UCSC.hg38.knownGene)
 
-# assign to txdb variable
-txdb <- TxDb.Hsapiens.UCSC.hg38.knownGene
-txdb
-##############################
-txdb <- loadDb("TxDb.Hsapiens.Ensembl.101.db")
-txdb
-##############################
-txs <- transcripts(txdb)
-txs
+#########################
+# load the package
+library(BSgenome)
 
-# what class is it?
-class(txs)
+# check currently available genomes
+available.genomes()
 
-# how long is it
-length(txs)
+# assign the genome to a variable using getBSgenome() (you need to have the package for the BSgenome you are trying to load already installed)
+genome <- getBSgenome("BSgenome.Mmusculus.UCSC.mm10")
+genome
 
-# what is the distribution of transcripts across strands
-table(strand(txs))
+# check the structure
+str(genome)
 
-##############################
-# retireve all the exon ranges
-ex <- exons(txdb)
+# print the metadata for the genome
+metadata(genome)
 
-# retireve all the gene ranges
-ge <- genes(txdb)
+genome.m <- getBSgenome("BSgenome.Mmusculus.UCSC.mm10.masked")
+class(genome.m)
+genome.m
 
-# promoter ranges for a specified width around TSS
-prom <- promoters(txdb, upstream=1000, downstream=0)
+# unmasked genome
+class(genome)
+genome
 
-# non-overlapping introns or exons
-exonicParts(txdb)
-intronicParts(txdb)
+# return basic sequence information summary
+seqinfo(genome.m)
 
-##############################
-# return all transcript ranges organized by gene
-txs_by_gene <- transcriptsBy(txdb, by = "gene")
-txs_by_gene
+# print chromosome 1
+genome.m$chr1
 
-# index by gene.id of interest to get all transcripts annotated to that gene
-txs_by_gene["ENSG00000000419"]
+# assign chr 1
+chr1 <- genome$chr1
 
-# index by exons by transcript (to identify unique exons)
-ex_by_gene <- exonsBy(txdb, by = "tx")
-ex_by_gene
+# what is the frequency of each base in your sequence
+alphabetFrequency(chr1, baseOnly=TRUE, as.prob=TRUE)
 
-##############################
-# look at the columns avaialble to be returned in the Txdb
-columns(txdb)
+# what is the frequency of your favourite base
+letterFrequency(chr1, "A", as.prob=TRUE)
 
-# return the transcripts annotated to a specific gene of interest
-gene_to_tx <- select(txdb, keys = "ENSG00000273696", columns="TXNAME", keytype="GENEID")
-gene_to_tx
+# where are all incidences of 'ATG'
+matchPattern("ATG", chr1)
 
-# return tx to gene mapping for top 500 RNA-seq diff. exp. results
-gene_to_tx <- select(txdb, keys = head(rownames(results), 500) ,
-                     columns="TXNAME",
-                     keytype="GENEID")
-head(gene_to_tx)
-dim(gene_to_tx)
+# we need to establish a vector describing what the extra extended BED columns are
+extraCols_narrowPeak <- c(signalValue = "numeric", pValue = "numeric",
+                          qValue = "numeric", peak = "integer")
 
-# check for duplicate entries
-table(duplicated(gene_to_tx$GENEID))
-table(duplicated(gene_to_tx$TXNAME))
+# read in peaks
+bed <- import("CTCF-forebrain-mm10.bed",
+              format="BED",
+              extraCols = extraCols_narrowPeak,
+              genome = "mm10")
 
-# return exons IDs, their coordinates, and strand for top 10 transcripts from RNA-seq results
-tx_to_exon <- select(txdb, keys = head(gene_to_tx, 10)$TXNAME ,
-                     columns=c("EXONCHROM", "EXONNAME", "EXONSTART",
-                               "EXONEND", "EXONSTRAND", "GENEID"),
-                     keytype="TXNAME")
+# extract sequences for peak regions and print to console
+ctcf_seqs <- getSeq(genome, bed)
+ctcf_seqs
 
-# again, check for duplicate entries
-table(duplicated(tx_to_exon$TXNAME))
+# calculate nucleotide freqs.
+nt_freqs <- alphabetFrequency(ctcf_seqs, baseOnly=TRUE, as.prob=TRUE)
 
-##############################
-library(VariantAnnotation)
+# calculate mean value for nucleotide freqs across all peaks
+round(apply(nt_freqs, 2, mean), digits=2)
 
-# import the variant locations in bed file format
-bed <- import("TCGA.pcawg.chr17.bed", format="BED")
-bed
+hist(width(ctcf_seqs),
+     col = "darkgray",
+     xlab = "Peak width (bp)",
+     main = "CTCF peak width distribution")
 
-# annotate the variants based on our Ensembl Txdb
-vars <- locateVariants(bed, txdb, AllVariants())
-vars
+# resize the regions from the BED file
+bed_centered <- resize(bed, width = 400, fix = "center")
+bed_centered
 
-##############################
-# sum up variants in each group
-sum.tab <- table(vars$LOCATION)
-sum.tab
+# check their with
+width(bed_centered)
 
-# calculate a quick proprtions table
-round(prop.table(sum.tab), digits = 2)
+# extract sequences again
+ctcf_seqs_cent <- getSeq(genome, bed_centered)
+ctcf_seqs_cent
 
-# quick visualization
-barplot(round(prop.table(table(vars$LOCATION)), digits = 2))
+# add names to peaks in ctcf_seqs so that FASTA entries have names
+names(ctcf_seqs) <- paste0(seqnames(bed), ":", start(bed), "-", end(bed))
 
-##############################
-#
-anno <- read.table("GRCh38.p12_ensembl-101.txt", sep="\t", header=TRUE, stringsAsFactors = F)
-
-# return indicies of ENSEMBL geneIDs from variants annotation in the Ensembl v101 annotation data
-indicies_of_matches <- match(vars$GENEID, anno$Gene.stable.ID)
-
-# add gene symbols to vars object
-vars$GENE.SYMBOL <- anno$Gene.name[indicies_of_matches]
-
-##############################
-# exmaple gene of interest:
-vars_cd79b <- vars[vars$GENE.SYMBOL %in% "CD79B",]
-vars_cd79b
-
-# check how many of each variant type
-table(vars_cd79b$LOCATION)
-
-##############################
-# required to set expectation for format of chromosome names ('chr17' vs '17')
-options(ucscChromosomeNames=FALSE)
-
-# set gene region track from our txdb
-txTr <- GeneRegionTrack(txdb,
-                        chromosome = "17",
-                        start = (min(start(vars_cd79b)) - 500),  
-                        end =  (max(start(vars_cd79b) + 500)),
-                        name = "Ensembl v101")
-
-# create the annotation track for the variants of interest
-track1 <- AnnotationTrack(granges(vars_cd79b), name = "TCGA variants",
-                          col.line = "red", fill = "red")
-
-# add the genome axis for scale
-gtrack <- GenomeAxisTrack()
-
-# generate the plot
-plotTracks(list(gtrack, txTr, track1), main="CD79B variants")
-
-##############################
+# export peaks to FASTA file
+writeXStringSet(ctcf_seqs, file="CTCF-peaks-resized.fa")
