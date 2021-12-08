@@ -40,6 +40,8 @@ Genomic visualiuzation | *rtracklayer*, *ggbio*, *Gviz*, *clusterProfiler*, *gen
 Genomic annotation | *GenomeInfoDB*, *TxDb*, *AnnotationHub*, *org.X.db*, *BioMart*
 Gene ontology analysis | *GO.db*, *DO.db*, *rGREAT*, *fGSEA*, *clusterProfiler*, *GSVA*
 
+---
+
 ### Learning objectives:
 
 In these lessons, we will focus on introducing you to the core set of Bioconductor packages, and how they can be used to perform common tasks in bioinformatics.
@@ -50,6 +52,8 @@ The primary topics we will cover include:
 - biological sequence analysis and reference genomes in R
 
 > We will *not* be discussing R/Bioconductor packages developed to perform complex statistical analysis of specific genomics data types, for example using *DESeq2* for differential expression analysis of RNA-seq, or *DiffBind* for differential binding analysis in ChIP-seq. Performing downstream statistical analysis of genomics data with packages such as *DESeq2* and *DiffBind* requires a working understanding of R/Bioconductor as well as some fundamental statistical knowledge, which are unfortunately beyond the scope of this workshop.
+
+---
 
 ### Installing & loading Bioconductor packages
 
@@ -64,11 +68,15 @@ Bioconductor packages can then be loaded like regular R-packages:
 library(IRanges)
 ```
 
+---
+
 ### Working with genomic region data
 
 Numerous NGS analyses result in a set of genomic regions of interest that you wish to assess in further downstream analysis. For example, coding regions in RNA-seq, transcription-factor binding sites in ChIP-seq, or accessible chromatin in ATAC-seq. Being able to store, query, and manipulate genomic regions is an extremely common and fundamental downstream analysis task of genomics data.
 
 The *IRanges* and *GenomicRanges* form the core functionality for working with genomic region data in Bioconductor, with IRanges providing much of the basic functionality that is then extended specifically for genomics data by GenomicRanges. We will first discuss the basic methods implemented in IRanges before discussing the GenomicRanges package.
+
+---
 
 #### The *IRanges* package
 
@@ -211,6 +219,8 @@ resize(gr, 5)
 # reduce the regions to one simplified set of non-overlapping regions
 reduce(gr)
 ```
+
+---
 
 ### Working with multiple GRanges objects  
 
@@ -362,6 +372,8 @@ ht_ov2
 
 Comparing the percentage of overlap for H3K27ac and H3K9ac, we see that while there is a lot of overlap, there are also a lot of of tissue specific regions, suggesting H3K27ac and H3K9ac profiles are tissue specific.
 
+---
+
 ### Visualization
 
 Bioconductor includes a number of visualization-specific packages. One useful package with extensive functionality for genomics data is the [GViz](http://bioconductor.org/packages/release/bioc/html/Gviz.html) package. The vignette available on the bioconductor page for Gviz provides an extensive overview of possible plots that can be generated using the package.
@@ -393,7 +405,9 @@ The plot clearly supports the hypothesis that H3K27ac profiles vary in this regi
 - which genes/transcripts do these regions overlap?
 - how do these profiles compare to other relevant published ChIP profiles?
 
-In order to address these questions, we need to obtain relevant annotation data. Fortunately, Bioconductor provides functions that allow you to interface directly with public databases like *UCSC*, *Ensembl*, and *NCBI* to obtain the most up to date annotation data available. **This will be the focus of our next lesson**.
+In order to address these questions, we need to obtain relevant annotation data. Fortunately, Bioconductor provides functions that allow you to interface directly with public databases like *UCSC*, *Ensembl*, and *NCBI* to obtain the most up to date annotation data available. **Genome annotation will be the focus of our next lesson**.
+
+---
 
 ### Practical considerations:
 
