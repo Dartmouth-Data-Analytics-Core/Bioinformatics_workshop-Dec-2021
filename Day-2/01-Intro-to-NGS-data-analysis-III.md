@@ -1,15 +1,20 @@
 # Working with NGS data Part III
 
-After generating read alignments to a reference genome, there are several downstream analysis tasks that can be performed to represent the final reduced representation of the dataset. How we use the read alignments to generate the reduced representation of teh dataset is dependent on what type of data we are working with (e.g. RNA-seq, ChIP-seq, WGS/WES). 
+After generating read alignments to a reference genome, there are several downstream analysis tasks that can be performed to represent the final reduced representation of the dataset. How we use the read alignments to generate the reduced representation of teh dataset is dependent on what type of data we are working with (e.g. RNA-seq, ChIP-seq, WGS/WES).
 
 **Read quantification:**
-- Often referred to as read counting, several NGS applications require us to count reads overlapping specific features to extract insights. For example, in RNA-seq, the number of reads overlapping each gene is used to infer expression level. 
+- Often referred to as read counting, several NGS applications require us to count reads overlapping specific features to extract insights. For example, in RNA-seq, the number of reads overlapping each gene is used to infer expression level.
 
 **Peak calling:**
-- In some experiments, we are interested in identifying genomic regions with significant accumulations of sequencing reads (i.e. peaks). This is the case for data types where we have performed enrichment for a specific type of DNA, such as those bound by a particular protein (ChIP-seq) or accessible chromatin ((e.g. DNAase-seq, ATAC-seq). 
+- In some experiments, we are interested in identifying genomic regions with significant accumulations of sequencing reads (i.e. peaks). This is the case for data types where we have performed enrichment for a specific type of DNA, such as those bound by a particular protein (ChIP-seq) or accessible chromatin ((e.g. DNAase-seq, ATAC-seq).
 
 **Variant Calling:**
-- In WGS/WES experiments, we are usually interested in identifying genetic variants that are present in a sequenced sample, but not in teh reference genome that the sample was aligned to. 
+- In WGS/WES experiments, we are usually interested in identifying genetic variants that are present in a sequenced sample, but not in teh reference genome that the sample was aligned to.
+
+<p align="center">
+<img src="../figures/ngs-III.png" title="xxxx" alt="context"
+	width="90%" height="90%" />
+</p>
 
 In this lesson, we will briefly explore the fundamental concepts of *read quantification*, *peak calling*, and *variant calling*, while introducing useful software and relevant file formats for each.
 
@@ -60,7 +65,7 @@ Specifies the feature in your GTF file you want to count over (3rd column). The 
 **Strandedness (`-s`):**  
 Specifies if reads in your experiment come from a stranded (`yes`) or unstranded (`no`) library type. It is critical to set this correctly, as incorrect selection will result in needlessly throwing away 50% of your reads.  
 
-```r
+```bash
 # go to your scratch dir
 biow
 
@@ -170,18 +175,18 @@ tail -n 10 /dartfs-hpc/scratch/fund_of_bioinfo/bed_files/heart_E15.5_H3K9ac.bed
 wc -l /dartfs-hpc/scratch/fund_of_bioinfo/bed_files/heart_E15.5_H3K9ac.bed
 ```
 
-**Note:** The settings and options used to perform peak calling appropriately are dependent on the data you have (e.g. ChIP-seq, ATAC-seq, etc.) and the type of peak you are hoping to detect. TFs usually form narrow punctuate peaks but other marks, such as histone marks, typically form broader peaks, and can require different settings to accurately detect.
+> **Note:** The settings and options used to perform peak calling appropriately are dependent on the data you have (e.g. ChIP-seq, ATAC-seq, etc.) and the type of peak you are hoping to detect. TFs usually form narrow punctuate peaks but other marks, such as histone marks, typically form broader peaks, and can require different settings to accurately detect.
 
 After a set of peak regions have been defined, read quantification can be performed over these regions, since these count data can be used as input to a differential binding analysis (ChIP-seq) or a differential accessibility analysis (ATAC-seq), to identify peaks unique to an experimental condition.
 
 
 ### Visualizing signal of enriched sequence tags (alignments)
 
-In analyses where you have identified a set of called peaks representing regions with  signal significantly above the background level, it can be useful to visualize extent of the signal in those peak regions, in order to gain an idea of **how enriched** above background the signal in those regions was.
+It is often useful to visualize extent of the signal in identified peak regions, to gain an idea of **how enriched** above background the signal in those regions was.
 
-Visualization of signal track data is usually achieved by converting alignment files (.BAM format) into a **bigWig** file, an indexed binary file format used to store dense continuous data (i.e. signal) over a large set of coordinates that can be viewed as a graph. These features make bigWig files a very efficient way to visualize read density/signal for any type of high-throughput genomics data.
+Visualization of signal track data is usually achieved by converting alignment files (`.BAM` format) into a `bigWig` file, an indexed binary file format used to store dense continuous data (i.e. signal).
 
-bigWig files can be constructed from the *wiggle (Wig)* or *bedGraph* file formats, both of which are also used to store dense continuous data. bigWig, Wig, and bedGraph files formats are all described in more detail on the [UCSC website](http://genome.ucsc.edu/goldenPath/help/bigWig.html).
+`bigWig` files can be constructed from the `wiggle (Wig)` or `bedGraph` file formats, both of which are also used to store dense continuous data. bigWig, Wig, and bedGraph files formats are all described in more detail on the [UCSC website](http://genome.ucsc.edu/goldenPath/help/bigWig.html).
 
 <p align="center">
 <img src="../figures/chip-signal-genome-wide.png" title="xxxx" alt="context"
@@ -190,7 +195,7 @@ bigWig files can be constructed from the *wiggle (Wig)* or *bedGraph* file forma
 
 > For the purposes of this workshop, we only need understand the idea behind of bigwig files and what they are used for. We hope to address their generation and use in more detail in future workshops.
 
-Bigwig file data essentially describes all positions in the reference genome, thus we can use them to evaluate signal across many genomic loci simultaneously. One common example is to plot the signal directly upstream and downstream of the called peaks. As you can see in the example below, such analysis is not limited to ChIP-seq, and could instead represent Tn5 insertions in an ATAC-seq experiment, for example.
+Bigwig files can be used to evaluate signal across many genomic loci simultaneously. A common task is to plot signal directly upstream and downstream of called peaks. Consider the example below:
 
 <p align="center">
 <img src="../figures/chip-tss-example.png" title="" alt="context"
@@ -204,15 +209,25 @@ Adapted from Figure 1 of [Lin-Shiao *et al*, 2019, *Science Advances*](https://a
 
 ## Variant calling
 
-Following an experiment such as Whole Genome Sequencing or Exome Sequencing and subsequent read alignment, a common next step is calling the variants in each sample.  *Variants* are locations in the sequenced samples where the sequenced reads differ from the reference genome to which they have been aligned.  
+Following an experiment such as Whole Genome Sequencing (WGS) or Exome Sequencing (WES) and subsequent read alignment, a common next step is variant calling. **Genomic variants** are locations in the sequenced samples where the sequenced reads differ from the reference genome to which they have been aligned.  
 
-Common software for variant calling includes Genome Analysis Toolkit, Mutect, Freebayes, Varscan, and Strelka.  The purpose of these softwares is to determine which variants are real, or which might be artifacts of sequencing error or alignment error, and output a score associated with that determination.  Any of these variant callers will require as input an aligned BAM file and a reference genome file.  Some expected optional parameters might be a list of sites to mask (such as known repetitive sites in the genome or known germline variants in a population), the expected ploidy of the sequenced sample, or a GTF file for annotating the genome context of each variant.
+<p align="center">
+<img src="../figures/var-calling.png" title="" alt="context"
+	width="90%" height="90%" />
+</p>
 
-The standard file format output by variant callers is Variant Call Format, or VCF, which is a tabular format containing the genomic location of each variant and the level of evidence for it in each sample, as well as a header describing the construction of the file.
+Common software for variant calling includes Genome Analysis Toolkit, Mutect, Freebayes, Varscan, and Strelka. The purpose of these softwares is to determine which variants are real, or which might be artifacts of sequencing error or alignment error, and output a score associated with that determination.  
+
+Any of these variant callers will require as input an aligned BAM file and a reference genome file.  Some expected optional parameters might be a list of sites to mask (such as known repetitive sites in the genome or known germline variants in a population), the expected ploidy of the sequenced sample, or a `GTF` file for annotating the genome context of each variant.
+
+The standard file format output by variant callers is `Variant Call Format`, or `VCF`, which is a tabular format containing the genomic location of each variant and the level of evidence for it in each sample, as well as a header describing the construction of the file.
 
 <p align="center">
 <img src="../figures/tcga_vcf_format.png" title="" alt="context"
 	width="90%" height="90%" />
 </p>
 
-After variant calling is performed and a confident set of variants is determined for each sample, some downstream analyses could include comparing variants found in tumor vs. normal pairs, variants found in resistant vs. non-resistant cell lines, or statistical analysis of the presence of variants in any case-control disease populations.
+After variant calling is performed and a confident set of variants is determined for each sample, some downstream analyses could include:
+- comparing variants found in tumor vs. normal pairs
+- variants found in resistant vs. non-resistant cell lines
+- statistical analysis of the presence of variants in any case-control disease populations.
