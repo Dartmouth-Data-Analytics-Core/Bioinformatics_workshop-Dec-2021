@@ -75,11 +75,11 @@ cd quantification
 
 # quantify reads that map to exons (default)
 htseq-count \
-	-f bam \
-	-s no \
-	-r pos \
-	../aligned/SRR1039508.Aligned.sortedByCoord.out.bam \
-	/dartfs-hpc/scratch/fund_of_bioinfo/Homo_sapiens.GRCh38.97.chr20.gtf > SRR1039508.htseq-counts
+-f bam \
+-s no \
+-r pos \
+../aligned/SRR1039508.Aligned.sortedByCoord.out.bam \
+/dartfs-hpc/scratch/fund_of_bioinfo/Homo_sapiens.GRCh38.97.chr20.gtf > SRR1039508.htseq-counts
 ```
 
 Have a look at the resulting file.
