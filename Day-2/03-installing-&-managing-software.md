@@ -140,7 +140,7 @@ conda list
 Once your conda environment is activated, you can install new software by running a single line of code. For example, if we wanted to install `samtools` to this environment, we would run:
 ```bash
 # DO NOT RUN NOW, AS IT MAY TAKE A SHORT WHILE
-conda install -c bioconda samtools
+conda install -c bioconda samtools=1.9
 ```
 
 `bioconda` refers to the specific *'channel'* that samtools will be installed from. Conda, and its parent distribution *Anaconda*, are organized into channels that contain specific collections of software. `bioconda` contains a lot of bioinformatics software.
