@@ -91,7 +91,7 @@ ls
 Programs written in Java are frequently distributed as JAR files, which are similar to pre-compiled binaries in that only a single file is required to download and install the software. The JAR file is then run using the `java -jar` command.  For example, the following will download the "picard" set of genomics tools written in Java, and run it to output the help string.
 ```shell
 wget https://github.com/broadinstitute/picard/releases/download/2.23.9/picard.jar
-java -jar picard.jar -h
+/opt/java/jdk1.8.0_66/bin/java -jar picard.jar -h
 ```
 
 ---
