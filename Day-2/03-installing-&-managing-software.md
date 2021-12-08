@@ -5,7 +5,7 @@
 Bioinformatics software can be installed and managed in a number of ways. It is important to be keep track of software versions so that you can report what was used for specific analyses/projects.
 
 Depending on the software to be installed, it may be available in one of the following formats:  
- - Pre-installed on your system (eg. modules on Discovery)
+ - Pre-installed on your system (eg. linux core utilities)
  - Language-specific package managers (eg. R/Bioconductor, Python/pip)
  - Full package and environment management tools (eg. Conda)
  - Pre-compiled binary executable
@@ -20,37 +20,62 @@ In this lesson, we will introduce the major ways bioinformatics packages can be 
 
 ---
 
-## Software pre-installed on the system
-Linux systems will have many core utilities for navigating the file system, creating, editing and removing files, downloading and uploading files, compiling code, submitting jobs to a cluster, and many more.  These utilities are commonly found in `/usr/bin`.  
+## What does it mean for software to be installed?
+To run software on a Linux command line, the software must both exist, and be accessible by a relative or absolute path.  The commands below demonstrate how the programs 'gzip' and 'gunzip' are installed on our system:
+```shell
+#Check which directory we're in
+pwd
+#/dartfs-hpc/scratch/sullivan/fundamentals_of_bioinformatics
+
+#Make a new directory to work in
+mkdir tools; cd tools
+
+#Establish a test file to try out gzip commands
+echo "test" > test.txt
+ls
+gzip test.txt
+ls
+zcat test.txt
+gunzip test.txt.gz
+ls
+
+#See where gzip is installed
+which gzip
+echo $PATH| grep "/usr/bin"
+
+#Save your path to retreive later
+PATH_BACKUP=$PATH
+
+#Empty your PATH variable
+PATH=
+echo $PATH
+
+#Try these commands
+ls
+gzip test.txt
+#Note that the programs are no longer accessible "ls: No such file"
+
+#It's possible to call them directly
+/usr/bin/ls
+/usr/bin/gzip test.txt
+/usr/bin/ls
+
+#Re-establish your PATH variable
+PATH=$PATH_BACKUP
+echo $PATH
+gunzip test.txt.gz
+cat test.txt
+```
+
 
 ---
 
-## Language-specific package managers
-Package managers for specific programming languages aim to make the installation of packages or libraries more simple, and from a central location. This allows software to be installed using a single command, rather than having to search the internet for each piece of software and download/install it separately.
+## Software pre-installed on the system
+As seen above, Linux systems will have many core utilities for navigating the file system, creating, editing and removing files, downloading and uploading files, compiling code, submitting jobs to a cluster, and many more.  These utilities are commonly found in `/usr/bin`.  
 
-For R, packages are available from two major sources:  
-- [*CRAN*](https://cran.r-project.org/web/packages/available_packages_by_name.html) - A large diverse collection of R packages currently approaching 17,000 in total
-- [*Bioconductor*](https://www.bioconductor.org/) - a specific collection of packages specifically geared toward facilitating bioinformatic data analysis in R
+---
 
-To install R packages from CRAN (within R):
-```R
-# Install ggplot2 from CRAN
-install.packages('ggplot2')
-```
 
-To install R packages from Bioconductor (within R):
-```R
-# Get Bioconductor, if not installed already
-install.packages("BiocManager")
-# Install DESeq2 from Bioconductor
-BiocManager::install("DESeq2")
-```
-
-In Python, packages are available in PyPI. To install Python packages from PyPI (from within the bash shell):
-```shell
-# Install matplotlib from PyPI
-pip install matplotlib
-```
 ---
 
 ## Pre-compiled binary executable
@@ -63,7 +88,7 @@ ls
 ./bowtie2 --help
 ```
 
-Programs written in Java are frequently distributed as JAR files, which are similar to pre-compiled binaries, in that only a single file is required to download and install the software. The JAR file is then run using the `java -jar` command.  For example, the following will download the "picard" set of genomics tools written in Java, and run it to output the help string.
+Programs written in Java are frequently distributed as JAR files, which are similar to pre-compiled binaries in that only a single file is required to download and install the software. The JAR file is then run using the `java -jar` command.  For example, the following will download the "picard" set of genomics tools written in Java, and run it to output the help string.
 ```shell
 wget https://github.com/broadinstitute/picard/releases/download/2.23.9/picard.jar
 java -jar picard.jar -h
@@ -85,14 +110,6 @@ With package managers becoming more widespread, you should only rarely need to i
 
 ---
 
-## Virtual machine images (eg. Docker, Singularity)
-Virtual machine images allow software to be distributed along with an entire linux environment. This ensures that anyone running the software will be able to, regardless of software installed or environment variables, and make software management seamless.
-
-However, containers can raise security issues when working with high performance computing clusters such as discovery. Docker cannot currently be used on discovery, and singularity images that can be currently used are somewhat limited.
-
-<img src="../figures/containers.png" height="150" width="350"/>
-
----
 
 
 ## Conda - Full package and environment management
@@ -126,7 +143,7 @@ Once your conda environment is activated, you can install new software by runnin
 conda install -c bioconda samtools
 ```
 
-`bioconda` refers to the specific *'channel'* that samtools will be installed from. Conda, and its parent dstribution *Anaconda*, are organized into channels that contain specific collections of software. `bioconda` contains a lot of bioinformatics software.
+`bioconda` refers to the specific *'channel'* that samtools will be installed from. Conda, and its parent distribution *Anaconda*, are organized into channels that contain specific collections of software. `bioconda` contains a lot of bioinformatics software.
 
 The easiest way to identify the install details for a specific package is to search for it on the conda website. The image below shows an example of the page for the bioconda distribution of samtools (available [here](https://anaconda.org/bioconda/samtools)).
 
@@ -141,8 +158,46 @@ conda deactivate
 
 Conda is an excellent way to install and manage software for bioinformatics, since typical programs used in bioinformatics require a large number of dependency packages, and we often want/need to use different versions for different projects.
 
-> Research computing provides an introduction to using Conda on the Dartmouth computing infrastructure (link [here](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=72888)), which describes how to best make use of Conda on Discovery/Polais/Andes.
+> Research computing provides an introduction to using Conda on the Dartmouth computing infrastructure (link [here](https://services.dartmouth.edu/TDClient/1806/Portal/KB/ArticleDet?ID=72888)), which describes how to best make use of Conda on Discovery/Polaris/Andes.
 
+---
+
+## Virtual machine images (eg. Docker, Singularity)
+Virtual machine images allow software to be distributed along with an entire linux environment. This ensures that anyone running the software will be able to, regardless of software installed or environment variables, and make software management seamless.
+
+However, containers can raise security issues when working with high performance computing clusters such as discovery. Docker cannot currently be used on discovery, and singularity images that can be currently used are somewhat limited.
+
+<img src="../figures/containers.png" height="150" width="350"/>
+
+---
+
+
+## Language-specific package managers
+Package managers for specific programming languages aim to make the installation of packages or libraries more simple, and from a central location. This allows software to be installed using a single command, rather than having to search the internet for each piece of software and download/install it separately.
+
+For R, packages are available from two major sources:  
+- [*CRAN*](https://cran.r-project.org/web/packages/available_packages_by_name.html) - A large diverse collection of R packages currently approaching 17,000 in total
+- [*Bioconductor*](https://www.bioconductor.org/) - a specific collection of packages specifically geared toward facilitating bioinformatic data analysis in R
+
+To install R packages from CRAN (within R):
+```R
+# Install ggplot2 from CRAN
+install.packages('ggplot2')
+```
+
+To install R packages from Bioconductor (within R):
+```R
+# Get Bioconductor, if not installed already
+install.packages("BiocManager")
+# Install DESeq2 from Bioconductor
+BiocManager::install("DESeq2")
+```
+
+In Python, packages are available in PyPI. To install Python packages from PyPI (from within the bash shell):
+```shell
+# Install matplotlib from PyPI
+pip install matplotlib
+```
 ---
 
 ### Breakout room exercises
