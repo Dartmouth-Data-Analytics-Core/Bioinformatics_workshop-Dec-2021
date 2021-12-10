@@ -35,8 +35,7 @@ We have designed the schedule so that breaks are essentially built into the brea
 
 - **12:00-12:10 - Day 2 recap & questions**
 - **12:10-1:00 - Genomics with R & Bioconductor I** (working with genomic regions)
-- **1:10-2:10 - Genomics with R & Bioconductor II** (genome annotation)
-- **2:15-3:10 - Genomics with R & Bioconductor III** (sequence analysis & reference genomes)
+- **1:10-2:10 - Genomics with R & Bioconductor II** (genome annotation/references)
 - **3:15-4:00 - Introduction to statistical inference for bioinformatics I**
 - **4:00-4:50 - Introduction to statistical inference for bioinformatics II**
 - **4:50-5:00 - Wrap-up & closing remarks**
