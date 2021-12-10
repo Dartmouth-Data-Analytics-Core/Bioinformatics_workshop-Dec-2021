@@ -388,20 +388,6 @@ Again, the coefficient tells us about the relationship between the predictor and
 Since a 'unit increase' in `subject_group` simply means controls vs diseased subjects, we can interpret this as the difference in expression between controls and cases. This is analogous to how we would calculate a fold-change value in an RNA-seq analysis.
 
 ---
-#### Multiple regression
-
-We could have simply addressed the above analysis using a more simple statistical test such as a *t-test*. However, we commonly want to include additional variables in our linear models, and approaches such as the t-test cannot handle this scenario.
-
-For example, we might want to control for factors that could confound gene expression differences between the control and diseased groups. For example, we could control for age and sex of the subjects, or perhaps the batch the samples were collected in.
-
-In this scenario, we can use linear models to control for the additional variables by adding them into the statistical model:
-```r
-summary(lm(dat3$exp_geneX ~ dat3$subject_group + dat3$age + dat3$gender + dat3$batch))
-```
-
-This approach is referred to as **multiple regression**. Here, the coefficient for  `subject_group` can be interpreted as the average value across all ages, genders, & batches.
-
----
 
 #### Final Note: Beyond simple linear models for NGS data analysis
 
