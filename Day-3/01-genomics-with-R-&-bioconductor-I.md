@@ -310,7 +310,8 @@ fr_h3k27ac_uniq1 <- fr_h3k27ac[-queryHits(overlaps)]
 fr_h3k27ac_uniq1
 ```
 
-Now let's read in the peaks for H3K9ac in both forebrain and heart. To help keep the objects in our R environment organized, we can use another class available in GenomicRanges, the `GRangesList` class, which allows storage or multiple Granges objects in a list style object. This makes sense to do for our analysis, as we have multiple sets of peaks for each tissue that we want to be in our global environment.
+Multiple `GRanges` objects can be stored efficientkly in one object using the `GRangesList` class. Read in peaks for H3K9ac in both forebrain and heart below, and combine them with the H3K27ac peaks.
+
 ```r
 # forebrain H3K9ac ChIP-seq peaks
 fr_h3k9ac <- rtracklayer::import("forebrain_E15.5_H3K9ac.bed",
@@ -342,35 +343,6 @@ fr[[2]]
 length(fr[[1]])
 length(fr[[2]])
 ```
-
-We can use the GRangesLists to explore the overlap between marks within a given tissue, using the same approach with the `findOverlaps()` function as we did above.
-```r
-# subset for overlapping regions within the forebrain peaks, across both histone marks
-fr_overlaps <- findOverlaps(query = fr$h3K27ac, subject = fr$h3K9ac)
-fr_overlaps
-
-# subset the forebrain H3K27ac GRanges for peaks overlapping with firebrain H3K9ac peaks
-fr_h3k27ac_ov_h3K9ac <- fr$h3K27ac[queryHits(fr_overlaps)]
-
-# calculate % overlapping peaks based on all forebrain H3K27ac peaks
-length(fr_h3k27ac_ov_h3K9ac)/length(fr$h3K27ac)*100
-
-# do the same for heart
-ht_overlaps <- findOverlaps(query = ht$h3K27ac, subject = ht$h3K9ac)
-ht_h3k27ac_ov_h3K9ac <- ht$h3K27ac[queryHits(ht_overlaps)]
-length(ht_h3k27ac_ov_h3K9ac)/length(ht$h3K27ac)*100
-```
-
-You could also obtain the overlapping regions between histone marks within each tissue more directly using the `susetByOverlaps()` function:
-```r
-fr_ov2 <- subsetByOverlaps(fr$h3K27ac, fr$h3K9ac)
-fr_ov2
-
-ht_ov2 <- subsetByOverlaps(ht$h3K27ac, ht$h3K9ac)
-ht_ov2
-```
-
-Comparing the percentage of overlap for H3K27ac and H3K9ac, we see that while there is a lot of overlap, there are also a lot of of tissue specific regions, suggesting H3K27ac and H3K9ac profiles are tissue specific.
 
 ---
 
@@ -420,6 +392,6 @@ In order to address these questions, we need to obtain relevant annotation data.
 	width="40%" height="40%" />
 </p>
 
-- The choice of which software you use for these types of operations is dependent on what you are doing and what you need to do next. For example, if plan to use other Bioconductor packages after determining overlap between sets of regions, you may choose to use R/Bioconductor. If you simply need to intersect two BED files quickly to be used as input into another UNIX-based software, it may be advantageous to use BEDTools.   
+- The choice of which software you use for these types of operations is dependent on your task and analysis pipeline. For example, if plan to use other Bioconductor packages after determining overlap between sets of regions, you may choose to use R/Bioconductor. If you simply need to intersect two BED files quickly to be used as input into another UNIX-based software, it may be advantageous to use BEDTools.   
 
-- This lesson is not intended to be a comprehensive introduction to the complete functionality of any of the packages discussed here, and would be impossible to achieve in the time we have. This lesson is based off of similar exercises available from far more comprehensive vignettes and documentation at the Bioconductor webpages for package. I encourage you to use this lesson as a starting point to direct you toward these more comprehensive resources.
+- This lesson is not intended to be a comprehensive introduction to the complete functionality of any of the packages discussed here, and would be impossible to achieve in the time we have. This lesson is based off of similar exercises available from far more comprehensive vignettes and documentation at the Bioconductor webpages for package. Use this lesson as a starting point to direct you toward these more comprehensive resources.

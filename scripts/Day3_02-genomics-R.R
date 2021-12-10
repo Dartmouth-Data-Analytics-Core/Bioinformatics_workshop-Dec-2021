@@ -23,7 +23,7 @@ mapIds(org.Hs.eg.db, keys = head(entrez.ids), column = c("SYMBOL"), keytype="ENS
 # read in data
 results <- read.csv("diff-exp-results.csv", stringsAsFactors = F, row.names = "ensembl")
 
-# check the first few lines  
+# check the first few lines
 head(results)
 
 # using mapIds but only to get gene symbol

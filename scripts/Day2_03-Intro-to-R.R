@@ -47,7 +47,7 @@ as.integer(x)
 # define a chacter string
 x <- c("a", "b", "c", "d")
 
-# get elements 1 and 3 
+# get elements 1 and 3
 x[c(1,3)]
 
 # get elements 1 to 3 using the ':' operator
@@ -68,7 +68,7 @@ x
 x.na <- is.na(x)
 x.na
 
-# what object class is returned  
+# what object class is returned
 class(x.na)
 
 
@@ -237,7 +237,7 @@ df2 <- df[df$gender == "female", ]
 # check dimensions of the new data frame
 dim(df2)
 
-# use the LOGICAL NOT operator ! to obtain only male subjects  
+# use the LOGICAL NOT operator ! to obtain only male subjects
 df[!df$gender == "female", ]
 
 # this could obviously also be achieved with..
@@ -339,7 +339,7 @@ x <- c(1.63, 2.25, 3.83, 4.99)
 y <- c(TRUE, FALSE, TRUE, TRUE)
 z <- c("a", "b", "c", "d")
 
-# save all 3 objects to one file 
+# save all 3 objects to one file
 save(x, y, z, file = "my_r_objects.rdata")
 
 load(file = "my_r_objects.rdata")

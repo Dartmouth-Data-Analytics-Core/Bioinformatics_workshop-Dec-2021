@@ -3,21 +3,21 @@ library(IRanges); library(GenomicRanges)
 # 1st region
 IRanges(start = c(1), width = 4)
 
-# 2nd region 
+# 2nd region
 IRanges(start = c(11), width = 3)
 ############################################################################################
 ir <- IRanges(start = c(1,11), width = c(4, 3))
 ir
 class(ir)
 ############################################################################################
-# shift all of the regions by a specified offset 
+# shift all of the regions by a specified offset
 shift(ir, 2)
 
-# resize all regions to only the integer at the center of each region 
+# resize all regions to only the integer at the center of each region
 resize(ir, fix="center", width=1)
 
 ############################################################################################
-ir <- IRanges(start = c(1,2,3,3,5,6,7,7,8,11), 
+ir <- IRanges(start = c(1,2,3,3,5,6,7,7,8,11),
               width = c(4,4,4,4,3,3,3,3,3,3))
 ir
 
@@ -30,44 +30,44 @@ gr <- GRanges(
   score = rnorm(10,5,2))
 gr
 
-# return the region ranges only 
+# return the region ranges only
 granges(gr)
 
-# return the strand info for all regions 
+# return the strand info for all regions
 strand(gr)
 
-# return the region names  
+# return the region names
 names(gr)
 
-# extract the metadata columns 
+# extract the metadata columns
 mcols(gr)
 
 ############################################################################################
-# calculate coverage of each base over this genomic region 
+# calculate coverage of each base over this genomic region
 coverage(gr)
 
-# sum across all regions to get the total coverage for this genomic region 
+# sum across all regions to get the total coverage for this genomic region
 sum(coverage(gr))
 
-# perhaps we are only interested in the regions on the + strand 
+# perhaps we are only interested in the regions on the + strand
 sum(coverage(gr[strand(gr)=="+"]))
 
 ############################################################################################
-# view the top X regions of interest 
+# view the top X regions of interest
 head(gr, n=5)
 
-# view the top X regions with scores greater than a value of interest 
+# view the top X regions with scores greater than a value of interest
 head(gr[score(gr)>4], n=5)
 
 ############################################################################################
-# shift all regions 5bp 
+# shift all regions 5bp
 shift(gr, 5)
 ##### Error in shift(gr, 5) : type 'S4' passed to shift(). Must be a vector, list, data.frame or data.table
 
-# resize all regions by requiring them to be 5bp wide 
+# resize all regions by requiring them to be 5bp wide
 resize(gr, 5)
 
-# reduce the regions to one simplified set of non-overlapping regions 
+# reduce the regions to one simplified set of non-overlapping regions
 reduce(gr)
 
 ############################################################################################
@@ -79,23 +79,23 @@ extraCols_narrowPeak <- c(signalValue = "numeric", pValue = "numeric",
 getwd()
 
 # use the import() function to read in the peaks called in the forebrain H3K27ac ChIP-seq
-fr_h3k27ac <- rtracklayer::import("forebrain_E15.5_H3K27ac.bed", 
-                                  format = "BED", 
+fr_h3k27ac <- rtracklayer::import("forebrain_E15.5_H3K27ac.bed",
+                                  format = "BED",
                                   extraCols = extraCols_narrowPeak,
                                   genome = "mm10")
 
 
-# do the same for the heart H3K27ac ChIP-seq peaks 
-ht_h3k27ac <- rtracklayer::import("heart_E15.5_H3K27ac.bed", 
-                                  format = "BED", 
-                                  extraCols = extraCols_narrowPeak, 
+# do the same for the heart H3K27ac ChIP-seq peaks
+ht_h3k27ac <- rtracklayer::import("heart_E15.5_H3K27ac.bed",
+                                  format = "BED",
+                                  extraCols = extraCols_narrowPeak,
                                   genome = "mm10")
 
-# print both GRanges objects to get an idea for their contents 
+# print both GRanges objects to get an idea for their contents
 fr_h3k27ac
 ht_h3k27ac
 
-# check their lengths 
+# check their lengths
 length(fr_h3k27ac)
 length(ht_h3k27ac)
 
@@ -119,7 +119,7 @@ length(ht_h3k27ac_ov1)/length(ht_h3k27ac)*100
 # we could directly subset for the overlapping peaks using subsetByOverlaps()
 subsetByOverlaps(fr_h3k27ac, ht_h3k27ac)
 
-# alternatively, we could get the H3K27ac peaks that are unique to each tissue  
+# alternatively, we could get the H3K27ac peaks that are unique to each tissue
 #### forebrain
 fr_h3k27ac_uniq1 <- fr_h3k27ac[-queryHits(overlaps)]
 fr_h3k27ac_uniq1
@@ -199,4 +199,3 @@ gtrack <- GenomeAxisTrack()
 
 # plot the tracks for this region
 plotTracks(list(gtrack, fr_h3k27ac_track, hr_h3k27ac_track), from = 9e6, to = 10e6)
-
