@@ -60,11 +60,21 @@ We can use the t-statistic to calculate the probability that this result was gen
 In this example, the t-statistic is large enough that less than 5% of the t-distribution has a larger value, therefore our P-value will be < 0.05. 
 	
 <p align="center">
-  <img src="../figures/pvalue-concept.png" height="80%" width="80%"/>
+  <img src="../figures/pvalues-concept.png" height="80%" width="80%"/>
 </p>
 
 If we use the common P-value threshold (&alpha;) of 0.05, we should choose to accept the alternative hypothesis and reject the null. Intuitively, we can interpret this result as meaning that there is less than a 5 in 100 probability of the finding being due to chance. 
-		      
+		
+In R, we could perform the t-test as follows: 
+```r
+# make numeric vectors containing your data 
+control <- c(10.548, 9.979, 8.388)
+tx <- c(17.89 ,16.66, 17.73)
+
+# run the test 
+t.test(control, tx)
+```
+
 The test-statistic and distribution will change depending on the type of statistical test you need to run based on your data, but the overarching procedure for **hypothesis testing** remains the same as presented here. 
 
 > **Definition:** The P-value can be generally defined as: **probability of observing data equal to or more extreme than that observed due to chance**. 
